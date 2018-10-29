@@ -7,16 +7,26 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
 	<title> Cuestionario CM </title>
   <style>
+  
+	@font-face {
+    font-family: 'EDboy';
+    src: url(fonts/VtEd.ttf);
+	}
 	html, body {
+		
 		padding: 0;
 		margin: 0;
 		overflow: hidden;
 		position: fixed;
-		background: #ff7373;
+		background:#00fb86;
 		width:100%;
 		height:100%;
+		background-image: url("img/bg.jpg")
+	
 	}
 	.container-welcome{
+		font:'EDboy'
+		border-radius: 0px 0px 10px 10px;
 		position: inherit;
 		width: calc(100vw);
 		height:calc(10vh);
@@ -30,16 +40,18 @@
 	}
 
 	h4:hover{
-		color: #ff7373;
+		color: #62d6a9;
 		cursor: pointer;
 	}
 
 	iframe{
 		position: inherit;
-		top: calc(20vh);
-		left: calc(20vw);
-		height:calc(60vh);
-		width: calc(60vw);
+		border-radius: 20px;
+		top: calc(15vh);
+		left: calc(10vw);
+		height:calc(80vh);
+		width: calc(80vw);
+		font:EDboy;
 	}
 
 	.icon{
@@ -60,20 +72,20 @@
 		background-size: 64px 64px;
 	}
 	.left.icon{
-		left: calc(25vw);
+		left: calc(10vw);
 		background: url(img/left.png);
 		width: 64px;
 		height: 64px;
 		background-size: 64px 64px;
 	}
 	.right.icon{
-		right: calc(25vw);
+		right: calc(10vw);
 		background: url(img/right.png);
 		width: 64px;
 		height: 64px;
 		background-size: 64px 64px;
 	}
-
+	
 
 	</style>
     <script src="libs/p5.min.js"></script>
@@ -84,7 +96,7 @@
 	<div class = "container-welcome">
 		<h1> EDUCAC </h1>
 	</div>
-	<iframe src="test.html">
+	<iframe src="test.html" style="border:2px solid black;" ></iframe>
 		<p>Your browser does not support iframes.</p>
 	</iframe>
 	<div class = "esc icon"></div>
@@ -107,14 +119,16 @@
 	window.onload = function(){
 		document.getElementsByClassName('esc icon')[0].onclick = function(){window.location.href="index.html";}
 	}
-
+	
+	
 	function keyPressed(){
 		if(keyCode===ESCAPE){
-      document.getElementsByClassName('esc icon')[0].style.opacity = 0.2;
+			document.getElementsByClassName('esc icon')[0].style.opacity = 0.2;
 		}
 
 		if(keyCode===LEFT_ARROW){
-      document.getElementsByClassName('left icon')[0].style.opacity = 0.2;
+			document.getElementsByClassName('left icon')[0].style.opacity = 0.2;
+
 		}
 		if(keyCode===RIGHT_ARROW){
 			document.getElementsByClassName('right icon')[0].style.opacity = 0.2;

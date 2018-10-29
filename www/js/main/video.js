@@ -1,9 +1,9 @@
 function setupVideo(){
-	andeerson = createVideo(['vid/Penrose.mp4']);
+	andeerson = createVideo('vid/Penrose.mp4');
 }
 function drawVideo(){
 	var amplevid = andeerson.width;
-	var ratio = rectw / amplevid;
+	var ratio = innerWidth / amplevid;
 	var altvid = andeerson.height * ratio;
 	
 		if(andeerson.time() >= andeerson.duration()){
@@ -11,7 +11,7 @@ function drawVideo(){
 			rectangle.draw();
 		}
 		else{
-			image(andeerson, centre.x - rectw/2, centre.y - recth/4, rectw, altvid );
+			image(andeerson, innerWidth/2 , innerHeight/2 , 100, altvid );
 			if(keyIsPressed){
 				andeerson.play();
 			}

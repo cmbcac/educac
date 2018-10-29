@@ -42,8 +42,9 @@ function rectC(x, y, w, h){
 	let half1 = w *.5;
 	let half2 = h *.5;
 
-	rect(x-half1, y - half2, w, h);
+	rect(x-half1, y - half2, w, h,10);
 }
+
 window.onresize = function(){
   resizeCanvas(window.innerWidth, window.innerHeight);
 	resizevariables();
@@ -57,12 +58,12 @@ function resizevariables(){
 	quarterheight2 = innerHeight * .50;
 	quarterheight3 = innerHeight * .75;
 }
+
 function rectangleCentrat(w, h){
 	var p1 = (window.innerWidth - w)*.5;
 	var p2 = (window.innerHeight- h)*.5;
 	rect(p1, p2, w, h);
 }
-
 
 function text_a_JSON(data){
 	var start = 25;
@@ -71,7 +72,6 @@ function text_a_JSON(data){
 	JParsedText = JSON.parse(JSONText);
 	return JParsedText;
 }
-
 
 function polygon(x, y, radius, npoints) {
   var angle = TWO_PI / npoints;
@@ -96,6 +96,7 @@ function circlesInPolygonC(x, y, radius, npoints, radiusellipse, angleinicial){
 		ellipse(sx, sy, radiusellipse);
 	}
 }
+
 function returnPointsInPolygon(x, y, radius, npoints, radiusellipse, angleinicial){
 	var posipunts = [];
 	
@@ -112,7 +113,6 @@ function returnPointsInPolygon(x, y, radius, npoints, radiusellipse, angleinicia
 	}
 	return posipunts;
 }
-
 
 function util_xmlhttp(id, todo, params, handle){
 
