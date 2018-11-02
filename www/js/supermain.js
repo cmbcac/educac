@@ -1485,19 +1485,26 @@ function draw(){
 						
 					}
 					
-					totaldate= document.createElement("input");
+						newdiv= document.createElement("div");
+						newdiv.id="Div"+i;
+						document.getElementById("foo").appendChild(newdiv);
+					
+						namenewlabel= document.createElement("label");
+						namenewlabel.innerHTML = "Temps total: ";
+						document.getElementById(newdiv.id).appendChild(namenewlabel);
 						
+						totaldate= document.createElement("input");
 						totaldate.name="Total";
 						totaldate.value = document.getElementById("totalhours").innerHTML+" : "+document.getElementById("totalminutes").innerHTML+" : "+document.getElementById("totalseconds").innerHTML;
 						totaldate.readOnly=true;
 						document.getElementById(newdiv.id).appendChild(totaldate);
 					
-				var sbmit= document.createElement("button");
-				sbmit.id="submit";		
-				sbmit.type="submit";
-				sbmit.innerHTML="Envia";
-				document.getElementById("foo").appendChild(sbmit);
-				stateprint=false;
+					var sbmit= document.createElement("button");
+					sbmit.id="submit";		
+					sbmit.type="submit";
+					sbmit.innerHTML="Envia";
+					document.getElementById("foo").appendChild(sbmit);
+					stateprint=false;
 			}
 		}
 		
