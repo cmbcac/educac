@@ -67,24 +67,11 @@
 		left: calc(1vw);
 		top: calc(1vw);
 		background: url(img/menu.png);
-		width: 64px;
-		height: 64px;
-		background-size: 64px 64px;
+		width: 3.879vw;
+		height: 7.048458149779735vh;
+		background-size:  3.879vw 7.048458149779735vh;
 	}
-	.left.icon{
-		left: calc(10vw);
-		background: url(img/left.png);
-		width: 64px;
-		height: 64px;
-		background-size: 64px 64px;
-	}
-	.right.icon{
-		right: calc(10vw);
-		background: url(img/right.png);
-		width: 64px;
-		height: 64px;
-		background-size: 64px 64px;
-	}
+	
 	
 
 	</style>
@@ -100,8 +87,7 @@
 		<p>Your browser does not support iframes.</p>
 	</iframe>
 	<div class = "esc icon"></div>
-	<div class = "left icon arrow"></div>
-	<div class = "right icon arrow"></div>
+	
   </body>
   <script>
 	var canvas;
@@ -119,33 +105,22 @@
 	window.onload = function(){
 		document.getElementsByClassName('esc icon')[0].onclick = function(){window.location.href="index.html";}
 	}
-	
+
+
 	
 	function keyPressed(){
 		if(keyCode===ESCAPE){
 			document.getElementsByClassName('esc icon')[0].style.opacity = 0.2;
 		}
 
-		if(keyCode===LEFT_ARROW){
-			document.getElementsByClassName('left icon')[0].style.opacity = 0.2;
-
-		}
-		if(keyCode===RIGHT_ARROW){
-			document.getElementsByClassName('right icon')[0].style.opacity = 0.2;
-
-		}
+		
 	}
 	function keyReleased(){
 		if(keyCode===ESCAPE){
 			document.getElementsByClassName('esc icon')[0].style.opacity = 1;
 			window.location.href = "index.html";
 		}
-		if(keyCode===LEFT_ARROW){
-			document.getElementsByClassName('left icon')[0].style.opacity = 1;
-		}
-		if(keyCode===RIGHT_ARROW){
-			document.getElementsByClassName('right icon')[0].style.opacity = 1;
-		}
+		
 	}
 
 	function pinta(s){console.log(s)};

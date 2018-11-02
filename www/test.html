@@ -18,11 +18,30 @@
 		top=calc(70vh)
 		left=calc(70vw)
 	}
-	#enviaresposta{
-		position: absolute
-		top=calc(70vh)
-		left=calc(70vw)
+	#foo{
+
+		display:none;
 	}
+	label{
+	color:white;
+	}
+	#countup{
+		position:absolute;
+		top: 5vh;
+		left:50%;
+		width: 10vw;
+		
+	}
+	#totalcountup{
+		position:absolute;
+		top: 90%;
+		left:10%;
+		
+		width: 10vw;
+		margin-left:-5vw;
+		
+	}
+	
 	
 	</style>
 	
@@ -30,6 +49,7 @@
     <script src="libs/p5.min.js"></script>
     <script src="libs/addons/p5.dom.min.js"></script>
     <script src="libs/addons/p5.sound.min.js"></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <!--
 	<script src="js/util.js"></script>
 	<script src="js/Bola.js"></script>
@@ -41,9 +61,89 @@
   
   <script src="js/util.js"></script>
   <script src="js/supermain.js"></script>
+  
   <input id='respostaescrita' style="display:none">
+			<div id="countup" style="display:none">
+				<p id="hours" style="float:left">00</p>
+				<p id="timeRefHours" style="float:left">:</p>
+				<p id="minutes" style="float:left">00</p>
+				<p id="timeRefMinutes" style="float:left">:</p>
+				<p id="seconds" style="float:left">00</p>
+				
+			</div>
   </head>
   <body>
-	
+		<div id="totalcountup">
+				<p style="float:left"> Tiempo total:  </p>
+				<p id="totalhours" style="float:left">00</p>
+				<p id="totaltimeRefHours" style="float:left">:</p>
+				<p id="totalminutes" style="float:left">00</p>
+				<p id="totaltimeRefMinutes" style="float:left">:</p>
+				<p id="totalseconds" style="float:left">00</p>
+				
+			</div>
+	<form id='foo'>
+	</form>
   </body>
+  <script src='js/google-sheet.js'></script>
+  <script> 
+  
+  
+  
+	function upTime(countTo) {
+			now = new Date();
+			
+			difference = (now-countTo);
+		
+			
+			hours=Math.floor((difference%(60*60*1000*24))/(60*60*1000)*1);
+			mins=Math.floor(((difference%(60*60*1000*24))%(60*60*1000))/(60*1000)*1);
+			secs=Math.floor((((difference%(60*60*1000*24))%(60*60*1000))%(60*1000))/1000*1);
+
+			
+			document.getElementById('hours').firstChild.nodeValue = hours;
+			document.getElementById('minutes').firstChild.nodeValue = mins;
+			document.getElementById('seconds').firstChild.nodeValue = secs;
+			
+			if(document.getElementById('hours').firstChild.nodeValue==0){
+				document.getElementById('hours').setAttribute('style', 'display:none');
+				document.getElementById('timeRefHours').setAttribute('style', 'display:none');
+			}else{
+				document.getElementById('hours').setAttribute('style', 'display:inline');
+				document.getElementById('timeRefHours').setAttribute('style', 'display:inline');
+			}
+			
+			clearTimeout(upTime.to);
+			upTime.to=setTimeout(function(){ upTime(countTo); },1000);
+	}
+	
+	function totalupTime(countTo) {
+			now = new Date();
+			
+			difference = (now-countTo);
+
+			hours=Math.floor((difference%(60*60*1000*24))/(60*60*1000)*1);
+			mins=Math.floor(((difference%(60*60*1000*24))%(60*60*1000))/(60*1000)*1);
+			secs=Math.floor((((difference%(60*60*1000*24))%(60*60*1000))%(60*1000))/1000*1);
+
+			
+			document.getElementById('totalhours').firstChild.nodeValue = hours;
+			document.getElementById('totalminutes').firstChild.nodeValue = mins;
+			document.getElementById('totalseconds').firstChild.nodeValue = secs;
+			
+			if(document.getElementById('totalhours').firstChild.nodeValue==0){
+				document.getElementById('totalhours').setAttribute('style', 'display:none');
+				document.getElementById('totaltimeRefHours').setAttribute('style', 'display:none');
+			}else{
+				document.getElementById('totalhours').setAttribute('style', 'display:inline');
+				document.getElementById('totaltimeRefHours').setAttribute('style', 'display:inline');
+			}
+			
+			clearTimeout(totalupTime.to);
+			totalupTime.to=setTimeout(function(){ totalupTime(countTo); },1000);
+	}
+	
+	
+	
+	</script>
 </html>

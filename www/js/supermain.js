@@ -1,7 +1,7 @@
 {
 var canvas;
 var ctx;
-var estats = ["inici", "playing", "pause", "error"], estatdelsistema = "inici", missatgeerror = "";
+var estats = ["inici", "playing", "pause", "error", "submit"], estatdelsistema = "inici", missatgeerror = "";
 var id_drive = "1nLZVoUA49YiSmf0ylFuOaTtB1V57yRrbDQO7pvr1TDs";   
 //var id_drive = "1-mffQ9q0im5VIm7gukacIjUI4Hps-3-n9vmeMj42d_k";
 
@@ -39,6 +39,12 @@ var ordre=["A- ","B- ","C- ","D- ","E- "]
 var resp;
 var respfin;
 
+var sbmit;
+
+var newlabel;
+var namenewlabel;
+
+var stateprint=true;
 }
 
 function preload(){
@@ -54,7 +60,8 @@ function setup(){
   ctx=canvas.getContext('2d');
   backswipe =  color(144, 145, 232, 0.2*255);
   lastframemouse = mouseIsPressed;
- 
+  upTime(new Date());
+  totalupTime(new Date());
   
 }
 
@@ -62,6 +69,7 @@ function draw(){
 
 		//DRAW QUAN EL SISEMA ESTA EN INICI
 		resp=document.getElementById("respostaescrita");
+		
 		resp.setAttribute('style', 'display:none');
 		if(estatdelsistema == "inici" ){
 
@@ -72,7 +80,7 @@ function draw(){
 					textC("No hi ha preguntes disponibles", innerHeight * .5 + 45, 15);
 				}
 				else{
-					textC("Prem enter per començar", innerHeight * .5 + 45, 15);
+					textC("Prem X per començar", innerHeight * .5 + 45, 15);
 				}
 		}
 
@@ -86,7 +94,7 @@ function draw(){
 
 				if(preguntes.length > 0){
 					textC("PREGUNTA: " + (current+1), innerHeight * .5 + 100, 20);
-					textC(preguntes[current].tipologia, innerHeight * .5 + 125, 13);
+					
 				}
 	
 	
@@ -94,14 +102,19 @@ function draw(){
 
 		if(preguntes.length > 0 && estatdelsistema == "playing"){
     
-			var p = preguntes[current];
-			var tipo = p.tipologia;
-			g = 202.5 + (Math.sin(frameCount/100) * 100);
+			if(current>=preguntes.length){
+				estatdelsistema="submit";
+			}else{
+			
+				var p = preguntes[current];
+				var tipo = p.tipologia;
+				g = 202.5 + (Math.sin(frameCount/100) * 100);
 
 	
 		//DRAW PER A CADA ESTAT DEL JOC
-	
-			if(tipo == "Opció múltiple"){
+			
+			
+				if(tipo == "Opció múltiple"){
      
 				background(50, 112, g);
 				textSize(20);
@@ -110,7 +123,7 @@ function draw(){
 				let half2 = textWidth(p.gran) * .5;
 				let height1 = innerHeight*.40;
 				
-				text(p.gran, half1-half2, height1);
+				textC2(p.gran, half1, height1, 20);
       
 				if(p.subpreguntes.length > 0){
 					for(var i = 0; i < p.subpreguntes.length; i++){
@@ -121,34 +134,36 @@ function draw(){
 						let fontsize = 20;
 						textSize(fontsize);
 						let half3 = textWidth(e)*.5;
-						let x = half1 - 50;
-						let y = height1 + 40 * (i+1);
+						let posx = half1 - 50;
+						let posy = height1 + 40 * (i+1);
 						let w =  textWidth(e)
 						let h = fontsize;
 
 						push();
 		  
-								if(mouseX > x && mouseX < x+w && mouseY > (y-14) && mouseY < (y-14+h)){
+								if(mouseX > posx && mouseX < posx+w && mouseY > (posy-14) && mouseY < (posy-14+h)){
 
 										fill(255,244, 123);
 										if(mouseIsPressed){
 			  
 											preguntes[current].respostaUsuari.push(e);
-											current ++;
-											current %= preguntes.length;
+											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+											upTime(new Date());
+											current++;
+											 
 										}
 								}
 		
-						ellipse(x - 10, y - 5, 6, 6);
-						text(e, x, y );
+						ellipse(posx - 10, posy - 5, 6, 6);
+						text(e, posx, posy );
 						pop();
 
 					}
 				}
 			}
 
-			if(tipo == "Swipe"){
-     
+				else if(tipo == "Swipe"){
+				
 				background(255, 255, 255);
 				
 				try{
@@ -160,7 +175,7 @@ function draw(){
 						text(p.opcions[2], quarterwidth3, quarterheight2);
 						if(p.numopcions <= 3) text(p.opcions[1], innerWidth/2 - textWidth(p.opcions[1])/2, quarterheight3);
 		  
-							pop();
+						pop();
 						let w = textWidth(p.subpreguntes[isubp]);
 						let h = textHeight(p.subpreguntes[isubp], w);
 						w+=40;
@@ -285,8 +300,10 @@ function draw(){
 						mouseY=innerHeight/2;
 						if(isubp == p.subpreguntes.length){
 							isubp = 0;
+							p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+							upTime(new Date());
 							current++;
-							current %= preguntes.length;
+							 
 						}
 					}
 		  
@@ -300,7 +317,7 @@ function draw(){
 				textC(p.gran, quarterheight , 23);
 			}
 
-			if(tipo == "Drag-categories"){
+				else if(tipo == "Drag-categories"){
      
 					background(190, 210, 190);
 					
@@ -322,9 +339,12 @@ function draw(){
 								if(dins && mouseIsPressed && !lastframemouse){
 									isubp2++;
 										if(isubp2 == p.subpreguntes.length){
+											preguntes[current].respostaUsuari.push(p.gran[i]);
 											isubp2 = 0;
+											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+											upTime(new Date());
 											current++;
-											current %= preguntes.length;
+											 
 				
 										}
 								}
@@ -367,10 +387,12 @@ function draw(){
 									
 										isubp2++;
 										if(isubp2 == p.subpreguntes.length){
-										
+											preguntes[current].respostaUsuari.push(p.gran[i]);
 											isubp2 = 0;
+											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+											upTime(new Date());
 											current++;
-											current %= preguntes.length;
+											 
 				
 										}	
 									}
@@ -405,9 +427,12 @@ function draw(){
              
 										isubp2++;
 										if(isubp2 == p.subpreguntes.length){
+											preguntes[current].respostaUsuari.push(p.gran[i]);
 											isubp2 = 0;
+											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+											upTime(new Date());
 											current++;
-											current %= preguntes.length;
+											 
 										}
 									}
 									if(dins && !mouseIsPressed && !lastframemouse){
@@ -427,25 +452,28 @@ function draw(){
 							else if(numopcions == 5){
           
 								var posipunts;
-								var rad = 200;
-								var radiusellipse = 100;
-								var angleinicial = g*0.01;
+								var rad = innerWidth*0.15;
+								var radiusellipse = innerWidth*0.1;
+								var angleinicial =0;
           
 								posipunts = returnPointsInPolygon(quarterwidth2, quarterheight2, rad, numopcions, radiusellipse, angleinicial);
 								for(var i = 0; i < posipunts.length; i++){
 									
 									let x = posipunts[i].x;
 									let y = posipunts[i].y;
-									let dins = dist(x, y, mouseX, mouseY) < radiusellipse;
+									let dins = dist(x, y, mouseX, mouseY) < radiusellipse/2;
 									push()
 									if(dins && mouseIsPressed && !lastframemouse){
-              
+										var rsp=p.gran[i];
+										preguntes[current].respostaUsuari.push(rsp);
 										isubp2++;
 										if(isubp2 == p.subpreguntes.length){
-               
+											
 											isubp2 = 0;
+											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+											upTime(new Date());
 											current++;
-											current %= preguntes.length;
+											 
 				
 										}
 									}
@@ -472,14 +500,14 @@ function draw(){
 
 			}
  
-			if(tipo == "Filtre"){
+				else if(tipo == "Filtre"){
 							
 				background(50, 112, 255);
 				
 				
 				var image1=new Image();
 				image1.src = p.subpreguntes;
-				ctx.drawImage(image1,innerWidth*0.25-150, innerHeight*0.25-100,300,200); 
+				ctx.drawImage(image1,innerWidth*0.15, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 				
 				textSize(20);
 		
@@ -488,9 +516,9 @@ function draw(){
 					let height1 = innerHeight*.50;
       
 					text(p.gran, half1-half2, height1-200);
-					rect(innerWidth*0.53-25, innerHeight/2-25, 100, 50,15);
+					rect(innerWidth*0.53-25, innerHeight/2-25, innerWidth*0.07,innerHeight*0.07,15);
 					textC2("RESET",innerWidth*0.55, innerHeight/2+8,20);
-					rect(innerWidth*0.42-25, innerHeight/2-25, 100, 50,15);
+					rect(innerWidth*0.42-25, innerHeight/2-25, innerWidth*0.07,innerHeight*0.07,15);
 					textC2("DONE",innerWidth*0.44, innerHeight/2+8,20);
 
 					var puntsx=[];
@@ -515,7 +543,7 @@ function draw(){
 									let y = puntsy[i];
 								let dins = dist(x, y, mouseX, mouseY) < 50;
 									push()
-								if(dins && mouseIsPressed && !lastframemouse){
+								if(dins && mouseIsPressed){
 									
 									if(i==0){
 										estat=0;
@@ -551,13 +579,14 @@ function draw(){
 									}
 									
 								}
-								if(dins && !mouseIsPressed && !lastframemouse){
+								if(dins && !mouseIsPressed){
 									fill(100,200,200);
+									
 								}
 								else{
 									fill(255);
 								}
-								rectC(x, y, 100,50);
+								rectC(x, y, innerWidth*0.1,innerHeight*0.1);
 								pop();
 								textC2(filtres[i], x, y, 11);
 								}
@@ -582,7 +611,7 @@ function draw(){
 												rectC(innerWidth*0.8, innerHeight*0.6,50,50);
 												
 												pop();
-												textC2("0%",innerWidth*0.8, innerHeight*0.6+8,20);
+												textC2("1px",innerWidth*0.8, innerHeight*0.6+8,20);
 												
 												if(mouseIsPressed){
 													opcions=1;
@@ -598,7 +627,7 @@ function draw(){
 												rectC(innerWidth*0.8, innerHeight*0.6+100,50,50);
 											
 												pop();
-												textC2("50%",innerWidth*0.8, innerHeight*0.6+100+8,20);
+												textC2("5px",innerWidth*0.8, innerHeight*0.6+100+8,20);
 												
 												if(mouseIsPressed){
 													opcions=2;
@@ -614,7 +643,7 @@ function draw(){
 												rectC(innerWidth*0.8, innerHeight*0.6+200,50,50);
 											
 												pop();
-												textC2("100%",innerWidth*0.8, innerHeight*0.6+200+5,15);
+												textC2("10px",innerWidth*0.8, innerHeight*0.6+200+5,15);
 												
 												if(mouseIsPressed){
 													opcions=3;;
@@ -624,7 +653,7 @@ function draw(){
 										}
 										
 										if(opcions==0){
-											ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+											 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 											pop();
 											
 											
@@ -632,20 +661,20 @@ function draw(){
 										}
 										if(opcions==1){
 													ctx.filter= 'blur(1px)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													
 													resposta="blur, 1px";
 										}
 										if(opcions==2){
 											ctx.filter= 'blur(5px)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="blur, 5px";
 										}
 										if(opcions==3){
 											ctx.filter= 'blur(10px)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="blur, 10px";
 										}
@@ -666,7 +695,7 @@ function draw(){
 												rectC(innerWidth*0.8, innerHeight*0.6,50,50);
 												
 												pop();
-												textC2("0%",innerWidth*0.8, innerHeight*0.6+8,20);
+												textC2("10%",innerWidth*0.8, innerHeight*0.6+8,20);
 												
 												if(mouseIsPressed){
 													opcions=1;
@@ -708,24 +737,24 @@ function draw(){
 										}
 										
 										if(opcions==0){
-											ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+											 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 											pop();
 										}
 										if(opcions==1){
 											ctx.filter= 'brightness(10%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="brightness, 10%";
 										}
 										if(opcions==2){
 											ctx.filter= 'brightness(50%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="brightness, 50%";
 										}
 										if(opcions==3){
 											ctx.filter= 'brightness(100%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="brightness, 100%";
 										}
@@ -748,7 +777,7 @@ function draw(){
 												rectC(innerWidth*0.8, innerHeight*0.6,50,50);
 												
 												pop();
-												textC2("0%",innerWidth*0.8, innerHeight*0.6+8,20);
+												textC2("10%",innerWidth*0.8, innerHeight*0.6+8,20);
 												
 												if(mouseIsPressed){
 													opcions=1;
@@ -790,24 +819,24 @@ function draw(){
 										}
 										
 										if(opcions==0){
-											ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+											 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 											pop();
 										}
 										if(opcions==1){
 											ctx.filter= 'contrast(10%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="contrast, 10%";
 										}
 										if(opcions==2){
 											ctx.filter= 'contrast(50%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="contrast, 50%";
 										}
 										if(opcions==3){
 											ctx.filter= 'contrast(100%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="brightness, 100%";
 										}
@@ -828,7 +857,7 @@ function draw(){
 												rectC(innerWidth*0.8, innerHeight*0.6,50,50);
 												
 												pop();
-												textC2("0%",innerWidth*0.8, innerHeight*0.6+8,20);
+												textC2("10%",innerWidth*0.8, innerHeight*0.6+8,20);
 												
 												if(mouseIsPressed){
 													opcions=1;
@@ -870,24 +899,24 @@ function draw(){
 										}
 										
 										if(opcions==0){
-											ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+											 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 											pop();
 										}
 										if(opcions==1){
 											ctx.filter= 'grayscale(10%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="grayscale, 10%";
 										}
 										if(opcions==2){
 											ctx.filter= 'grayscale(50%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="grayscale, 50%";
 										}
 										if(opcions==3){
 											ctx.filter= 'grayscale(100%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="grayscale, 100%";
 										};	
@@ -908,7 +937,7 @@ function draw(){
 												rectC(innerWidth*0.8, innerHeight*0.6,50,50);
 												
 												pop();
-												textC2("0%",innerWidth*0.8, innerHeight*0.6+8,20);
+												textC2("10%",innerWidth*0.8, innerHeight*0.6+8,20);
 												
 												if(mouseIsPressed){
 													opcions=1;
@@ -950,24 +979,24 @@ function draw(){
 										}
 										
 										if(opcions==0){
-											ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+											 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 											pop();
 										}
 										if(opcions==1){
 											ctx.filter= 'invert(10%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="invert, 10%";
 										}
 										if(opcions==2){
 											ctx.filter= 'invert(50%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="invert, 50%";
 										}
 										if(opcions==3){
 											ctx.filter= 'invert(100%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="invert, 100%";
 										}	
@@ -988,7 +1017,7 @@ function draw(){
 												rectC(innerWidth*0.8, innerHeight*0.6,50,50);
 												
 												pop();
-												textC2("0%",innerWidth*0.8, innerHeight*0.6+8,20);
+												textC2("10%",innerWidth*0.8, innerHeight*0.6+8,20);
 												
 												if(mouseIsPressed){
 													opcions=1;
@@ -1030,24 +1059,24 @@ function draw(){
 										}
 										
 										if(opcions==0){
-											ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+											 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 											pop();
 										}
 										if(opcions==1){
 											ctx.filter= 'opacity(10%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="opacity, 10%";
 										}
 										if(opcions==2){
 											ctx.filter= 'opacity(50%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="opacity, 50%";
 										}
 										if(opcions==3){
 											ctx.filter= 'opacity(100%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="opacity, 100%";
 										}
@@ -1068,7 +1097,7 @@ function draw(){
 												rectC(innerWidth*0.8, innerHeight*0.6,50,50);
 												
 												pop();
-												textC2("0%",innerWidth*0.8, innerHeight*0.6+8,20);
+												textC2("10%",innerWidth*0.8, innerHeight*0.6+8,20);
 												
 												if(mouseIsPressed){
 													opcions=1;
@@ -1110,24 +1139,24 @@ function draw(){
 										}
 										
 										if(opcions==0){
-											ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+											 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 											pop();
 										}
 										if(opcions==1){
 											ctx.filter= 'saturate(10%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="saturate, 10%";
 										}
 										if(opcions==2){
 											ctx.filter= 'saturate(50%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="saturate, 10%";
 										}
 										if(opcions==3){
 											ctx.filter= 'saturate(100%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="saturate, 100%";
 										}
@@ -1148,7 +1177,7 @@ function draw(){
 												rectC(innerWidth*0.8, innerHeight*0.6,50,50);
 												
 												pop();
-												textC2("0%",innerWidth*0.8, innerHeight*0.6+8,20);
+												textC2("10%",innerWidth*0.8, innerHeight*0.6+8,20);
 												
 												if(mouseIsPressed){
 													opcions=1;
@@ -1190,36 +1219,38 @@ function draw(){
 										}
 										
 										if(opcions==0){
-											ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+											 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 											pop();
 										}
 										if(opcions==1){
 											ctx.filter= 'sepia(10%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="sepia, 10%";
 										}
 										if(opcions==2){
 											ctx.filter= 'sepia(50%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="sepia, 50%";
 										}
 										if(opcions==3){
 											ctx.filter= 'sepia(100%)';
-													ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+													 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 													pop();
 													resposta="sepia, 100%";
 										}	
 								}
 								if(estat==-1){ 
-									ctx.drawImage(image1,innerWidth*0.75-150, innerHeight*0.25-100,300,200); 
+									 ctx.drawImage(image1,innerWidth*0.65, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
+									 reposta="nothing";
 								}
 								if(estat==-2){
 									preguntes[current].respostaUsuari.push(resposta);
-									estat=-1;
+									p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+									upTime(new Date());
 									current++;
-									current %= preguntes.length;
+									 
 									
 								
 								}
@@ -1227,8 +1258,7 @@ function draw(){
 									push();
 									
 									fill(40,200,200);
-									rect(innerWidth*0.53-25, innerHeight/2-25, 100, 50,15);
-									
+										rect(innerWidth*0.53-25, innerHeight/2-25, innerWidth*0.07,innerHeight*0.07,15);
 									
 									pop();
 									textC2("RESET",innerWidth*0.55, innerHeight/2+8,20);
@@ -1242,7 +1272,7 @@ function draw(){
 									push();
 									
 									fill(40,200,200);
-									rect(innerWidth*0.42-25, innerHeight/2-25, 100, 50,15);
+									rect(innerWidth*0.42-25, innerHeight/2-25, innerWidth*0.07,innerHeight*0.07,15);
 									
 									
 									pop();
@@ -1253,13 +1283,10 @@ function draw(){
 									
 									}
 								}
-
-			
-				
-			
+	
 			}
-		
-			if(tipo == "Relació"){
+					
+				else if(tipo == "Relació"){
 				
 				background(50, 112, g);
 				
@@ -1335,13 +1362,16 @@ function draw(){
 										if(mouseIsPressed&&estat=="click"){
 											
 											if(track<p.numopcions-1){
+												preguntes[current].respostaUsuari.push(e);
 												track++;
 												estat="noclick";
 											}else{
 											
 											preguntes[current].respostaUsuari.push(e);
-											current ++;
-											current %= preguntes.length;
+											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+											upTime(new Date());
+											current++;
+											 
 											}
 											
 										}
@@ -1357,7 +1387,7 @@ function draw(){
 			
 			}
 		
-			if(tipo == "Ordenar"){
+				else if(tipo == "Ordenar"){
 			
 				background(50, 112, g);
 				textSize(20);
@@ -1376,8 +1406,6 @@ function draw(){
 					resp.style.position = 'absolute';
 					resp.style.left = half1-80+'px';
 					resp.style.top = height1+400+'px';
-
-					
 					rectC(half1,innerHeight*0.6,450,400);
 					
 					for(var i = 0; i < p.subpreguntes.length; i++){
@@ -1393,32 +1421,86 @@ function draw(){
 						let w =  textWidth(e)
 						let h = fontsize;
 						
-						if(keyCode==13){
-						
-							respfin=resp.value;
-							resp.setAttribute('style', 'display:none');
-							preguntes[current].respostaUsuari.push(respfin);
-							current ++;
-							current %= preguntes.length;
-							
-						}
-
-						
 						text(e, x-textWidth(e)/2, y );
-						
-						text(respfin, 100, 100 );
 
 					}
-						
+						if(keyCode==13){
+							resp.setAttribute("style", "display:none");
+							respfin=resp.value;
+							
+							preguntes[current].respostaUsuari.push(respfin);
+							p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+							upTime(new Date());
+							current++;
+							 	
+						}
 						
 				}
 			
 			}
-		
+			
+			
+			}
 		}
 
 		//DRAW PER A SI HI HAGUES UN ERROR
- 
+		if(estatdelsistema == "submit"){
+		
+			g = 255 + (Math.sin(frameCount/100) * 100);
+			background(50, 255/g, g);
+			sbmit=document.getElementById("foo");
+			sbmit.setAttribute('style', 'display:inline');
+			sbmit.style.position = 'absolute';
+			sbmit.style.left = 40+'vw';
+			sbmit.style.top = 20+'vh';
+			
+			 if(stateprint==true){
+			
+					for( var i = 0; i<preguntes.length; i++){
+				   
+						var newdiv= document.createElement("div");
+						newdiv.id="Div"+i;
+						document.getElementById("foo").appendChild(newdiv);
+					
+						
+						namenewlabel= document.createElement("label");
+						namenewlabel.innerHTML = "Resposta"+(i+1)+": ";
+						document.getElementById(newdiv.id).appendChild(namenewlabel);
+					
+						newinput= document.createElement("input");
+						
+						newinput.name="resposta"+(i+1);
+						newinput.value = preguntes[i].respostaUsuari;
+						newinput.readOnly=true;
+						document.getElementById(newdiv.id).appendChild(newinput);
+						
+						newdate= document.createElement("input");
+						
+						newdate.name="temps"+(i+1);
+						newdate.value = preguntes[i].date;
+						newdate.readOnly=true;
+						document.getElementById(newdiv.id).appendChild(newdate);
+						
+						
+						
+					}
+					
+					totaldate= document.createElement("input");
+						
+						totaldate.name="Total";
+						totaldate.value = document.getElementById("totalhours").innerHTML+" : "+document.getElementById("totalminutes").innerHTML+" : "+document.getElementById("totalseconds").innerHTML;
+						totaldate.readOnly=true;
+						document.getElementById(newdiv.id).appendChild(totaldate);
+					
+				var sbmit= document.createElement("button");
+				sbmit.id="submit";		
+				sbmit.type="submit";
+				sbmit.innerHTML="Envia";
+				document.getElementById("foo").appendChild(sbmit);
+				stateprint=false;
+			}
+		}
+		
 		if(estatdelsistema == "error"){
    
 			background(199, 100, 100);
@@ -1446,44 +1528,37 @@ function keyPressed(){
   event.stopImmediatePropagation();
   //console.log(keyCode);
   //on inici
-  if(keyCode === ENTER && estatdelsistema == "inici" && preguntes.length > 0){
+  if(keyCode === 88 && estatdelsistema == "inici" && preguntes.length > 0){
     estatdelsistema = "playing";
     return;
   }
 
   //on playing
-  if(keyCode ===  SPACE &&  estatdelsistema == "playing"){
+  if(keyCode ===  SPACE &&  (estatdelsistema == "playing"||estatdelsistema == "submit")){
     estatdelsistema = "pause";
     return;
   }
-  if(keyCode === ESC && estatdelsistema == "playing"){
+  if(keyCode === ESC && (estatdelsistema == "playing"||estatdelsistema == "submit")){
     estatdelsistema = "pause";
     return;
   }
 
   //on pause
-  if((keyCode === SPACE || keyCode === ENTER) && estatdelsistema == "pause"){
-    estatdelsistema = "playing";
+  if((keyCode === SPACE || keyCode === 88) && estatdelsistema == "pause"){
+	  if(current>=preguntes.length){
+		estatdelsistema="submit";
+	  }else{
+		estatdelsistema = "playing";
+	  }
+    
     return;
   }
   if(keyCode === ESC && estatdelsistema == "pause"){
     estatdelsistema = "inici";
     return;
   }
-  if(keyCode === DRETA && estatdelsistema !== "inici"){
-	
-    console.log("Següent Pregunta");
-    current ++;
-    current %= preguntes.length;
-    return;
-  }
-  if(keyCode === ESQUERRA && estatdelsistema !== "inici"){
-	
-    console.log("Pregunta Anterior");
-    current --
-    if(current < 0) current = preguntes.length-1;
-    return;
-  }
+
+
 
   //on error
   if((keyCode === SPACE || keyCode === ENTER) && estatdelsistema == "error"){
@@ -1681,11 +1756,12 @@ var multichoice_gsx = [
 'corr'];
 
 class Pregunta{
-	constructor(gran, subpreguntes, numopcions, nump){
+	constructor(gran, subpreguntes, numopcions, nump, date){
 		this.gran = gran;
 		this.subpreguntes = subpreguntes;
 		this.numopcions = numopcions;
 		this.numero = nump;
 		this.respostaUsuari = [];
+		this.date=date;
 	}
 }
