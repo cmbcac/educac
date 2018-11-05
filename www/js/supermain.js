@@ -283,7 +283,7 @@ function draw(){
 					if( estatswipe == "migamb"){
 						push();
 						fill(150,150,150);
-						rectC(mouseX, mouseY, w*0.01 , h*0.1);
+						rectC(mouseX, mouseY, w*0.1 , h*0.3);
 						pop();
 						
 					}
