@@ -41,8 +41,33 @@
 		margin-left:-5vw;
 		
 	}
+	#loader {
+    border: 1vw solid #b30000; /* Light grey */
+    border-top: 1vw solid #000000; /* Blue */
+    border-radius: 50%;
 	
-	
+	margin:-5vw;
+    width: 10vw;
+    height: 10vw;
+	position: absolute;
+    animation: spin 2s linear infinite;
+	display:none;
+	}
+
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+		}
+	#passar{
+		left: calc(1vw);
+		top: calc(1vw);
+		position:absolute;
+		background-image: url(img/right.png);
+		width: 3.879vw;
+		height: 7.048458149779735vh;
+		background-size:  3.879vw 7.048458149779735vh;
+		display:none;
+	}
 	</style>
 	
 	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
@@ -73,6 +98,8 @@
 			</div>
   </head>
   <body>
+		<div id="loader"></div>
+		<div id="passar"></div>
 		<div id="totalcountup">
 				<p style="float:left"> Tiempo total:  </p>
 				<p id="totalhours" style="float:left">00</p>
@@ -82,6 +109,13 @@
 				<p id="totalseconds" style="float:left">00</p>
 				
 			</div>
+		 <div id="controls" style="position:absolute ; top:50%; left:30%; display:none">
+			Red:
+			<input id="red" type="range" min="0" max="256" step="1" value="150"> Green:
+			<input id="green" type="range" min="0" max="256" step="1" value="150"> Blue:
+			<input id="blue" type="range" min="0" max="256" step="1" value="150">
+			</div>
+		
 	<form id='foo'>
 	</form>
   </body>

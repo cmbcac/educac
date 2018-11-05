@@ -43,7 +43,8 @@ var sbmit;
 
 var newlabel;
 var namenewlabel;
-
+var passar;
+var boolpassar=false;;
 var stateprint=true;
 }
 
@@ -101,11 +102,13 @@ function draw(){
 		}
 
 		if(preguntes.length > 0 && estatdelsistema == "playing"){
-    
+			
 			if(current>=preguntes.length){
 				estatdelsistema="submit";
-			}else{
-			
+			}
+			else{
+
+				document.getElementById("passar").setAttribute("style", "display:inline");
 				var p = preguntes[current];
 				var tipo = p.tipologia;
 				g = 202.5 + (Math.sin(frameCount/100) * 100);
@@ -149,7 +152,9 @@ function draw(){
 											preguntes[current].respostaUsuari.push(e);
 											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
 											upTime(new Date());
+											sleep(500);
 											current++;
+											
 											 
 										}
 								}
@@ -278,12 +283,12 @@ function draw(){
 					if( estatswipe == "migamb"){
 						push();
 						fill(150,150,150);
-						rectC(mouseX, mouseY, w+g*0.1 , h+g*0.1);
+						rectC(mouseX, mouseY, w*0.01 , h*0.1);
 						pop();
-						textC2(p.subpreguntes[isubp], mouseX, mouseY, 20);
+						
 					}
 					if( estatswipe == "esquerra"){
-			  
+					
 						preguntes[current].respostaUsuari.push(p.opcions[0]);
 					}
 					if( estatswipe == "dreta"){
@@ -294,7 +299,7 @@ function draw(){
 					}
 					if( estatswipe == "dreta" || estatswipe == "esquerra"||estatswipe=="avall"){
 			  
-						isubp++;
+						isubp+=1;
 						estatswipe = "nomig";
 						mouseX=innerWidth/2;
 						mouseY=innerHeight/2;
@@ -302,7 +307,8 @@ function draw(){
 							isubp = 0;
 							p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
 							upTime(new Date());
-							current++;
+							sleep(500);
+							current+=1;
 							 
 						}
 					}
@@ -343,6 +349,7 @@ function draw(){
 											isubp2 = 0;
 											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
 											upTime(new Date());
+											sleep(500);
 											current++;
 											 
 				
@@ -391,6 +398,7 @@ function draw(){
 											isubp2 = 0;
 											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
 											upTime(new Date());
+											sleep(500);
 											current++;
 											 
 				
@@ -431,6 +439,7 @@ function draw(){
 											isubp2 = 0;
 											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
 											upTime(new Date());
+											sleep(500);
 											current++;
 											 
 										}
@@ -1249,6 +1258,7 @@ function draw(){
 									preguntes[current].respostaUsuari.push(resposta);
 									p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
 									upTime(new Date());
+									sleep(500);
 									current++;
 									 
 									
@@ -1370,6 +1380,7 @@ function draw(){
 											preguntes[current].respostaUsuari.push(e);
 											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
 											upTime(new Date());
+											sleep(500);
 											current++;
 											 
 											}
@@ -1431,6 +1442,8 @@ function draw(){
 							preguntes[current].respostaUsuari.push(respfin);
 							p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
 							upTime(new Date());
+							
+							sleep(500);
 							current++;
 							 	
 						}
@@ -1439,13 +1452,37 @@ function draw(){
 			
 			}
 			
-			
+				
 			}
+			let dinsw = entre(mouseX, innerWidth*0.01, innerWidth*0.01+64);
+		let dinsh = entre(mouseY, innerHeight*0.01, innerHeight*0.01+64);
+		if(dinsw&&dinsh){
+			if(mouseIsPressed){
+				
+				passar= confirm("Segur que vols passar de resposta? si passes no contarà com a vàlida");
+				if(passar==true){
+					boolpassar=true;
+				}else{
+					boolpassar=false;
+				}
+			}
+		}
+		
+		if(boolpassar==true){
+			preguntes[current].respostaUsuari.push("No s'ha respòs");
+			p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+			upTime(new Date());
+							
+			sleep(500);
+			mouseIsPressed=false;
+			current++;
+			boolpassar=false;
+		}
 		}
 
 		//DRAW PER A SI HI HAGUES UN ERROR
 		if(estatdelsistema == "submit"){
-		
+			document.getElementById("passar").setAttribute("style", "display:none");
 			g = 255 + (Math.sin(frameCount/100) * 100);
 			background(50, 255/g, g);
 			sbmit=document.getElementById("foo");
@@ -1509,7 +1546,7 @@ function draw(){
 		}
 		
 		if(estatdelsistema == "error"){
-   
+			document.getElementById("passar").setAttribute("style", "display:none");
 			background(199, 100, 100);
 	
 				textC("Error", innerHeight * .5, 30);
@@ -1518,9 +1555,11 @@ function draw(){
 		}
 
 		push()
-		fill(121);
+		fill(0+g*0.1, 204, 102);
+		
 		pop();
-
+		
+		
 	}
 
 function mouseReleased(){
@@ -1761,6 +1800,20 @@ var multichoice_gsx = [
 'cat5',
 'url',
 'corr'];
+
+function sleep(milliseconds) {
+ 
+  var start = new Date().getTime();
+  
+  for (var i = 0; i < 1e7; i++) {
+	  
+    if ((new Date().getTime() - start) > milliseconds){
+	 
+      break;
+    }
+	
+  }
+}
 
 class Pregunta{
 	constructor(gran, subpreguntes, numopcions, nump, date){
