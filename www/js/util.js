@@ -41,7 +41,7 @@ function textC2(missatge, x, y, size ){
 function rectC(x, y, w, h){
 	let half1 = w *.5;
 	let half2 = h *.5;
-
+	
 	rect(x-half1, y - half2, w, h,10);
 }
 

@@ -24,12 +24,13 @@ var backdrag;
 var isubp2 = 0;
 var lastframemouse;
 
+
 //vars per relacio
 var estat="noclick";
 var track=0;
 
 //vars per filtre
-var filtres = ["blur","brightness","contrast","grayscale","invert","opacity", "saturate", "sepia"];
+var filtres = ["Blur","Brightness","Contrast","Grayscale","Invert","Opacity", "Saturate", "Sepia"];
 var estat=-1;
 var opcions;
 var resposta;
@@ -46,6 +47,8 @@ var namenewlabel;
 var passar;
 var boolpassar=false;;
 var stateprint=true;
+
+
 }
 
 function preload(){
@@ -109,9 +112,10 @@ function draw(){
 			else{
 
 				document.getElementById("passar").setAttribute("style", "display:inline");
+				document.getElementById("txtpassar").setAttribute("style", "display:block");
 				var p = preguntes[current];
 				var tipo = p.tipologia;
-				g = 202.5 + (Math.sin(frameCount/100) * 100);
+				g = Math.cos(frameCount/70)*100;
 
 	
 		//DRAW PER A CADA ESTAT DEL JOC
@@ -119,13 +123,16 @@ function draw(){
 			
 				if(tipo == "Opció múltiple"){
      
-				background(50, 112, g);
-				textSize(20);
+				background(0, 255, 255+g);
+				
 				
 				let half1 = innerWidth * .5
 				let half2 = textWidth(p.gran) * .5;
 				let height1 = innerHeight*.40;
-				
+				ctx.lineWidth="2";
+				ctx.strokeStyle="black";
+				ctx.fillStyle = "white";
+				ctx.fill();
 				textC2(p.gran, half1, height1, 20);
       
 				if(p.subpreguntes.length > 0){
@@ -142,6 +149,7 @@ function draw(){
 						let w =  textWidth(e)
 						let h = fontsize;
 
+						
 						push();
 		  
 								if(mouseX > posx && mouseX < posx+w && mouseY > (posy-14) && mouseY < (posy-14+h)){
@@ -153,17 +161,26 @@ function draw(){
 											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
 											upTime(new Date());
 											sleep(500);
+											
 											current++;
 											
 											 
 										}
 								}
-		
+								
+						
 						ellipse(posx - 10, posy - 5, 6, 6);
 						text(e, posx, posy );
+					
+						
+								
+						
 						pop();
-
+						
+						
+						
 					}
+					
 				}
 			}
 
@@ -174,13 +191,7 @@ function draw(){
 				try{
 					if(p.numopcions != 2 && p.numopcions != 3) throw("El numero de opcions hauria de ser 2 o 3");
 
-						push();
-						textSize(14);
-						text(p.opcions[0], quarterwidth, quarterheight2);
-						text(p.opcions[2], quarterwidth3, quarterheight2);
-						if(p.numopcions <= 3) text(p.opcions[1], innerWidth/2 - textWidth(p.opcions[1])/2, quarterheight3);
-		  
-						pop();
+						
 						let w = textWidth(p.subpreguntes[isubp]);
 						let h = textHeight(p.subpreguntes[isubp], w);
 						w+=40;
@@ -216,7 +227,7 @@ function draw(){
 					if(entre(mouseX, quarterwidth3, innerWidth) && estatswipe == "migamb"){
 						estatswipe = "dreta";
 					}
-					if(entre(mouseX, quarterwidth2, innerWidth)&&entre(mouseY,quarterheight3,innerHeight)&& estatswipe=="migamb"){
+					if(entre(mouseX, quarterwidth2, innerWidth)&&entre(mouseY,quarterheight3,innerHeight)&& estatswipe=="migamb"&&p.numopcions==3){
 						estatswipe="avall";
 					}
 		  		  
@@ -283,7 +294,13 @@ function draw(){
 					if( estatswipe == "migamb"){
 						push();
 						fill(150,150,150);
-						rectC(mouseX, mouseY, w*0.1 , h*0.3);
+						ellipse(mouseX, mouseY, innerWidth*0.05 , innerWidth*0.05);
+						textSize(14);
+						ctx.fillStyle = "black";
+						text(p.opcions[0], quarterwidth, quarterheight2);
+						text(p.opcions[2], quarterwidth3, quarterheight2);
+						if(p.numopcions <= 3) text(p.opcions[1], innerWidth/2 - textWidth(p.opcions[1])/2, quarterheight3);
+		  
 						pop();
 						
 					}
@@ -331,138 +348,11 @@ function draw(){
 						textC("Organitza les opcions amb la categoria que més t'agradi", innerHeight*0.1,40);
 						textC(p.subpreguntes[isubp2], quarterheight2, 23);
 						try{
-							if(numopcions == 2){
-		
-								var puntsx=[window.innerWidth*0.35,window.innerWidth*0.65];
-								var puntsy=[window.innerHeight*0.5,window.innerHeight*0.5];
-
-  
-								for(var i = 0; i < puntsx.length; i++){
-									let x = puntsx[i];
-									let y = puntsy[i];
-								let dins = dist(x, y, mouseX, mouseY) < 100;
-									push()
-								if(dins && mouseIsPressed && !lastframemouse){
-									isubp2++;
-										if(isubp2 == p.subpreguntes.length){
-											preguntes[current].respostaUsuari.push(p.gran[i]);
-											isubp2 = 0;
-											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
-											upTime(new Date());
-											sleep(500);
-											current++;
-											 
-				
-										}
-								}
-								if(dins && !mouseIsPressed && !lastframemouse){
-									fill(100,200,200);
-								}
-								else{
-									fill(255);
-								}
-
-						ellipse(x, y, 100);
-						pop();
-			
-						textC2(p.gran[i], x, y, 11);
-          }
-		
-		}
-							else if(numopcions == 3){
-		  
-								var puntsx=[window.innerWidth*0.5,window.innerWidth*0.35,window.innerWidth*0.65];
-								var puntsy=[window.innerHeight*0.25,window.innerHeight*0.65,window.innerHeight*0.65];
-								push();
-								ellipse(window.innerWidth*0.5, window.innerHeight*0.25,100);
-								pop();
-								push();
-								ellipse(window.innerWidth*0.35, window.innerHeight*0.65,100);
-								pop();
-								push();
-								ellipse(window.innerWidth*0.65, window.innerHeight*0.65,100);
-								pop();
-		  
-		  
-								for(var i = 0; i < puntsx.length; i++){
-								
-									let x = puntsx[i];
-									let y = puntsy[i];
-									let dins = dist(x, y, mouseX, mouseY) < 100;
-									push()
-									if(dins && mouseIsPressed && !lastframemouse){
-									
-										isubp2++;
-										if(isubp2 == p.subpreguntes.length){
-											preguntes[current].respostaUsuari.push(p.gran[i]);
-											isubp2 = 0;
-											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
-											upTime(new Date());
-											sleep(500);
-											current++;
-											 
-				
-										}	
-									}
-									if(dins && !mouseIsPressed && !lastframemouse){
-										fill(100,200,200);
-									}
-									else{
-										fill(255);
-									}
-
-									ellipse(x, y, 100);
-									pop();
-			
-									textC2(p.gran[i], x, y, 11);
-								}
-		
-							}
-							else if(numopcions == 4){
-			
-								var puntsx=[window.innerWidth*0.35,window.innerWidth*0.35,window.innerWidth*0.65,window.innerWidth*0.65];
-								var puntsy=[window.innerHeight*0.25,window.innerHeight*0.65,window.innerHeight*0.25,window.innerHeight*0.65];
-		  
-		  
-		  
-								for(var i = 0; i < puntsx.length; i++){
-									
-									let x = puntsx[i];
-									let y = puntsy[i];
-									let dins = dist(x, y, mouseX, mouseY) < 100;
-									push()
-									if(dins && mouseIsPressed && !lastframemouse){
-             
-										isubp2++;
-										if(isubp2 == p.subpreguntes.length){
-											preguntes[current].respostaUsuari.push(p.gran[i]);
-											isubp2 = 0;
-											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
-											upTime(new Date());
-											sleep(500);
-											current++;
-											 
-										}
-									}
-									if(dins && !mouseIsPressed && !lastframemouse){
-										fill(100,200,200);
-									}
-									else{
-										fill(255);
-									}
-
-									ellipse(x, y, 100);
-									pop();
-			
-									textC2(p.gran[i], x, y, 11);
-								}
-		  
-							}
-							else if(numopcions == 5){
+							
           
 								var posipunts;
 								var rad = innerWidth*0.15;
-								var radiusellipse = innerWidth*0.1;
+								var radiusellipse = innerWidth*0.06;
 								var angleinicial =0;
           
 								posipunts = returnPointsInPolygon(quarterwidth2, quarterheight2, rad, numopcions, radiusellipse, angleinicial);
@@ -487,6 +377,8 @@ function draw(){
 										}
 									}
 									if(dins && !mouseIsPressed && !lastframemouse){
+										ctx.scale(2,2);
+										ctx.translate(-x/2,-y/2);
 										fill(100,200,200);
 									}
 									else{
@@ -498,7 +390,7 @@ function draw(){
 									textC2(p.gran[i], x, y, 11);
 
 								}
-							}
+							
 						}
 						catch(error){
 							console.log(error);
@@ -516,22 +408,29 @@ function draw(){
 				
 				var image1=new Image();
 				image1.src = p.subpreguntes;
-				ctx.drawImage(image1,innerWidth*0.15, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
 				
-				textSize(20);
-		
-					let half1 = innerWidth * .5
-					let half2 = textWidth(p.gran) * .5;
-					let height1 = innerHeight*.50;
-      
-					text(p.gran, half1-half2, height1-200);
-					rect(innerWidth*0.53-25, innerHeight/2-25, innerWidth*0.07,innerHeight*0.07,15);
-					textC2("RESET",innerWidth*0.55, innerHeight/2+8,20);
-					rect(innerWidth*0.42-25, innerHeight/2-25, innerWidth*0.07,innerHeight*0.07,15);
-					textC2("DONE",innerWidth*0.44, innerHeight/2+8,20);
+				
+								
+								textSize(20);
+			
+								let half1 = innerWidth * .5
+								let half2 = textWidth(p.gran) * .5;
+								let height1 = innerHeight*.50;
+								ctx.lineWidth="2";
+								ctx.strokeStyle="black";
+								ctx.fillStyle = "#999999";
+								ctx.fill();
+								rect(innerWidth*0.149, innerHeight*0.249,innerWidth*0.202,innerHeight*0.203); 
+								rect(innerWidth*0.649, innerHeight*0.249,innerWidth*0.202,innerHeight*0.203); 
+								ctx.drawImage(image1,innerWidth*0.15, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
+								text(p.gran, half1-half2, height1-200);
+								rect(innerWidth*0.53-25, innerHeight/2-25, innerWidth*0.07,innerHeight*0.07,15);
+								textC2("RESET",innerWidth*0.55-5, innerHeight/2+8,20);
+								rect(innerWidth*0.42-25, innerHeight/2-25, innerWidth*0.07,innerHeight*0.07,15);
+								textC2("DONE",innerWidth*0.44-5, innerHeight/2+8,20);
 
-					var puntsx=[];
-				    var puntsy=[];
+								var puntsx=[];
+								var puntsy=[];
 								
 								for(var i=0;i<8;i++){
 								
@@ -593,13 +492,12 @@ function draw(){
 									
 								}
 								else{
-									fill(255);
+									fill(153, 153, 153);
 								}
-								rectC(x, y, innerWidth*0.1,innerHeight*0.1);
+								rectC(x, y, innerWidth*0.07,innerHeight*0.07);
 								pop();
 								textC2(filtres[i], x, y, 11);
 								}
-								
 								if(estat==0){
 
 									push();
@@ -1271,7 +1169,7 @@ function draw(){
 										rect(innerWidth*0.53-25, innerHeight/2-25, innerWidth*0.07,innerHeight*0.07,15);
 									
 									pop();
-									textC2("RESET",innerWidth*0.55, innerHeight/2+8,20);
+									textC2("RESET",innerWidth*0.55-5, innerHeight/2+8,20);
 									
 									if(mouseIsPressed){
 									estat=-1;
@@ -1286,14 +1184,14 @@ function draw(){
 									
 									
 									pop();
-									textC2("DONE",innerWidth*0.44, innerHeight/2+8,20);
+									textC2("DONE",innerWidth*0.44-5, innerHeight/2+8,20);
 									
 									if(mouseIsPressed){
 									estat=-2;
 									
 									}
 								}
-	
+								
 			}
 					
 				else if(tipo == "Relació"){
@@ -1455,19 +1353,19 @@ function draw(){
 				
 			}
 			let dinsw = entre(mouseX, innerWidth*0.01, innerWidth*0.01+64);
-		let dinsh = entre(mouseY, innerHeight*0.01, innerHeight*0.01+64);
-		if(dinsw&&dinsh){
-			if(mouseIsPressed){
-				
+			let dinsh = entre(mouseY, innerHeight*0.01, innerHeight*0.01+64);
+		if(dinsw&&dinsh&&mouseIsPressed){
+			
 				passar= confirm("Segur que vols passar de resposta? si passes no contarà com a vàlida");
 				if(passar==true){
 					boolpassar=true;
 				}else{
 					boolpassar=false;
+					sleep(500);
 				}
-			}
+			
 		}
-		
+		//ENS ASSEGUREM DE QUE L'USUARI HA VOLGUT PASSAR DE PREGUNTA
 		if(boolpassar==true){
 			preguntes[current].respostaUsuari.push("No s'ha respòs");
 			p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
@@ -1480,7 +1378,8 @@ function draw(){
 		}
 		}
 
-		//DRAW PER A SI HI HAGUES UN ERROR
+
+		//DRAW PER A QUAN L'USUARI VULGUI ENVIAR
 		if(estatdelsistema == "submit"){
 			document.getElementById("passar").setAttribute("style", "display:none");
 			g = 255 + (Math.sin(frameCount/100) * 100);
@@ -1544,7 +1443,7 @@ function draw(){
 					stateprint=false;
 			}
 		}
-		
+		//DRAW PER A SI HI HAGUES UN ERROR
 		if(estatdelsistema == "error"){
 			document.getElementById("passar").setAttribute("style", "display:none");
 			background(199, 100, 100);
@@ -1565,7 +1464,6 @@ function draw(){
 function mouseReleased(){
   mouseout = true;
 }
-
 
 //EVENTS
 
