@@ -20,6 +20,7 @@ function textC(missatge, y, size){
 
 	push();
 	textSize(size);
+	 ctx.font = size+"px Arial"
 	let half1 = innerWidth * .5;
 	let half2 = textWidth(missatge) * .5;
 	let x = half1 - half2;
@@ -30,6 +31,7 @@ function textC(missatge, y, size){
 function textC2(missatge, x, y, size ){
 	push();
 	textSize(size);
+	 ctx.font = size+"px Arial"
 	let half1 = textWidth(missatge) * .5;
 	let px = x - half1;
 	let half2 = textHeight(missatge, textWidth(missatge)) * .5;
@@ -47,10 +49,10 @@ function rectC(x, y, w, h){
 
 window.onresize = function(){
   resizeCanvas(window.innerWidth, window.innerHeight);
-	resizevariables();
+	resizevArialbles();
 }
 
-function resizevariables(){
+function resizevArialbles(){
 	quarterwidth = innerWidth * .25;
 	quarterwidth2 = innerWidth * .50;
 	quarterwidth3 = innerWidth * .75;
@@ -101,7 +103,7 @@ function returnPointsInPolygon(x, y, radius, npoints, radiusellipse, angleinicia
 	var posipunts = [];
 	
 	var angle = TWO_PI / npoints;
-	var i = 0;
+	
 	for (var a = 0; a < TWO_PI; a += angle) {
 		//a = a - TWO_PI/4;
 		let a2 = a - TWO_PI/4;
@@ -109,7 +111,7 @@ function returnPointsInPolygon(x, y, radius, npoints, radiusellipse, angleinicia
 		var sx = x + cos(a2) * radius;
 		var sy = y + sin(a2) * radius;
 		posipunts.push({x:sx, y:sy});
-		i+=1;
+		
 	}
 	return posipunts;
 }

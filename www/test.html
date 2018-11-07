@@ -12,6 +12,7 @@
 		margin: 0;
 		overflow: hidden;
 		position: fixed;
+		font-family: "Arial", cursive, sans-serif;
 	}
 	#respostaescrita{
 		position: absolute
@@ -41,23 +42,8 @@
 		margin-left:-5vw;
 		
 	}
-	#loader {
-    border: 1vw solid #b30000; /* Light grey */
-    border-top: 1vw solid #000000; /* Blue */
-    border-radius: 50%;
 	
-	margin:-5vw;
-    width: 10vw;
-    height: 10vw;
-	position: absolute;
-    animation: spin 2s linear infinite;
-	display:none;
-	}
 
-	@keyframes spin {
-		0% { transform: rotate(0deg); }
-		100% { transform: rotate(360deg); }
-		}
 	#passar{
 		left: calc(1vw);
 		top: calc(1vw);
@@ -66,15 +52,30 @@
 		width: 3.879vw;
 		height: 7.048458149779735vh;
 		background-size:  3.879vw 7.048458149779735vh;
+		
 		display:none;
 	}
+	#infopass{
+		left: calc(5vw);
+		top: calc(1vw);
+		position:absolute;
+		background-image: url(img/info.png);
+		width: 25vw;
+		height: 15vh;
+		background-size: 25vw 15vh;
+		display:none;
+		
+		
+		
+	}
 	#txtpassar{
-		left: calc(6vw);
-		top: calc(2vw);
+		left: calc(10vw);
+		top: calc(4vw);
 		width:auto;
 		position:absolute;
 		display:none;
 		color:black;
+		
 	}
 	#controls{
 	
@@ -82,6 +83,7 @@
 	 top:50%; 
 	 left:30%; 
 	 display:none;
+	  
 	}
 	</style>
 	
@@ -89,7 +91,8 @@
     <script src="libs/p5.min.js"></script>
     <script src="libs/addons/p5.dom.min.js"></script>
     <script src="libs/addons/p5.sound.min.js"></script>
-	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	 
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!--
 	<script src="js/util.js"></script>
 	<script src="js/Bola.js"></script>
@@ -101,7 +104,7 @@
   
   <script src="js/util.js"></script>
   <script src="js/supermain.js"></script>
-  
+  <script src="js/tipologies.js"></script>
   <input id='respostaescrita' style="display:none">
 			<div id="countup" style="display:none">
 				<p id="hours" style="float:left">00</p>
@@ -117,7 +120,8 @@
 		<div id="passar">
 			
 		</div>
-		<text id="txtpassar">No respondre</text>
+		<div id="infopass"></div>
+		<text id="txtpassar">Si passes, la pregunta no puntuarà</text>
 		<div id="totalcountup">
 				<p style="float:left"> Tiempo total:  </p>
 				<p id="totalhours" style="float:left">00</p>
