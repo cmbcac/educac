@@ -1130,22 +1130,22 @@ function relacio(p,g){
 	
 	background(0, 255-g, 255+2*g);
 				
-				textC("Relaciona els conceptes", innerHeight*0.1,40);
+				textC(p.gran, innerHeight*0.3,24);
 				textSize(20);
 				
-				let half1 = innerWidth * .15
-				let half2 = innerWidth * .85
+				let half1 = innerWidth * .35
+				let half2 = innerWidth * .65
 				let height1 = innerHeight*.40;
 				
-				if(p.numopcions > 0){
-					
-						var e = p.subpreguntes[track];
+				if(p.subpreguntes.length > 0){
+					for(var i = 0; i < p.categories.length; i++){
+						var e = p.subpreguntes[i];
 								
 						let fontsize = 20;
 						textSize(fontsize);
 						
 						let x = half1 - 50;
-						let y = innerHeight/2 ;
+						let y = height1 + 40 * (i+1);
 						let w =  textWidth(e)
 						let h = fontsize;
 
@@ -1158,31 +1158,34 @@ function relacio(p,g){
 										
 								}
 								if(mouseIsPressed&&(mouseX > x && mouseX < x+w && mouseY > (y-14) && mouseY < (y-14+h))){
-											
-												estat="click";
-											
-											
+										
+										
+										estat="click";
+																					
 								}
 								if(!mouseIsPressed){
 									estat="noclick";
 								}
 								if(estat=="click"){
-									
-									line(x+w , y, mouseX, mouseY);
-									
+									let dins = dist(x, y, mouseX, mouseY) < h;
+									if(dins){
+										
+										line(x + 10 + w, y - 5, mouseX, mouseY);
+									}
 								}
-		
+
 						ellipse(x + 10 + w, y - 5, 6, 6);
 						text(e, x, y );
 						
 						pop();
+					}
 
 				}
 			
-				if(p.gran.length > 0){
-					for(var i = 0; i < p.gran.length; i++){
+				if(p.categories.length > 0){
+					for(var i = 0; i < p.categories.length; i++){
 						
-						let e = p.gran[i];
+						let e = p.categories[i];
 							if( e == "") continue;
 								
 						let fontsize = 20;
@@ -1201,7 +1204,7 @@ function relacio(p,g){
 									    
 										if(mouseIsPressed&&estat=="click"){
 											
-											if(track<p.numopcions-1){
+											if(track<p.subpreguntes.length-1){
 												preguntes[current].respostaUsuari.push(e);
 												track++;
 												estat="noclick";

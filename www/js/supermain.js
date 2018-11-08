@@ -422,23 +422,29 @@ function afegir_pregunta(tip, e,list_gsx){
 	var subpreguntes = [], resp;
 	categories = [];
 		
-		
-		
-		multichoice_gsx.forEach(element => {
+	 multichoice_gsx.forEach(element => {
 			if(element.includes("resp")){
-					if(e[g+element].$t!=""){
+				if(e[g+element].$t!=""){
 					subpreguntes.push(e[g+element].$t);
-					numopcions++;
-					}
+				}
 			}
 			if(element.includes("corr")){
+				if(e[g+element].$t!=""){
 				resp = e[g+element].$t;
+				}
 			}
 			if(element.includes("cat")){
-				categories.push(e[g.element].$t);
+				if(e[g+element].$t!=""){
+				categories.push(e[g+element].$t);
+				}
 			}
-    });
-    var p = new Pregunta(categories, subpreguntes, numopcions, Math.floor(random(100)));
+			if(element.includes("enun")){
+				if(e[g+element].$t!=""){
+				gran=e[g+element].$t;
+				}
+			}
+		});
+    var p = new Pregunta(gran,subpreguntes, categories, numopcions, Math.floor(random(100)));
     p.tipologia = tip;
     p.respostes = resp;
     preguntes.push(p);
