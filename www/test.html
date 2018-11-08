@@ -6,7 +6,10 @@
     <!--<meta name="viewport" height=device-height, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
     <style>
-	
+	@font-face {
+    font-family: myFirstFont;
+    
+	}
 	html, body {
 		padding: 0;
 		margin: 0;
@@ -22,6 +25,13 @@
 	#foo{
 
 		display:none;
+		position:absolute;
+		top:0%;
+		left:0%;
+		width:50%;
+		height:50%;
+		margin-left:-20%;
+		margin-top:-3%;
 	}
 	label{
 	color:white;
@@ -42,8 +52,6 @@
 		margin-left:-5vw;
 		
 	}
-	
-
 	#passar{
 		left: calc(1vw);
 		top: calc(1vw);
@@ -84,6 +92,35 @@
 	 left:30%; 
 	 display:none;
 	  
+	}
+
+
+	#submit {
+	background-color: transparent;
+    color: black;
+	border: solid black;
+	position:absolute;
+    text-align: center;
+    font-size: 16px;
+   
+	top:50%;
+	left:50%;
+	width:10vw;
+	height:10vw;
+	margin:-2,5vw;
+	border-radius:100%;
+	
+	-webkit-transition-duration: 0.4s; 
+    transition-duration: 0.4s;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+	
+	}
+
+	#submit:hover {
+			background-color: #ff1aff; 
+			color: white;
 	}
 	</style>
 	

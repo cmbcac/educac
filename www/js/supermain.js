@@ -86,7 +86,11 @@ function draw(){
 					textC("No hi ha preguntes disponibles", innerHeight * .5 + 45, 15);
 				}
 				else{
-					textC("Prem X per començar", innerHeight * .5 + 45, 15);
+					textC("Clica o prem X per començar", innerHeight * .5 + 45, 15);
+				}
+				
+				if(mouseIsPressed){
+					estatdelsistema="playing";
 				}
 		}
 
@@ -183,69 +187,7 @@ function draw(){
 
 		//DRAW PER A QUAN L'USUARI VULGUI ENVIAR
 		if(estatdelsistema == "submit"){
-			document.getElementById("passar").setAttribute("style", "display:none");
-			document.getElementById("infopass").setAttribute("style", "display:none");
-			document.getElementById("txtpassar").setAttribute("style", "display:none");
-			g = 255 + (Math.sin(frameCount/100) * 100);
-			background(50, 255/g, g);
-			sbmit=document.getElementById("foo");
-			sbmit.setAttribute('style', 'display:inline');
-			sbmit.style.position = 'absolute';
-			sbmit.style.left = 40+'vw';
-			sbmit.style.top = 20+'vh';
-			
-			 if(stateprint==true){
-			
-					for( var i = 0; i<preguntes.length; i++){
-				   
-						var newdiv= document.createElement("div");
-						newdiv.id="Div"+i;
-						document.getElementById("foo").appendChild(newdiv);
-					
-						
-						namenewlabel= document.createElement("label");
-						namenewlabel.innerHTML = "Resposta"+(i+1)+": ";
-						document.getElementById(newdiv.id).appendChild(namenewlabel);
-					
-						newinput= document.createElement("input");
-						
-						newinput.name="resposta"+(i+1);
-						newinput.value = preguntes[i].respostaUsuari;
-						newinput.readOnly=true;
-						document.getElementById(newdiv.id).appendChild(newinput);
-						
-						newdate= document.createElement("input");
-						
-						newdate.name="temps"+(i+1);
-						newdate.value = preguntes[i].date;
-						newdate.readOnly=true;
-						document.getElementById(newdiv.id).appendChild(newdate);
-						
-						
-						
-					}
-					
-						newdiv= document.createElement("div");
-						newdiv.id="Div"+i;
-						document.getElementById("foo").appendChild(newdiv);
-					
-						namenewlabel= document.createElement("label");
-						namenewlabel.innerHTML = "Temps total: ";
-						document.getElementById(newdiv.id).appendChild(namenewlabel);
-						
-						totaldate= document.createElement("input");
-						totaldate.name="Total";
-						totaldate.value = document.getElementById("totalhours").innerHTML+" : "+document.getElementById("totalminutes").innerHTML+" : "+document.getElementById("totalseconds").innerHTML;
-						totaldate.readOnly=true;
-						document.getElementById(newdiv.id).appendChild(totaldate);
-					
-					var sbmit= document.createElement("button");
-					sbmit.id="submit";		
-					sbmit.type="submit";
-					sbmit.innerHTML="Envia";
-					document.getElementById("foo").appendChild(sbmit);
-					stateprint=false;
-			}
+			stateprint=creaSubmit(stateprint);
 		}
 		//DRAW PER A SI HI HAGUES UN ERROR
 		if(estatdelsistema == "error"){

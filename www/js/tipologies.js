@@ -138,10 +138,21 @@ function swipe(p,g){
 
 						
 						let w = textWidth(p.categories[isubp]);
+						if(w>=innerWidth){ w=w*0.5;}
 						let h = textHeight(p.categories[isubp], w);
-						w+=40;
+						var pregunta=[];
+						var lines = []
+						w+=80;
 						h+=20;
-		 
+						
+							
+						
+						
+						
+						
+						
+						
+						
 	
 						let dinsw = entre(mouseX, quarterwidth2 - w*.5, quarterwidth2 + w*.5);
 		 
@@ -182,7 +193,24 @@ function swipe(p,g){
 						
 						rectC(quarterwidth2, quarterheight2, w , h );
 
-						textC(p.categories[isubp], quarterheight2, 20);
+						if(p.categories[isubp].length>=Math.ceil(innerWidth/20)){
+							
+								for(var i=0;i<=p.categories[isubp].length-1;i++){
+									pregunta+=p.categories[isubp][i];
+									if(i==Math.ceil(p.categories[isubp].length/2)){
+										pregunta+=' / ';
+									}
+								}
+									lines=pregunta.split('/');
+								
+								for (var i = 0; i<lines.length; i++){
+									textC(lines[i], quarterheight2+(i*20),20 );
+								}
+							
+						}else{
+								lines=p.categories[isubp];
+								textC(lines, quarterheight2,20 );
+						}
 					}
 					if( estatswipe == "migsense"){
 			  
@@ -190,7 +218,24 @@ function swipe(p,g){
 						fill(200,200,234, 0.5*255);
 						rectC(quarterwidth2, quarterheight2, w , h);
 						pop();
-						textC(p.categories[isubp], quarterheight2, 20);
+						if(p.categories[isubp].length>=Math.ceil(innerWidth/20)){
+							
+								for(var i=0;i<=p.categories[isubp].length-1;i++){
+									pregunta+=p.categories[isubp][i];
+									if(i==Math.ceil(p.categories[isubp].length/2)){
+										pregunta+=' / ';
+									}
+								}
+									lines=pregunta.split('/');
+								
+								for (var i = 0; i<lines.length; i++){
+									textC(lines[i], quarterheight2+(i*20),20 );
+								}
+							
+						}else{
+								lines=p.categories[isubp];
+								textC(lines, quarterheight2,20 );
+						}
 					}		
 					if( estatswipe == "migamb" || estatswipe == "dreta" || estatswipe == "esquerra"||estatswipe=="avall"){
         

@@ -20,7 +20,7 @@ function textC(missatge, y, size){
 
 	push();
 	textSize(size);
-	 ctx.font = size+"px Arial"
+	ctx.font=size+'px Verdana';;
 	let half1 = innerWidth * .5;
 	let half2 = textWidth(missatge) * .5;
 	let x = half1 - half2;
@@ -162,4 +162,74 @@ function textHeight(text, maxWidth) {
 		}
 
 		return h;
+}
+
+function creaSubmit(stateprint){
+
+document.getElementById("passar").setAttribute("style", "display:none");
+			document.getElementById("infopass").setAttribute("style", "display:none");
+			document.getElementById("txtpassar").setAttribute("style", "display:none");
+			g = 255 + (Math.sin(frameCount/100) * 100);
+			background(0, 204, 204+g)
+			sbmit=document.getElementById("foo");
+			sbmit.setAttribute('style', 'display:inline');
+			sbmit.style.position = 'absolute';
+			sbmit.style.left = 40+'vw';
+			sbmit.style.top = 20+'vh';
+			
+			 if(stateprint==true){
+			
+					for( var i = 0; i<preguntes.length; i++){
+				   
+						var newdiv= document.createElement("div");
+						newdiv.id="Div"+i;
+						newdiv.style.display = 'none';
+						document.getElementById("foo").appendChild(newdiv);
+					
+							
+						namenewlabel= document.createElement("label");
+						namenewlabel.innerHTML = "Resposta"+(i+1)+": ";
+						document.getElementById(newdiv.id).appendChild(namenewlabel);
+					
+						newinput= document.createElement("input");
+						
+						newinput.name="resposta"+(i+1);
+						newinput.value = preguntes[i].respostaUsuari;
+						newinput.readOnly=true;
+						document.getElementById(newdiv.id).appendChild(newinput);
+						
+						newdate= document.createElement("input");
+						
+						newdate.name="temps"+(i+1);
+						newdate.value = preguntes[i].date;
+						newdate.readOnly=true;
+						document.getElementById(newdiv.id).appendChild(newdate);
+						
+						
+						
+					}
+					
+						newdiv= document.createElement("div");
+						newdiv.id="Div"+i;
+						newdiv.style.display = 'none';
+						document.getElementById("foo").appendChild(newdiv);
+					
+						namenewlabel= document.createElement("label");
+						namenewlabel.innerHTML = "Temps total: ";
+						document.getElementById(newdiv.id).appendChild(namenewlabel);
+						
+						totaldate= document.createElement("input");
+						totaldate.name="Total";
+						totaldate.value = document.getElementById("totalhours").innerHTML+" : "+document.getElementById("totalminutes").innerHTML+" : "+document.getElementById("totalseconds").innerHTML;
+						totaldate.readOnly=true;
+						document.getElementById(newdiv.id).appendChild(totaldate);
+					
+					var sbmit= document.createElement("button");
+					sbmit.id="submit";		
+					sbmit.type="submit";
+					sbmit.innerHTML="Envia";
+					document.getElementById("foo").appendChild(sbmit);
+					return stateprint=false;
+			}
+
 }
