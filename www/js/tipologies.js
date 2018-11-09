@@ -89,7 +89,7 @@ function drag(p,g){
 									if(dins && mouseIsPressed && !lastframemouse){
 										var rsp=p.subpreguntes[i];
 										preguntes[current].respostaUsuari.push(rsp);
-										ctx.scale(0.5,0.5);
+										
 										
 										isubp2++;
 										if(isubp2 == p.categories.length){
@@ -193,7 +193,7 @@ function swipe(p,g){
 						
 						rectC(quarterwidth2, quarterheight2, w , h );
 
-						if(p.categories[isubp].length>=Math.ceil(innerWidth/20)){
+						if(p.categories[isubp].length>=Math.ceil(innerWidth*0.02)){
 							
 								for(var i=0;i<=p.categories[isubp].length-1;i++){
 									pregunta+=p.categories[isubp][i];
@@ -218,7 +218,7 @@ function swipe(p,g){
 						fill(200,200,234, 0.5*255);
 						rectC(quarterwidth2, quarterheight2, w , h);
 						pop();
-						if(p.categories[isubp].length>=Math.ceil(innerWidth/20)){
+						if(p.categories[isubp].length>=Math.ceil(innerWidth*0.02)){
 							
 								for(var i=0;i<=p.categories[isubp].length-1;i++){
 									pregunta+=p.categories[isubp][i];
@@ -1130,106 +1130,101 @@ function relacio(p,g){
 	
 	background(0, 255-g, 255+2*g);
 				
-				textC(p.gran, innerHeight*0.3,24);
-				textSize(20);
+				textSize(innerWidth*0.03);
+				text(p.gran,innerWidth/2-textWidth(p.gran)/2, quarterheight2-40);
+				for(var i=0;i<p.subpreguntes.length;i++){
+					
 				
-				let half1 = innerWidth * .35
-				let half2 = innerWidth * .65
-				let height1 = innerHeight*.40;
-				
-				if(p.subpreguntes.length > 0){
-					for(var i = 0; i < p.categories.length; i++){
-						var e = p.subpreguntes[i];
-								
-						let fontsize = 20;
-						textSize(fontsize);
-						
-						let x = half1 - 50;
-						let y = height1 + 40 * (i+1);
-						let w =  textWidth(e)
-						let h = fontsize;
+									
+									let fontsize = innerWidth*0.01;
+										textSize(fontsize);
+									let x = innerWidth*0.25;
+									let y = quarterheight2+40*(i+1)+fontsize;
+									let w =  textWidth(p.subpreguntes[i]);	
+									let dinsx = entre(mouseX, x, x+w);
+									let dinsy = entre(mouseY, y-fontsize, y+fontsize);
 
-						push();
-		  
-								if((mouseX > x && mouseX < x+w && mouseY > (y-14) && mouseY < (y-14+h))&&!mouseIsPressed){
-
-										fill(255,244, 123);
-										estat="noclick";
-										
-								}
-								if(mouseIsPressed&&(mouseX > x && mouseX < x+w && mouseY > (y-14) && mouseY < (y-14+h))){
-										
-										
-										estat="click";
-																					
-								}
-								if(!mouseIsPressed){
-									estat="noclick";
-								}
-								if(estat=="click"){
-									let dins = dist(x, y, mouseX, mouseY) < h;
-									if(dins){
-										
-										line(x + 10 + w, y - 5, mouseX, mouseY);
+									push()
+									
+									if(dinsx && dinsy && !mouseIsPressed){
+										fill(255, 255, 102);
+									}else if(dinsx && dinsy && mouseIsPressed){
+										lock1=i;
+									}else{
+										fill(0);
 									}
-								}
-
-						ellipse(x + 10 + w, y - 5, 6, 6);
-						text(e, x, y );
-						
-						pop();
-					}
-
+									
+									
+									text(p.subpreguntes[i],	x, y);
+									pop();
+									
+									ellipse(x+w+10, y-5, 6, 6);
 				}
-			
-				if(p.categories.length > 0){
-					for(var i = 0; i < p.categories.length; i++){
-						
-						let e = p.categories[i];
-							if( e == "") continue;
-								
-						let fontsize = 20;
-						textSize(fontsize);
-						let half3 = textWidth(e)*.5;
-						let x = half2-textWidth(e)/2;
-						let y = height1 + 40 * (i+1);
-						let w =  textWidth(e)
-						let h = fontsize;
-						
-						push();
-		  
-								if(mouseX > x && mouseX < x+w && mouseY > (y-14) && mouseY < (y-14+h)){
-
-										fill(255,244, 123);
-									    
-										if(mouseIsPressed&&estat=="click"){
-											
-											if(track<p.subpreguntes.length-1){
-												preguntes[current].respostaUsuari.push(e);
-												track++;
-												estat="noclick";
-											}else{
-											
-											preguntes[current].respostaUsuari.push(e);
-											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
-											upTime(new Date());
-											sleep(500);
-											current++;
-											 
-											}
-											
-										}
+				for(var i=0;i<p.categories.length;i++){
+					
+				
+									
+									let fontsize = innerWidth*0.01;
+										textSize(fontsize);
+									let w =  textWidth(p.categories[i]);
+									let x = quarterwidth3-w;
+									let y = quarterheight2+40*(i+1)+fontsize;
 										
-								}
-		
-						ellipse(x - 10, y - 5, 6, 6);
-						text(e, x, y );
-						pop();
+									let dinsx = entre(mouseX, x, x+w);
+									let dinsy = entre(mouseY, y-fontsize, y+fontsize);
 
-					}
+									push()
+									
+									if(dinsx && dinsy && !mouseIsPressed){
+										fill(255, 255, 102);
+									}else if(dinsx && dinsy && mouseIsPressed){
+										lock2=i;
+									}else{
+										fill(0);
+									}
+									
+									
+									text(p.categories[i],	x, y);
+									pop();
+									
+									ellipse(x-10, y-5, 6, 6);
 				}
-			
-	
+					
+				if(lock1!=undefined && lock2 != undefined){
+					
+							respostarel=p.subpreguntes[lock1]+" - "+p.categories[lock2];
+							line(quarterwidth+textWidth(p.subpreguntes[lock1])+10, quarterheight2+40*(lock1+1)+9, quarterwidth3-textWidth(p.categories[lock2])-10, quarterheight2+40*(lock2+1)+9);
+							
+							rect(quarterwidth2-50, quarterheight-25, 100 ,50,15);
+							text("Confirmar",quarterwidth2-textWidth("Confirmar")/2,quarterheight);
+					
+								if(dist(quarterwidth2, quarterheight-25, mouseX, mouseY) < 50){
+									push();
+									fill(179, 179, 179);
+									rect(quarterwidth2-50, quarterheight-25, 100 ,50,15);
+									pop();
+									text("Confirmar",quarterwidth2-textWidth("Confirmar")/2,quarterheight);
+										if(mouseIsPressed){
+											if(track<p.subpreguntes.length-1){
+												p.respostaUsuari.push(respostarel);
+												lock1=undefined;
+												lock2=undefined;
+												sleep(200);
+												track++;
+												
+											}else if(track>=p.subpreguntes.length-1){
+												p.respostaUsuari.push(respostarel);
+												p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+												upTime(new Date());
+												sleep(500);
+												current++;
+											}
+										}
+								}
+				}
+					
+					
+					
 }
 
 function ordenar(p,g){
@@ -1250,7 +1245,7 @@ function ordenar(p,g){
 					resp.setAttribute('style', 'display:initial');
 					resp.style.position = 'absolute';
 					resp.style.left = half1-80+'px';
-					resp.style.top = height1+400+'px';
+					resp.style.top = innerHeight*0.8+'px';
 					ctx.lineWidth="2";
 					ctx.strokeStyle="black";
 					ctx.fill();
@@ -1290,18 +1285,4 @@ function ordenar(p,g){
 	
 }
 
-function movedrag() {
-    var elem = document.getElementById("enun"); 
-    var pos = 0;
-    var id = setInterval(frame, 10);
-    function frame() {
-        if (pos == 350) {
-            clearInterval(id);
-        } else {
-            pos++; 
-            elem.style.top = pos + 'px'; 
-            elem.style.left = pos + 'px'; 
-        }
-    }
-}
 

@@ -26,7 +26,10 @@ var lastframemouse;
 
 
 //vars per relacio
-var estat="noclick";
+var lock1;
+var lock2;
+var respostarel="";
+var estatmatch=false;
 var track=0;
 
 //vars per filtre

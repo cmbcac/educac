@@ -17,11 +17,7 @@
 		position: fixed;
 		font-family: "Arial", cursive, sans-serif;
 	}
-	#respostaescrita{
-		position: absolute
-		top=calc(70vh)
-		left=calc(70vw)
-	}
+	
 	#foo{
 
 		display:none;
@@ -83,7 +79,7 @@
 		position:absolute;
 		display:none;
 		color:black;
-		
+		font-size:1vw;
 	}
 	#controls{
 	
@@ -121,7 +117,7 @@
 	#submit:hover {
 			background-color: #ff1aff; 
 		
-			-webkit-transform: scale(1.5, 1.5) translate3d(0, 0, 0);
+		
 				
 	}
 
@@ -145,8 +141,8 @@
   <script src="js/util.js"></script>
   <script src="js/supermain.js"></script>
   <script src="js/tipologies.js"></script>
-  <input id='respostaescrita' style="display:none">
-			<div id="countup" style="display:none">
+  
+  <div id="countup" style="display:none">
 				<p id="hours" style="float:left">00</p>
 				<p id="timeRefHours" style="float:left">:</p>
 				<p id="minutes" style="float:left">00</p>
@@ -156,6 +152,7 @@
 			</div>
   </head>
   <body>
+		<input id='respostaescrita' style="display:none">
 		<div id="loader"></div>
 		<div id="passar">
 			
