@@ -50,7 +50,7 @@ var namenewlabel;
 var passar;
 var boolpassar=false;;
 var stateprint=true;
-
+var end=false;
 
 }
 
@@ -168,6 +168,11 @@ function draw(){
 			}
 			
 			document.getElementById("passar").onmouseover=function(){
+				 $("#infopass").toggle("slow");
+				 $("#txtpassar").toggle("slow");
+				 
+			};
+			document.getElementById("passar").onmouseout=function(){
 				 $("#infopass").toggle("slow");
 				 $("#txtpassar").toggle("slow");
 				 
@@ -386,7 +391,7 @@ function afegir_pregunta(tip, e,list_gsx){
         subpreguntes.push(e[g+element].$t);
 		 }
       }
-      if(element.includes("resp")){
+      if(element.includes("corr")){
 		  if(e[g+element].$t!=""){
 				resp = e[g+element].$t;
 		  }
@@ -463,7 +468,7 @@ function afegir_pregunta(tip, e,list_gsx){
       if(element.includes("resp")){
         subpreguntes.push(e[g+element].$t);
       }
-      if(element.includes("resp")){
+      if(element.includes("corr")){
         resp = e[g+element].$t;
       }
     });

@@ -52,6 +52,7 @@ $("#foo").submit(function(event){
     request.always(function () {
         // Reenable the inputs
         $inputs.prop("disabled", false);
+		end=true;
     });
 
     // Prevent default posting of form

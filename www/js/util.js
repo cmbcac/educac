@@ -4,8 +4,7 @@ var quarterwidth3 = innerWidth * .75;
 var quarterheight = innerHeight * .25;
 var quarterheight2 = innerHeight * .50;
 var quarterheight3 = innerHeight * .75;
-
-
+var puntatje=0;
 function entre(x, a, b){
 	return x > a && x < b;
 }
@@ -176,9 +175,12 @@ document.getElementById("passar").setAttribute("style", "display:none");
 			sbmit.style.position = 'absolute';
 			sbmit.style.left = 40+'vw';
 			sbmit.style.top = 20+'vh';
+			document.getElementById("totalcountup").setAttribute("style", "display:none");
 			
 			 if(stateprint==true){
 			
+					totalPuntatje();
+					
 					for( var i = 0; i<preguntes.length; i++){
 				   
 						var newdiv= document.createElement("div");
@@ -186,10 +188,6 @@ document.getElementById("passar").setAttribute("style", "display:none");
 						newdiv.style.display = 'none';
 						document.getElementById("foo").appendChild(newdiv);
 					
-							
-						namenewlabel= document.createElement("label");
-						namenewlabel.innerHTML = "Resposta"+(i+1)+": ";
-						document.getElementById(newdiv.id).appendChild(namenewlabel);
 					
 						newinput= document.createElement("input");
 						
@@ -213,10 +211,6 @@ document.getElementById("passar").setAttribute("style", "display:none");
 						newdiv.id="Div"+i;
 						newdiv.style.display = 'none';
 						document.getElementById("foo").appendChild(newdiv);
-					
-						namenewlabel= document.createElement("label");
-						namenewlabel.innerHTML = "Temps total: ";
-						document.getElementById(newdiv.id).appendChild(namenewlabel);
 						
 						totaldate= document.createElement("input");
 						totaldate.name="Total";
@@ -229,7 +223,27 @@ document.getElementById("passar").setAttribute("style", "display:none");
 					sbmit.type="submit";
 					sbmit.innerHTML="Envia";
 					document.getElementById("foo").appendChild(sbmit);
+					
+					
+					
 					return stateprint=false;
 			}
 
+			 if(end==true){
+				
+			 }
 }
+
+function totalPuntatje(){
+	
+
+	for(var i=0; i<preguntes.length-1; i++){
+		if(preguntes[i].respostes!=undefined){
+			if( preguntes[i].respostes==preguntes[i].respostaUsuari){
+				puntatje++;
+			}	
+		}
+	}
+	
+}
+

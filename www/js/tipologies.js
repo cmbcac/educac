@@ -1132,6 +1132,7 @@ function relacio(p,g){
 				
 				textSize(innerWidth*0.03);
 				text(p.gran,innerWidth/2-textWidth(p.gran)/2, quarterheight2-40);
+				
 				for(var i=0;i<p.subpreguntes.length;i++){
 					
 				
@@ -1157,9 +1158,11 @@ function relacio(p,g){
 									
 									text(p.subpreguntes[i],	x, y);
 									pop();
-									
-									ellipse(x+w+10, y-5, 6, 6);
+									if(p.subpreguntes[i]!=""){
+										ellipse(x+w+10, y-5, 6, 6);
+									}
 				}
+				
 				for(var i=0;i<p.categories.length;i++){
 					
 				
@@ -1186,13 +1189,14 @@ function relacio(p,g){
 									
 									text(p.categories[i],	x, y);
 									pop();
-									
-									ellipse(x-10, y-5, 6, 6);
+									if(p.categories[i]!=""){
+										ellipse(x-10, y-5, 6, 6);
+									}
 				}
 					
 				if(lock1!=undefined && lock2 != undefined){
 					
-							respostarel=p.subpreguntes[lock1]+" - "+p.categories[lock2];
+							respostarel=(lock1+1)+"-"+(lock2+1);
 							line(quarterwidth+textWidth(p.subpreguntes[lock1])+10, quarterheight2+40*(lock1+1)+9, quarterwidth3-textWidth(p.categories[lock2])-10, quarterheight2+40*(lock2+1)+9);
 							
 							rect(quarterwidth2-50, quarterheight-25, 100 ,50,15);
@@ -1207,6 +1211,8 @@ function relacio(p,g){
 										if(mouseIsPressed){
 											if(track<p.subpreguntes.length-1){
 												p.respostaUsuari.push(respostarel);
+												p.subpreguntes[lock1]="";
+												p.categories[lock2]="";
 												lock1=undefined;
 												lock2=undefined;
 												sleep(200);

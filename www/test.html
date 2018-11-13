@@ -56,25 +56,26 @@
 		width: 3.879vw;
 		height: 7.048458149779735vh;
 		background-size:  3.879vw 7.048458149779735vh;
-		
+		transition: all 0.5s;
 		display:none;
 	}
+	
+	#passar:hover{transform:scale(1.2,1.2)}
+	
 	#infopass{
 		left: calc(5vw);
 		top: calc(1vw);
 		position:absolute;
 		background-image: url(img/info.png);
 		width: 25vw;
-		height: 15vh;
-		background-size: 25vw 15vh;
+		height: 10vh;
+		background-size: 25vw 10vh;
 		display:none;
-		
-		
-		
+
 	}
 	#txtpassar{
 		left: calc(10vw);
-		top: calc(4vw);
+		top: calc(2vw);
 		width:auto;
 		position:absolute;
 		display:none;
@@ -106,21 +107,38 @@
 	margin:-2,5vw;
 	border-radius:100%;
 	
-	-webkit-transition-duration: 0.4s; 
-    transition-duration: 0.4s;
-    cursor: pointer;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
+	
 	
 	}
 
 	#submit:hover {
-			background-color: #ff1aff; 
-		
-		
-				
+	
+	animation-name: example,spin;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+	
 	}
-
+	
+	
+	@keyframes example {
+    0%   {background-color:#cc00cc;}
+    25%  {background-color:#0066ff;}
+    50%  {background-color:#339933;}
+    75%  {background-color:#ffff00;}
+    100% {background-color:#ff0066;}
+	}
+	@keyframes spin {
+	0%   {transform: rotate(0deg);}
+    100% {transform: rotate(720deg);}
+	}
+	
+	@keyframes shrink {
+	0%   {transform: scale(1.0);}
+	
+    50% {transform: scale(2.0);}
+	
+	100% {transform: scale(0);}
+	}
 	</style>
 	
 	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
@@ -178,10 +196,8 @@
 	<form id='foo'>
 	</form>
   </body>
-  <script src='js/google-sheet.js'></script>
+  <script src='js/google-sheet.js'></script> 
   <script> 
-  
-  
   
 	function upTime(countTo) {
 			now = new Date();
@@ -235,8 +251,6 @@
 			clearTimeout(totalupTime.to);
 			totalupTime.to=setTimeout(function(){ totalupTime(countTo); },1000);
 	}
-	
-	
-	
+
 	</script>
 </html>

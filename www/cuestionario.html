@@ -54,13 +54,23 @@
 		height:calc(80vh);
 		width: calc(90vw);
 		font:EDboy;
+		margin: -calc(40vh) -calc(45vw) 0;
 		border-color: red #009933 #ffcc00 #a300cc;
-		border-width: thick;
-		transition: all 5s;
+		border-width: 0.25vw;
+		transition: all 2s;
 	}
 	.iframe.animate {
 		transform: scale(1);
 	}
+	
+	<!--iframe:hover {
+		
+		animation-name: borderiframe;
+		animation-duration: 2s;
+		animation-iteration-count: infinite;
+	
+	}-->
+
 	.icon{
 		position: inherit;
 		cursor: pointer;
@@ -78,7 +88,11 @@
 		height: 7.048458149779735vh;
 		background-size:  3.879vw 7.048458149779735vh;
 		margin: -0.4vw -1vw 0 0;
+		transition: all 0.5s;
 	}
+	
+	.esc.icon:hover{transform:scale(1.2,1.2)}
+	
 	
 	
 
@@ -91,7 +105,7 @@
 	<div class = "container-welcome">
 		<h1> EDUCAC </h1>
 	</div>
-	<iframe src="test.html"></iframe>
+	<iframe src="test.html" id="iframe"></iframe>
 		<p>Your browser does not support iframes.</p>
 	</iframe>
 	<div class = "esc icon"></div>
