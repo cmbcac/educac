@@ -9,20 +9,20 @@
   <style>
   
 	@font-face {
-    font-family: 'EDboy';
-    src: url(fonts/VtEd.ttf);
+		font-family: 'EDboy';
+		src: url(fonts/VtEd.ttf);
 	}
+	
 	html, body {
 		
 		padding: 0;
 		margin: 0;
 		overflow: hidden;
 		position: fixed;
-		background:#00fb86;
+		background:white;
 		width:100%;
 		height:100%;
 		background-image: url("img/bg.jpg");
-	
 	}
 	.container-welcome{
 		font:'EDboy'
@@ -89,49 +89,78 @@
 		background-size:  3.879vw 7.048458149779735vh;
 		margin: -0.4vw -1vw 0 0;
 		transition: all 0.5s;
+		border-radius:100%;
 	}
 	
 	.esc.icon:hover{transform:scale(1.2,1.2)}
 	
+	#col{
+		display:none
+	}
 	
 	
-
+	#esc:checked ~ #col{
+		display: block;
+	}
+	
+	#esc:checked ~ #iframe{
+		display: none;
+	}
+	
+	#can{
+		position:absolute;
+		top:10%;
+		width:100%;
+		height:100%;
+	 }
+	  
 	</style>
-    <script src="libs/p5.min.js"></script>
+    
+	<script src="libs/p5.min.js"></script>
     <script src="libs/addons/p5.dom.min.js"></script>
     <script src="libs/addons/p5.sound.min.js"></script>
-  </head>
-  <body>
+	
+</head>
+ 
+	<script src="js/canvasDraw.js"></script> 
+ 
+<body onload="init()">
+	
 	<div class = "container-welcome">
 		<h1> EDUCAC </h1>
+		
 	</div>
-	<iframe src="test.html" id="iframe"></iframe>
-		<p>Your browser does not support iframes.</p>
-	</iframe>
-	<div class = "esc icon"></div>
 	
-  </body>
+        <canvas id="can" style="border:2px solid;"></canvas>
+			
+			<div class = "esc icon" ></div>
+			<input type="checkbox" id="esc" style="top:93%;left:5%; position:absolute; width:3vw; height:3vh;"></input>
+			<div id="col">
+				<div style="position:absolute;top:12%;left:65%;width:10px;height:10px;background:green;" id="green" onclick="colors(this)"></div>
+				<div style="position:absolute;top:12%;left:66%;width:10px;height:10px;background:blue;" id="blue" onclick="colors(this)"></div>
+				<div style="position:absolute;top:12%;left:67%;width:10px;height:10px;background:red;" id="red" onclick="colors(this)"></div>
+				<div style="position:absolute;top:12%;left:68%;width:10px;height:10px;background:yellow;" id="yellow" onclick="colors(this)"></div>
+				<div style="position:absolute;top:12%;left:69%;width:10px;height:10px;background:orange;" id="orange" onclick="colors(this)"></div>
+				<div style="position:absolute;top:12%;left:70%;width:10px;height:10px;background:black;" id="black" onclick="colors(this)"></div>
+				<div style="position:absolute;top:12%;left:72%;width:15px;height:15px;background:white;border:2px solid;" id="white" onclick="colors(this)"></div>
+				<input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:12%;left:85%;">
+			</div>
+			
+		<iframe src="test.html" id="iframe"></iframe>
+			<p>Your browser does not support iframes.</p>
+		</iframe> 
+		
+	
+		
+    </body>
+  
+  
   <script>
-	var canvas;
-	function setup(){
-		//canvas = createCanvas(.6 * innerWidth,  0.6*innerHeight);
-	}
-	function draw(){
-		//background(244, 244, 244);
-	}
-
-	function windowResized() {
-		//resizeCanvas(.6* windowWidth, .6*windowHeight);
-	}
-
-	window.onload = function(){
-		document.getElementsByClassName('esc icon')[0].onclick = function(){window.location.href="index.html";}
-	}
 
 
-	
 	function keyPressed(){
 		if(keyCode===ESCAPE){
+			document.getElementsByClassName('esc icon')[0].onclick = function(){window.location.href="index.html";}
 			document.getElementsByClassName('esc icon')[0].style.opacity = 0.2;
 		}
 

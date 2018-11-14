@@ -93,7 +93,11 @@ function draw(){
 				}
 				
 				if(mouseIsPressed){
+					
+					mouseIsPressed=false;
+					sleep(500);
 					estatdelsistema="playing";
+					
 				}
 		}
 
@@ -115,6 +119,7 @@ function draw(){
 
 		if(preguntes.length > 0 && estatdelsistema == "playing"){
 			
+			
 			if(current>=preguntes.length){
 				estatdelsistema="submit";
 			}
@@ -123,6 +128,7 @@ function draw(){
 				document.getElementById("passar").setAttribute("style", "display:inline");
 				
 				var p = preguntes[current];
+				
 				var tipo = p.tipologia;
 				g = Math.cos(frameCount/70)*100;
 
@@ -287,6 +293,7 @@ function afegir_pregunta(tip, e,list_gsx){
   var categories;
   var numopcions;
   var resp;
+  var punt;
   
   if(tip == "Swipe"){
 		subpreguntes=[];
@@ -324,11 +331,16 @@ function afegir_pregunta(tip, e,list_gsx){
 								gran=e[g+element].$t;
 							}
 						}
+						if(element.includes("punt")){
+							if(e[g+element].$t!=""){
+								punt=parseInt(e[g+element].$t, 10);
+							}
+						}
 		});
 		
 		subpreguntes = [left, down, right];
 		
-		var p = new Pregunta(gran, subpreguntes, categories, numopcions, Math.floor(random(100)));
+		var p = new Pregunta(gran, subpreguntes, categories, numopcions, punt);
 		
 		p.tipologia = tip;
 		
@@ -364,12 +376,17 @@ function afegir_pregunta(tip, e,list_gsx){
 				gran=e[g+element].$t;
 				}
 			}
+			if(element.includes("punt")){
+							if(e[g+element].$t!=""){
+								punt=parseInt(e[g+element].$t, 10);
+							}
+						}
 		});
     
 		respuestascorrectas = [];
 		respuestascorrectas.push(e[g+'corr'].$t);
     
-		var p = new Pregunta(gran, subpreguntes, categories, 5, Math.floor(random(100)));
+		var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, punt);
 		p.tipologia = tip;
 		
 		p.respostes = respuestascorrectas;
@@ -396,8 +413,15 @@ function afegir_pregunta(tip, e,list_gsx){
 				resp = e[g+element].$t;
 		  }
       }
+	  if(element.includes("puntatje")){
+			if(e[g+element].$t!=""){
+				
+				punt=parseInt(e[g+element].$t, 10);
+			}
+		}
+		
     });
-    var p = new Pregunta(gran, subpreguntes, subpreguntes.length, Math.floor(random(100)));
+    var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, punt);
     p.tipologia = tip;
     p.respostes = resp;
     preguntes.push(p);
@@ -415,9 +439,10 @@ function afegir_pregunta(tip, e,list_gsx){
 			let ecurrent = e[g+current].$t;
 			
 			if(current.includes("enun") && ecurrent) gran = ecurrent;
+			if(current.includes("punt")&& ecurrent) punt=ecurrent;
 			subpreguntes = e[g+'url'].$t;
 	}
-    var p = new Pregunta(gran, subpreguntes, subpreguntes.length, Math.floor(random(100)));
+    var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, punt);
     p.tipologia = tip;
     p.respostes = resp;
     preguntes.push(p);
@@ -451,8 +476,13 @@ function afegir_pregunta(tip, e,list_gsx){
 				gran=e[g+element].$t;
 				}
 			}
+			if(element.includes("punt")){
+					if(e[g+element].$t!=""){
+						punt=parseInt(e[g+element].$t, 10);
+					}
+			}
 		});
-    var p = new Pregunta(gran,subpreguntes, categories, numopcions, Math.floor(random(100)));
+    var p = new Pregunta(gran,subpreguntes, categories, numopcions, punt);
     p.tipologia = tip;
     p.respostes = resp;
     preguntes.push(p);
@@ -471,8 +501,13 @@ function afegir_pregunta(tip, e,list_gsx){
       if(element.includes("corr")){
         resp = e[g+element].$t;
       }
+	  if(element.includes("punt")){
+			if(e[g+element].$t!=""){
+				punt=parseInt(e[g+element].$t, 10);
+			}
+	  }
     });
-    var p = new Pregunta(gran, subpreguntes, subpreguntes.length, Math.floor(random(100)));
+    var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, punt);
     p.tipologia = tip;
     p.respostes = resp;
     preguntes.push(p);
@@ -493,7 +528,8 @@ var multichoice_gsx = [
 'cat4',
 'cat5',
 'url',
-'corr'];
+'corr',
+'puntatje'];
 
 function sleep(milliseconds) {
  
@@ -510,12 +546,12 @@ function sleep(milliseconds) {
 }
 
 class Pregunta{
-	constructor(gran, subpreguntes, categories, numopcions, nump, date){
+	constructor(gran, subpreguntes, categories, numopcions, puntatje, date){
 		this.gran = gran;
 		this.subpreguntes = subpreguntes;
 		this.categories = categories
 		this.numopcions = numopcions;
-		this.numero = nump;
+		this.puntatje = puntatje;
 		this.respostaUsuari = [];
 		this.date=date;
 	}

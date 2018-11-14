@@ -1290,5 +1290,3 @@ function ordenar(p,g){
 			
 	
 }
-
-

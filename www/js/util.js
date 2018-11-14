@@ -217,6 +217,17 @@ document.getElementById("passar").setAttribute("style", "display:none");
 						totaldate.value = document.getElementById("totalhours").innerHTML+" : "+document.getElementById("totalminutes").innerHTML+" : "+document.getElementById("totalseconds").innerHTML;
 						totaldate.readOnly=true;
 						document.getElementById(newdiv.id).appendChild(totaldate);
+						
+						newdiv= document.createElement("div");
+						newdiv.id="Div"+i;
+						newdiv.style.display = 'none';
+						document.getElementById("foo").appendChild(newdiv);
+						
+						totalpunt= document.createElement("input");
+						totalpunt.name="puntatje";
+						totalpunt.value = puntatje
+						totalpunt.readOnly=true;
+						document.getElementById(newdiv.id).appendChild(totalpunt);
 					
 					var sbmit= document.createElement("button");
 					sbmit.id="submit";		
@@ -237,10 +248,10 @@ document.getElementById("passar").setAttribute("style", "display:none");
 function totalPuntatje(){
 	
 
-	for(var i=0; i<preguntes.length-1; i++){
+	for(var i=0; i<preguntes.length; i++){
 		if(preguntes[i].respostes!=undefined){
 			if( preguntes[i].respostes==preguntes[i].respostaUsuari){
-				puntatje++;
+				puntatje+=preguntes[i].puntatje;
 			}	
 		}
 	}
