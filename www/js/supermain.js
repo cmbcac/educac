@@ -77,7 +77,7 @@ function draw(){
 
 		//DRAW QUAN EL SISEMA ESTA EN INICI
 		resp=document.getElementById("respostaescrita");
-			
+		
 		resp.setAttribute('style', 'display:none');
 		
 		if(estatdelsistema == "inici" ){
@@ -170,6 +170,11 @@ function draw(){
 				
 				}
 			
+				else if(tipo == "Busca"){
+				
+					buscador(p,g);
+				
+				}
 				
 			}
 			
@@ -179,8 +184,8 @@ function draw(){
 				 
 			};
 			document.getElementById("passar").onmouseout=function(){
-				 $("#infopass").toggle("slow");
-				 $("#txtpassar").toggle("slow");
+				 $("#infopass").toggle("fast");
+				 $("#txtpassar").toggle("fast");
 				 
 			};
 			document.getElementById("passar").onmousedown=function(){
@@ -489,7 +494,7 @@ function afegir_pregunta(tip, e,list_gsx){
   
   }
 
-   if(tip == "Ordenar"){
+  if(tip == "Ordenar"){
     var gran, subpreguntes = [], resp;
     multichoice_gsx.forEach(element => {
       if(element.includes("enun")){
@@ -512,6 +517,40 @@ function afegir_pregunta(tip, e,list_gsx){
     p.respostes = resp;
     preguntes.push(p);
 
+  }
+ 
+  if(tip == "Busca"){
+  
+	var gran, subpreguntes = [], resp;
+    multichoice_gsx.forEach(element => {
+      if(element.includes("enun")){
+			if(e[g+element].$t!=""){
+			gran = e[g+element].$t
+			}
+      }
+      if(element.includes("resp")){
+		 if(e[g+element].$t!=""){ 
+        subpreguntes.push(e[g+element].$t);
+		 }
+      }
+      if(element.includes("corr")){
+		  if(e[g+element].$t!=""){
+				resp = e[g+element].$t;
+		  }
+      }
+	  if(element.includes("puntatje")){
+			if(e[g+element].$t!=""){
+				
+				punt=parseInt(e[g+element].$t, 10);
+			}
+		}
+		
+    });
+    var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, punt);
+    p.tipologia = tip;
+    p.respostes = resp;
+    preguntes.push(p);
+  
   }
  }
 

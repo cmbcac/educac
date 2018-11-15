@@ -1,3 +1,5 @@
+var uncop=0;
+
 function opcio_multiple(p,g){
 	
 	background(0, 255-g, 255+2*g);
@@ -1289,4 +1291,43 @@ function ordenar(p,g){
 				}
 			
 	
+}
+
+function buscador(p,g){
+
+	background(0, 255-g, 255+2*g);
+	if(uncop==0){
+		
+		var newdiv=document.createElement("div");
+			
+			newdiv.src="prova1.html";
+			newdiv.id="formdiv";
+			newdiv.style.left=50+"%";
+			newdiv.style.top=50+"%";
+			newdiv.style.width=30+"%";
+			newdiv.style.height=25+"%";
+			newdiv.style.position="absolute";
+			document.body.appendChild(newdiv);
+		
+		var newform=document.createElement("from");
+			newform.id="formsearch";
+			newform.action="https://google.com/search";
+			newform.method="get";
+			document.getElementById("formdiv").appendChild(newform);
+		
+		var input=document.createElement("input");
+			input.type="text";
+			input.name="q";
+			input.required=true;
+			input.autofocus=true;
+			document.getElementById("formsearch").appendChild(input);
+			
+		input=document.createElement("input");
+			input.type="submit";
+			input.value="Buscador";
+			document.getElementById("formsearch").appendChild(input);
+		
+		uncop++;
+		
+	}
 }
