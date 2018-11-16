@@ -1,6 +1,6 @@
-var quarterwidth = innerWidth * .25;
-var quarterwidth2 = innerWidth * .50;
-var quarterwidth3 = innerWidth * .75;
+var quarterwidth = innerWidth * .15;
+var quarterwidth2 = innerWidth * .40;
+var quarterwidth3 = innerWidth * .65;
 var quarterheight = innerHeight * .25;
 var quarterheight2 = innerHeight * .50;
 var quarterheight3 = innerHeight * .75;
@@ -20,7 +20,7 @@ function textC(missatge, y, size){
 	push();
 	textSize(size);
 	ctx.font=size+'px Verdana';;
-	let half1 = innerWidth * .5;
+	let half1 = innerWidth * .4;
 	let half2 = textWidth(missatge) * .5;
 	let x = half1 - half2;
 	text(missatge, x, y);
@@ -31,7 +31,7 @@ function textC2(missatge, x, y, size ){
 	push();
 	textSize(size);
 	 ctx.font = size+"px Arial"
-	let half1 = textWidth(missatge) * .5;
+	let half1 = textWidth(missatge) * .4;
 	let px = x - half1;
 	let half2 = textHeight(missatge, textWidth(missatge)) * .5;
 	let py = y;
@@ -47,7 +47,7 @@ function rectC(x, y, w, h){
 }
 
 window.onresize = function(){
-  resizeCanvas(window.innerWidth, window.innerHeight);
+  resizeCanvas(window.innerWidth*0.8, window.innerHeight);
 	resizevArialbles();
 }
 
@@ -168,6 +168,7 @@ function creaSubmit(stateprint){
 document.getElementById("passar").setAttribute("style", "display:none");
 			document.getElementById("infopass").setAttribute("style", "display:none");
 			document.getElementById("txtpassar").setAttribute("style", "display:none");
+			document.getElementById("defaultCanvas0").setAttribute("style","display:none");
 			g = 255 + (Math.sin(frameCount/100) * 100);
 			background(0, 204, 204+g)
 			sbmit=document.getElementById("foo");
@@ -258,12 +259,3 @@ function totalPuntatje(){
 	
 }
 
-function historial(){
-
-chrome.history.search({text: '', maxResults: 10}, function(data) {
-    data.forEach(function(page) {
-        console.log(page.url);
-    });
-});
-
-}

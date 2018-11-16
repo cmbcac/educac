@@ -75,7 +75,7 @@ var canvas, ctx, flag = false,
         var m = confirm("Want to clear");
         if (m) {
             ctx.clearRect(0, 0, w, h);
-            document.getElementById("canvasimg").style.display = "none";
+            
         }
     }
     

@@ -62,10 +62,13 @@ function preload(){
 
 function setup(){
   
-  canvas = createCanvas(window.innerWidth, window.innerHeight);
+  canvas = createCanvas(window.innerWidth*0.8, window.innerHeight*0.9);
+  canvas.position(window.innerWidth*0.1,window.innerHeight*0.1);
   canvas = document.getElementById("defaultCanvas0");
+  canvas.style.borderRadius = "15px";
+  canvas.style.border="2px solid";
   ctx=canvas.getContext('2d');
-  backswipe =  color(144, 145, 232, 0.2*255);
+  backswipe =  color(144, 145, 232, 0.2);
   lastframemouse = mouseIsPressed;
   upTime(new Date());
   totalupTime(new Date());
@@ -121,6 +124,7 @@ function draw(){
 			
 			
 			if(current>=preguntes.length){
+				
 				estatdelsistema="submit";
 			}
 			else{
