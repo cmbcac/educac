@@ -89,10 +89,10 @@ function draw(){
 			background(10, g, 255);
 			textC("Inici", innerHeight * .5, 30);
 				if(((preguntes.length == 0) || (preguntes == undefined))){
-					textC("No hi ha preguntes disponibles", innerHeight * .5 + 45, 15);
+					textC("El cuestionario está vacio", innerHeight * .5 + 45, 15);
 				}
 				else{
-					textC("Clica o prem X per començar", innerHeight * .5 + 45, 15);
+					textC("Pulsa X o haz click para comenzar", innerHeight * .5 + 45, 15);
 				}
 				
 				if(mouseIsPressed){
@@ -110,7 +110,7 @@ function draw(){
     
 			background(199, 233, 222);
 			textC("Pausa", innerHeight * .5, 30);
-			textC("Prem espai o enter per seguir", innerHeight * .5 + 45, 15);
+			textC("Pulsa espacio o enter para seguir", innerHeight * .5 + 45, 15);
 
 				if(preguntes.length > 0){
 					textC("PREGUNTA: " + (current+1), innerHeight * .5 + 100, 20);
@@ -194,7 +194,7 @@ function draw(){
 			};
 			document.getElementById("passar").onmousedown=function(){
 		
-				preguntes[current].respostaUsuari.push("No s'ha respòs");
+				preguntes[current].respostaUsuari.push("NS/NC");
 				p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
 				upTime(new Date());
 							
