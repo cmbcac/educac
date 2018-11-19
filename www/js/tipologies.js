@@ -1,5 +1,6 @@
 var uncop=0;
-var lockfil=-1;
+var lockfil=[];
+var lock=0;
 
 function opcio_multiple(p,g){
 	
@@ -13,7 +14,7 @@ function opcio_multiple(p,g){
 				ctx.strokeStyle="black";
 				ctx.fillStyle = "white";
 				ctx.fill();
-				textC2(p.gran, half1, height1, 20);
+				ajustaText(p.gran, height1,20);
       
 				if(p.subpreguntes.length > 0){
 					for(var i = 0; i < p.subpreguntes.length; i++){
@@ -71,8 +72,7 @@ function drag(p,g){
 					
 						let numopcions = p.numopcions;
 						
-						
-						textC(p.gran, quarterheight-40,20);
+						ajustaText(p.gran, quarterheight-40,20);
 						textC(p.categories[isubp2], quarterheight2, 23);
 						try{
 							
@@ -141,7 +141,7 @@ function swipe(p,g){
 
 						
 						let w = textWidth(p.categories[isubp]);
-						if(w>=innerWidth){ w=w*0.4;}
+						if(w>=innerWidth*0.8){ w=w*0.6;}
 						let h = textHeight(p.categories[isubp], w);
 						var pregunta=[];
 						var lines = []
@@ -331,7 +331,8 @@ function swipe(p,g){
 					missatgeerror = error;
 					estatdelsistema = "error";
 				}
-				textC(p.gran, quarterheight+40 , 20);
+				
+				ajustaText(p.gran, quarterheight+40,20);
 	
 }
 
@@ -339,8 +340,9 @@ function filtre(p,g){
 	
 	background(0, 255-g, 255+2*g);
 				
-				var opcions=["red","green","blue","white","black"];
+				var opcions=["Rojo","Verde","Azul","Blanco","Negro"];
 				var image1=new Image();
+			
 				image1.src = p.subpreguntes;
 				
 				
@@ -356,18 +358,57 @@ function filtre(p,g){
 								ctx.fillStyle = "#999999";
 								ctx.fill();
 								
-								rect(innerWidth*0.30, innerHeight*0.249,innerWidth*0.202,innerHeight*0.203); 
 								
-								ctx.drawImage(image1,innerWidth*0.301, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2); 
+								ctx.drawImage(image1,innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4); 
 								
-								text(p.gran, half1-half2, window.innerHeight*0.1);
+								//text(p.gran, half1-half2, window.innerHeight*0.1);
+								ajustaText(p.gran, innerHeight*0.15,15);
 								
-								rect(innerWidth*0.25-25, innerHeight/2-25, innerWidth*0.07,innerHeight*0.07,15);
+								let dinsDonex = entre(mouseX,innerWidth*0.1, innerWidth*0.1+innerWidth*0.07 ); 
+								let dinsDoney = entre(mouseY,innerHeight/2-25,innerHeight/2+innerHeight*0.07); 
+								
+								let dinsResx = entre(mouseX,innerWidth*0.65, innerWidth*0.65+innerWidth*0.07 ); 
+								let dinsResy = entre(mouseY,innerHeight/2-25,innerHeight/2+innerHeight*0.07); 
+								
+								if(dinsDonex&&dinsDoney){
+									push();
+									fill(255, 255, 204);
+									rect(innerWidth*0.1, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
+									pop();
+									if(mouseIsPressed){
+											
+											for(var i=0; i<lockfil.length;i++){
+											
+												p.respostaUsuari.push(opcions[lockfil[i]]);
+											
+											}
+											p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+											upTime(new Date());
+											sleep(500);
+											
+											current++;
+									}
+								}else{
+									rect(innerWidth*0.1, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
+								}
+								if(dinsResx&&dinsResy){
+									push();
+									fill(255, 255, 204);
+									rect(innerWidth*0.65, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
+									pop();
+									if(mouseIsPressed){
+										lockfil=[];
+										lock=0;
+									}
+								}else{
+									rect(innerWidth*0.65, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
+								}
+								
 
-								rect(innerWidth*0.51-25, innerHeight/2-25, innerWidth*0.07,innerHeight*0.07,15);
 								
-								textC2("DONE",innerWidth*0.27-5, innerHeight/2+8,20);
-								textC2("RESET",innerWidth*0.53-5, innerHeight/2+8,20);
+								
+								textC2("Acabar",innerWidth*0.13, innerHeight/2+35,20);
+								textC2("Reset",innerWidth*0.68, innerHeight/2+35,20);
 								
 								//FOR DE DIBUIXAR
 								for(var i = 0; i < 5 ; i++){
@@ -377,7 +418,7 @@ function filtre(p,g){
 									
 									let dinsx = entre(mouseX, x, x+100);
 									let dinsy = entre(mouseY, y, y+50);
-									
+
 
 									if(dinsx&&dinsy){
 										push();
@@ -385,7 +426,10 @@ function filtre(p,g){
 									if(mouseIsPressed){
 										
 										fill(255, 255, 102);
-										lockfil=i;
+										lockfil[lock]=i;
+										sleep(300);
+										lock++;
+										
 									}
 									}else{
 										push();
@@ -398,88 +442,57 @@ function filtre(p,g){
 									textC2(opcions[i],x+40,y+35,24);
 									
 								}
-								var imageData = ctx.getImageData(innerWidth*0.301, innerHeight*0.25,innerWidth*0.2,innerHeight*0.2);
-								var data = imageData.data;
+								for( var i=0; i<lockfil.length;i++){
 								
-								if(lockfil==0){
+									if(lockfil[i]==0){
 										
-									for (var i = 0; i < data.length; i += 4) {
-										var red = data[i]; // red
-										var green = data[i + 1]; // green
-										var blue = data[i + 2]; // blue
+										ctx.beginPath();
+										ctx.rect(innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
+										ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
+										ctx.fill();
 										
-										data[i] = 200;
-										data[i + 1] = green;
-										data[i + 2] = blue;
-									}
-
+										
 									
-									ctx.putImageData(imageData,innerWidth*0.301, innerHeight*0.25);
+									}
+								
+									else if(lockfil[i]==1){
+									
+										ctx.beginPath();
+										ctx.rect(innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
+										ctx.fillStyle = "rgba(0, 255, 0, 0.2)";
+										ctx.fill();
+								
+									}
+								
+									else if(lockfil[i]==2){
+								
+										ctx.beginPath();
+										ctx.rect(innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
+										ctx.fillStyle = "rgba(0, 0, 255, 0.2)";
+										ctx.fill();
+								
+									}
+								
+									else if(lockfil[i]==3){
+								
+										ctx.beginPath();
+										ctx.rect(innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
+										ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
+										ctx.fill();
+								
+									}
+								
+									else if(lockfil[i]==4){
+								
+										ctx.beginPath();
+										ctx.rect(innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
+										ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+										ctx.fill();
+								
+									}
 									
 								}
 								
-								else if(lockfil==1){
-								
-								for (var i = 0; i < data.length; i += 4) {
-										var red = data[i]; // red
-										var green = data[i + 1]; // green
-										var blue = data[i + 2]; // blue
-										
-										data[i] = red;
-										data[i + 1] = 200;
-										data[i + 2] = blue;
-									}
-
-									
-									ctx.putImageData(imageData,innerWidth*0.301, innerHeight*0.25);
-								
-								}
-								
-								else if(lockfil==2){
-								
-								for (var i = 0; i < data.length; i += 4) {
-										var red = data[i]; // red
-										var green = data[i + 1]; // green
-										var blue = data[i + 2]; // blue
-										
-										data[i] = red;
-										data[i + 1] = green;
-										data[i + 2] = 200;
-									}
-
-									
-									ctx.putImageData(imageData,innerWidth*0.301, innerHeight*0.25);
-								
-								}
-								
-								else if(lockfil==3){
-								
-									for (var i = 0; i < data.length; i += 4) {
-										
-										data[i] += 100;
-										data[i + 1] += 100;
-										data[i + 2] += 100;
-									}
-
-									ctx.putImageData(imageData,innerWidth*0.301, innerHeight*0.25);
-								
-								}
-								
-								else if(lockfil==4){
-								
-									for (var i = 0; i < data.length; i += 4) {
-										var red = data[i]; // red
-										var green = data[i + 1]; // green
-										var blue = data[i + 2]; // blue
-										
-										var v = 0.2126*red + 0.7152*green + 0.0722*blue;
-										data[i] = data[i+1] = data[i+2] = v
-									}
-
-									
-									ctx.putImageData(imageData,innerWidth*0.301, innerHeight*0.25);
-								
-								}
 	
 }
 
@@ -606,8 +619,8 @@ function ordenar(p,g){
 					
 					
 					resp.setAttribute('style', 'display:initial');
-					resp.style.position = 'absolute';
-					resp.style.left = half1-80+'px';
+					
+					resp.style.left = innerWidth*0.45+'px';
 					resp.style.top = innerHeight*0.8+'px';
 					ctx.lineWidth="2";
 					ctx.strokeStyle="black";

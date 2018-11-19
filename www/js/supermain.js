@@ -135,7 +135,7 @@ function draw(){
 				
 				var tipo = p.tipologia;
 				g = Math.cos(frameCount/70)*100;
-
+				ctx.fillStyle = "#999999";
 				
 		//DRAW PER A CADA ESTAT DEL JOC
 			
@@ -218,7 +218,7 @@ function draw(){
 			background(199, 100, 100);
 	
 				textC("Error", innerHeight * .5, 30);
-				textC("Clica espai o enter per anar a pausa i canviar de pregunta", innerHeight * .5 + 45, 15);
+				textC("Algo no funciona bien", innerHeight * .5 + 45, 15);
 				textC(missatgeerror, innerHeight * .5 + 125, 13);
 		}
 

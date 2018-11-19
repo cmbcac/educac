@@ -259,3 +259,28 @@ function totalPuntatje(){
 	
 }
 
+function ajustaText(txt, height, mida){
+
+	var pregunta=[];
+	textSize(mida);
+								if(txt.length>=Math.ceil(innerWidth*0.05)){
+							
+								for(var i=0;i<=txt.length-1;i++){
+									pregunta+=txt[i];
+									if(i==Math.ceil(txt.length/2)){
+										pregunta+=' / ';
+									}
+								}
+									lines=pregunta.split('/');
+								
+								for (var i = 0; i<lines.length; i++){
+									textC(lines[i], height*0.9+(i*mida*1.2),20 );
+								}
+							
+								}else{
+									lines=txt;
+									textC(lines, height,20 );
+								}
+
+
+}
