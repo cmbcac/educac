@@ -669,7 +669,7 @@ function ordenar(p,g){
 						textSize(fontsize);
 						let half3 = textWidth(e)*.5;
 						let x = half1;
-						let y = (height1+100) + 40 * (i+1);
+						let y = (height1+150) + 40 * (i+1);
 						let w =  textWidth(e)
 						let h = fontsize;
 						
