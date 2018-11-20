@@ -5,15 +5,19 @@ var quarterheight = innerHeight * .25;
 var quarterheight2 = innerHeight * .50;
 var quarterheight3 = innerHeight * .75;
 var puntatje=0;
+
+//CALCULA SI L'ELEMENT X ESTÀ ENTRE A I B
 function entre(x, a, b){
 	return x > a && x < b;
 }
 
+//CENTRA EL TEXT
 function centraText(t, pos){
 	pos.x = pos.x - textWidth(t)/2;
 	return pos;
 }
 
+//CENTRA EL TEXT EN LA POSICIÓ Y DESITJADA
 function textC(missatge, y, size){
 	///
 
@@ -27,6 +31,7 @@ function textC(missatge, y, size){
 	pop();
 }
 
+//POTS POSAR EL TEXT ON VULGUIS
 function textC2(missatge, x, y, size ){
 	push();
 	textSize(size);
@@ -39,6 +44,7 @@ function textC2(missatge, x, y, size ){
 	pop();
 }
 
+//ESCRIURE UN RECTANGLE
 function rectC(x, y, w, h){
 	let half1 = w *.5;
 	let half2 = h *.5;
@@ -46,11 +52,13 @@ function rectC(x, y, w, h){
 	rect(x-half1, y - half2, w, h,10);
 }
 
+//QUÈ FA LA FINESTRA QUAN CANVIA DE MIDA
 window.onresize = function(){
   resizeCanvas(window.innerWidth*0.8, window.innerHeight);
 	resizevArialbles();
 }
 
+//CANVIA TOTES LES MESURES PREDEFINIDES QUAN LA FINESTRA CANVIA DE MIDA
 function resizevArialbles(){
 	quarterwidth = innerWidth * .25;
 	quarterwidth2 = innerWidth * .50;
@@ -60,12 +68,14 @@ function resizevArialbles(){
 	quarterheight3 = innerHeight * .75;
 }
 
+//CENTRA UN RECTANGLE
 function rectangleCentrat(w, h){
 	var p1 = (window.innerWidth - w)*.5;
 	var p2 = (window.innerHeight- h)*.5;
 	rect(p1, p2, w, h);
 }
 
+//TRANSFORMA TOTES LES DADES DE TEXT QUE PASSEM A TIPUS JSON
 function text_a_JSON(data){
 	var start = 25;
 	var end = data.length - 2;
@@ -74,6 +84,7 @@ function text_a_JSON(data){
 	return JParsedText;
 }
 
+//DIBUIXA UN POLIGON
 function polygon(x, y, radius, npoints) {
   var angle = TWO_PI / npoints;
   beginShape();
@@ -85,6 +96,7 @@ function polygon(x, y, radius, npoints) {
   endShape(CLOSE);
 }
 
+//ESCRIU UN CERCLE A CADA VÉRTEX D'UN POLIGON DESIGNAT
 function circlesInPolygonC(x, y, radius, npoints, radiusellipse, angleinicial){
 	var angle = TWO_PI / npoints;
 	for (var a = 0; a < TWO_PI; a += angle) {
@@ -98,6 +110,7 @@ function circlesInPolygonC(x, y, radius, npoints, radiusellipse, angleinicial){
 	}
 }
 
+//RETORNA LA POSICIÓ DELS VERTEXS D'UN POLIGON DESIGNAT
 function returnPointsInPolygon(x, y, radius, npoints, radiusellipse, angleinicial){
 	var posipunts = [];
 	
@@ -115,6 +128,7 @@ function returnPointsInPolygon(x, y, radius, npoints, radiusellipse, angleinicia
 	return posipunts;
 }
 
+//CARREGA LES DADES JSON DE LA URL QUE LI PASSEM (ID)
 function util_xmlhttp(id, todo, params, handle){
 
 	/*id: id del document que llegeix*/
@@ -143,6 +157,7 @@ function util_xmlhttp(id, todo, params, handle){
     xmlhttp.send();
 }
 
+//CALCULA L'ALTURA QUE OCUPA EL TEXT DESIGNAT
 function textHeight(text, maxWidth) {
 		var words = text.split(' ');
 		var line = '';
@@ -163,9 +178,10 @@ function textHeight(text, maxWidth) {
 		return h;
 }
 
+//CREA EL FORMULARI QUE CONTINDRÀ LES RESPOSTES DEL CUESTIONARI
 function creaSubmit(stateprint){
 
-document.getElementById("passar").setAttribute("style", "display:none");
+			document.getElementById("passar").setAttribute("style", "display:none");
 			document.getElementById("infopass").setAttribute("style", "display:none");
 			document.getElementById("txtpassar").setAttribute("style", "display:none");
 			document.getElementById("defaultCanvas0").setAttribute("style","display:none");
@@ -183,7 +199,9 @@ document.getElementById("passar").setAttribute("style", "display:none");
 					totalPuntatje();
 					
 					for( var i = 0; i<preguntes.length; i++){
-				   
+						
+						
+						
 						var newdiv= document.createElement("div");
 						newdiv.id="Div"+i;
 						newdiv.style.display = 'none';
@@ -230,22 +248,41 @@ document.getElementById("passar").setAttribute("style", "display:none");
 						totalpunt.readOnly=true;
 						document.getElementById(newdiv.id).appendChild(totalpunt);
 					
-					var sbmit= document.createElement("button");
-					sbmit.id="submit";		
-					sbmit.type="submit";
-					sbmit.innerHTML="Envia";
-					document.getElementById("foo").appendChild(sbmit);
 					
 					
+					newlabel= document.createElement("label");
+						newlabel.innerHTML="Usuario: ";
+						newlabel.id="usulabel";
+						//newlabel.style.color="white";
+						
+						newlabel.style.padding = "11px";
+						newlabel.style.backgroundColor="white";
+						document.getElementById("foo").appendChild(newlabel);
 					
+						newinput= document.createElement("input");
+						newinput.name="usuari"
+						newinput.id="usuari";
+						newinput.style.padding="9.8px";
+						document.getElementById("foo").appendChild(newinput);
+					
+						
+						var sbmit= document.createElement("button");
+						sbmit.id="submit";		
+						sbmit.type="submit";
+						sbmit.style.display="none";
+						sbmit.innerHTML="Envia";
+						document.getElementById("foo").appendChild(sbmit);
+						
+						
 					return stateprint=false;
 			}
 
-			 if(end==true){
-				
-			 }
+			 if(document.getElementById("usuari").value!=""){
+							document.getElementById("submit").style.display="block";
+						}
 }
 
+//CALCULA LA PUNTUACIÓ FINAL DEPENENT DE LES RESPOSTES DE L'USUARI
 function totalPuntatje(){
 	
 
@@ -259,6 +296,7 @@ function totalPuntatje(){
 	
 }
 
+//AJUSTA EL TEXT PERQUÈ NO S'ESCAPI DE LA PANTALLA
 function ajustaText(txt, height, mida){
 
 	var pregunta=[];

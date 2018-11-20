@@ -2,8 +2,6 @@
 var canvas;
 var ctx;
 var estats = ["inici", "playing", "pause", "error", "submit"], estatdelsistema = "inici", missatgeerror = "";
-var id_drive = "1nLZVoUA49YiSmf0ylFuOaTtB1V57yRrbDQO7pvr1TDs";   
-//var id_drive = "1-mffQ9q0im5VIm7gukacIjUI4Hps-3-n9vmeMj42d_k";
 
 var ESC = 27;
 var SPACE = 32;
@@ -13,52 +11,53 @@ var DRETA = 39;
 var preguntes = [];
 var current = 0;
 
-
-// vars pel swipe
+// vars para swipe
 var backswipe;
 var estatswipe = "nomig", estats_swipe = ["nomig", "migsense", "migamb", "dreta", "esquerra", "avall"];
 var isubp = 0;
 
-//vars pel drag;
+//vars para drag;
 var backdrag;
 var isubp2 = 0;
 var lastframemouse;
 
-
-//vars per relacio
+//vars para relacio
 var lock1;
 var lock2;
 var respostarel="";
 var estatmatch=false;
 var track=0;
 
-//vars per filtre
+//vars para filtre
 var filtres = ["Blur","Brightness","Contrast","Grayscale","Invert","Opacity", "Saturate", "Sepia"];
 var estat=-1;
 var opcions;
 var resposta;
 
-//vars per ordenar
+//vars para ordenar
 var ordre=["A- ","B- ","C- ","D- ","E- "]
 var resp;
 var respfin;
 
+//Vars para submit
 var sbmit;
-
 var newlabel;
 var namenewlabel;
 var passar;
-var boolpassar=false;;
+var boolpassar=false;
 var stateprint=true;
 var end=false;
-
+var start=true;
+var SENDURL;
 }
 
+/*
 function preload(){
   //carrega base de dades
   util_xmlhttp(id_drive, set_preguntes,{}, function(){} )
   
 }
+*/
 
 function setup(){
   
@@ -70,42 +69,91 @@ function setup(){
   ctx=canvas.getContext('2d');
   backswipe =  color(144, 145, 232, 0.2);
   lastframemouse = mouseIsPressed;
-  upTime(new Date());
-  totalupTime(new Date());
+ 
   ctx.font = "30px Arial"
   
 }
 
 function draw(){
 
-		//DRAW QUAN EL SISEMA ESTA EN INICI
 		resp=document.getElementById("respostaescrita");
-		
 		resp.setAttribute('style', 'display:none');
 		
+		//DRAW QUAN EL SISEMA ESTA EN INICI
 		if(estatdelsistema == "inici" ){
 
 			var g = 202.5 + (Math.sin(frameCount/100) * 52.5);
 			background(10, g, 255);
-			textC("Inici", innerHeight * .5, 30);
-				if(((preguntes.length == 0) || (preguntes == undefined))){
-					textC("El cuestionario está vacio", innerHeight * .5 + 45, 15);
-				}
-				else{
-					textC("Pulsa X o haz click para comenzar", innerHeight * .5 + 45, 15);
+			
+						if(start==true){
+						var newdiv= document.createElement("div");
+						newdiv.id="StartingDiv";
+						document.body.appendChild(newdiv);
+					
+					
+						newlabel= document.createElement("p");
+						newlabel.name="URL";
+						newlabel.innerHTML="URL: ";
+						document.getElementById(newdiv.id).appendChild(newlabel);
+						
+						newinput= document.createElement("input");
+						newinput.id="url"
+						newinput.type="url";
+						document.getElementById(newdiv.id).appendChild(newinput);
+						
+						newlabel= document.createElement("p");
+						newlabel.name="URL";
+						newlabel.innerHTML="Dónde guardar las respuestas: ";
+						document.getElementById(newdiv.id).appendChild(newlabel);
+						
+						newinput= document.createElement("input");
+						newinput.id="sendurl"
+						newinput.type="url";
+						document.getElementById(newdiv.id).appendChild(newinput);
+						
+						
+						start=false;
+						
+						}
+						
+							
+							rectC(innerWidth/2.5,innerHeight/1.5,100,50);
+							textC("Empezar",innerHeight/1.48,20);
+
+						
+						let dinsX=entre(mouseX, innerWidth/2.5-50, innerWidth/2.5 + 50);
+						let dinsY=entre(mouseY, innerHeight/1.5-25, innerHeight/1.5 + 25);
+				
+				if(dinsX&&dinsY){
+					push();
+					fill(100,200,200);
+					rectC(innerWidth/2.5,innerHeight/1.5,100,50);
+					pop();
+					textC("Empezar",innerHeight/1.48,20);
+					
+					if(mouseIsPressed){
+						
+						if(document.getElementById("url").value!="" && document.getElementById("sendurl").value !=""){
+						util_xmlhttp(document.getElementById("url").value, set_preguntes,{}, function(){} );
+					
+						
+							document.getElementById("StartingDiv").setAttribute("style", "display:none");
+							background(10, g, 255);
+							upTime(new Date());
+							totalupTime(new Date());
+							SENDURL=document.getElementById("sendurl").value;
+							estatdelsistema="playing";
+						}
+					}
+					
+					
 				}
 				
-				if(mouseIsPressed){
-					
-					mouseIsPressed=false;
-					sleep(500);
-					estatdelsistema="playing";
-					
-				}
+				
+				
 		}
 
-			//DRAW QUAN EL SISTEMA ESTIGUI EN PAUSA
-		
+		//DRAW QUAN EL SISTEMA ESTIGUI EN PAUSA
 		if(estatdelsistema == "pause"){
     
 			background(199, 233, 222);
@@ -119,10 +167,11 @@ function draw(){
 	
 	
 		}
-
+		
+		//DRAW QUAN EL SISTEMA ESTA JUGANT
 		if(preguntes.length > 0 && estatdelsistema == "playing"){
 			
-			
+			document.getElementById("totalcountup").setAttribute("style","display:block");
 			if(current>=preguntes.length){
 				
 				estatdelsistema="submit";
@@ -206,12 +255,18 @@ function draw(){
 			}
 		}
 		
-
-
+		//CONTADOR D'ERROR EN CAS DE NO PODER LLEGIR PREGUTNES
+		if(document.getElementById("totalseconds").innerHTML=="5"&&preguntes.length<=0){
+			document.getElementById("totalcountup").setAttribute("style", "display:none");
+			estatdelsistema="error";
+		
+		}
+		
 		//DRAW PER A QUAN L'USUARI VULGUI ENVIAR
 		if(estatdelsistema == "submit"){
 			stateprint=creaSubmit(stateprint);
 		}
+		
 		//DRAW PER A SI HI HAGUES UN ERROR
 		if(estatdelsistema == "error"){
 			document.getElementById("passar").setAttribute("style", "display:none");
@@ -226,8 +281,6 @@ function draw(){
 		fill(0+g*0.1, 204, 102);
 		
 		pop();
-		
-		
 	}
 
 function mouseReleased(){
@@ -295,6 +348,9 @@ function set_preguntes(data, params){
 
 }
 
+//LA FUNCIÓ D'AFEGIR PREGUNTA ES LLEGIR ELS ELEMENTS DE TIPUS JSON QUE ESTEM REBENT I TRANSFORMAR-LOS EN STRINGS A DINS
+//DE LA ESTRUCTURA DE PERGUNTES DE LA MANERA QUE VOLGUEM, EN CAS D'AFEGIR UN NOU TIPUS DE PREGUNTA NECESSITARÁ SER ESPECIFICAT
+//A DINS D'AQUESTA FUNCIÓ
 function afegir_pregunta(tip, e,list_gsx){
   var g = 'gsx$';
   var gran;
@@ -558,6 +614,8 @@ function afegir_pregunta(tip, e,list_gsx){
   }
  }
 
+//ELEMENT QUE ENS PERMET LLEGIR ELS APARTATS DE LES DADES TIPUS JSON
+//EN CAS D'AFEGIR UN NOU TIPUS D'ELEMENT, TAMBÉ S'HAURÀ D'AFEGIR EN AQUEST ELEMENT MULTICHOICE
 var multichoice_gsx = [
 "enunciat",
 "resposta1",
@@ -574,6 +632,7 @@ var multichoice_gsx = [
 'corr',
 'puntatje'];
 
+//NO ES RECOMANABLE, PERO AQUESTA FUNCIÓ OCUPA A L'ORDINADOR X MILISEGONS PER A PERMETRE QUE ELS EVENTS COM MOUSEISPRESSED O KEYPRESSED S'ACTUALITZIN CORRECTAMENT
 function sleep(milliseconds) {
  
   var start = new Date().getTime();
@@ -588,6 +647,7 @@ function sleep(milliseconds) {
   }
 }
 
+//STRUCT DE TIPUS PREGUNTES
 class Pregunta{
 	constructor(gran, subpreguntes, categories, numopcions, puntatje, date){
 		this.gran = gran;
