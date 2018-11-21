@@ -74,13 +74,7 @@ h4:hover{
 #esc:checked ~ #iframe{
 		display: none;
 	}
-#can,#defaultCanvas0{
-		position:absolute;
-		top:8%;
-		width:100%;
-		width:100%;
-		height:100%;
-	 }
+
 #foo{
 		display:none;
 		position:absolute;

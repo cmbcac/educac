@@ -262,11 +262,11 @@ function draw(){
 		//DRAW PER A SI HI HAGUES UN ERROR
 		if(estatdelsistema == "error"){
 			document.getElementById("passar").setAttribute("style", "display:none");
-			background(199, 100, 100);
-	
-				textC("Error", innerHeight * .5, 30);
+			
+				textC("Error", innerHeight * .4, 30);
 				textC("Algo no funciona bien", innerHeight * .5 + 45, 15);
-				textC(missatgeerror, innerHeight * .5 + 125, 13);
+				document.getElementById("defaultCanvas0").style.backgroundImage="url('img/error.gif')";
+			
 		}
 
 		push()
