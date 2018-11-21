@@ -54,7 +54,7 @@ function rectC(x, y, w, h){
 
 //QUÈ FA LA FINESTRA QUAN CANVIA DE MIDA
 window.onresize = function(){
-  resizeCanvas(window.innerWidth*0.8, window.innerHeight);
+  resizeCanvas(window.innerWidth*0.8, window.innerHeight*0.85);
 	resizevArialbles();
 }
 
@@ -247,21 +247,12 @@ function creaSubmit(stateprint){
 						totalpunt.value = puntatje
 						totalpunt.readOnly=true;
 						document.getElementById(newdiv.id).appendChild(totalpunt);
-					
-					
-					
-					newlabel= document.createElement("label");
-						newlabel.innerHTML="Usuario: ";
-						newlabel.id="usulabel";
-						//newlabel.style.color="white";
-						
-						newlabel.style.padding = "11px";
-						newlabel.style.backgroundColor="white";
-						document.getElementById("foo").appendChild(newlabel);
-					
+				
 						newinput= document.createElement("input");
 						newinput.name="usuari"
 						newinput.id="usuari";
+						newinput.placeholder="Usuario: ";
+						newinput.classList.add('ginput');
 						newinput.style.padding="9.8px";
 						document.getElementById("foo").appendChild(newinput);
 					

@@ -61,7 +61,7 @@ function preload(){
 
 function setup(){
   
-  canvas = createCanvas(window.innerWidth*0.8, window.innerHeight*0.9);
+  canvas = createCanvas(window.innerWidth*0.8, window.innerHeight*0.85);
   canvas.position(window.innerWidth*0.1,window.innerHeight*0.1);
   canvas = document.getElementById("defaultCanvas0");
   canvas.style.borderRadius = "15px";
@@ -83,32 +83,24 @@ function draw(){
 		if(estatdelsistema == "inici" ){
 
 			var g = 202.5 + (Math.sin(frameCount/100) * 52.5);
-			background(10, g, 255);
+			background(255,255,255,0.5);
 			
 						if(start==true){
 						var newdiv= document.createElement("div");
 						newdiv.id="StartingDiv";
 						document.body.appendChild(newdiv);
 					
-					
-						newlabel= document.createElement("p");
-						newlabel.name="URL";
-						newlabel.innerHTML="URL: ";
-						document.getElementById(newdiv.id).appendChild(newlabel);
-						
 						newinput= document.createElement("input");
 						newinput.id="url"
 						newinput.type="url";
+						newinput.classList.add('ginput');
+						newinput.placeholder="URL del cuestionario: ";
 						document.getElementById(newdiv.id).appendChild(newinput);
-						
-						newlabel= document.createElement("p");
-						newlabel.name="URL";
-						newlabel.innerHTML="Dónde guardar las respuestas: ";
-						document.getElementById(newdiv.id).appendChild(newlabel);
 						
 						newinput= document.createElement("input");
 						newinput.id="sendurl"
-						newinput.type="url";
+						newinput.classList.add('ginput');
+						newinput.placeholder="Dónde guardar las respuestas: ";
 						document.getElementById(newdiv.id).appendChild(newinput);
 						
 						

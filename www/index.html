@@ -5,6 +5,7 @@
 	 <meta http-equiv="pragma" content="no-cache" />
     <!--<meta name="viewport" height=device-height, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+	<link rel="icon" href="img/favicon.png" type="image/gif" sizes="16x16"/>
 	<title>CM Inicio </title>
     <style>
 	html, body {
@@ -12,9 +13,24 @@
 		margin: 0;
 		overflow: hidden;
 		position: fixed;
-		background: #0ad4fc;
-    height:100%;
-    width:100%;
+		background:
+		linear-gradient(
+			cyan,
+			transparent
+		),
+		linear-gradient(
+			-45deg,
+			magenta,
+			transparent
+		),
+		linear-gradient(
+			45deg,
+			yellow,
+			transparent
+		);
+		background-blend-mode: multiply;
+		height:100%;
+		width:100%;
 	}
 	.container-welcome{
 		position: inherit;
@@ -22,7 +38,7 @@
 		height:calc(30vh);
 		left: calc(35vw);
 		top: calc(35vh);
-		background:white;
+		background:transparent;
 		text-align: center;
 
 	}
@@ -33,7 +49,7 @@
 	}
 
 	h4:hover{
-		color: #ff7373;
+		color: yellow;
 		cursor: pointer;
 	}
 	a {
