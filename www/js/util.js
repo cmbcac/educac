@@ -313,3 +313,26 @@ function ajustaText(txt, height, mida){
 
 
 }
+function createStart(){
+
+	var newdiv= document.createElement("div");
+						newdiv.id="StartingDiv";
+						document.body.appendChild(newdiv);
+					
+						newinput= document.createElement("input");
+						newinput.id="url"
+						newinput.type="url";
+						newinput.classList.add('ginput');
+						newinput.placeholder="URL del cuestionario: ";
+						document.getElementById(newdiv.id).appendChild(newinput);
+						
+						newinput= document.createElement("input");
+						newinput.id="sendurl"
+						newinput.classList.add('ginput');
+						newinput.placeholder="Dónde guardar las respuestas: ";
+						document.getElementById(newdiv.id).appendChild(newinput);
+						
+						
+						start=false;
+
+}

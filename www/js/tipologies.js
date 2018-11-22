@@ -9,7 +9,7 @@ A LA QUE L'USUARI CLICKI UNA DE LES OPCIONS, LA RESPOSTA S'ACTUALITZARÀ I
 L'USUARI PASSARÁ A LA SEGUENT PREGUNTA^*/
 function opcio_multiple(p,g){
 	
-	background(0, 120+g, 255);
+	background(255);
 				
 				
 				let half1 = innerWidth * .4
@@ -77,7 +77,7 @@ function opcio_multiple(p,g){
 UNA PREGUNTA DE OPCIO MULTIPLE, EL FUNCIONAMENT ES PRÀCTICAMENT EL MATEIX QUE L'ANTERIOR*/
 function drag(p,g){
 	
-	background(0, 120+g, 255);
+	background(255);
 					
 						let numopcions = p.numopcions;
 						
@@ -360,7 +360,7 @@ UN COP L'USUARI ESTIGUI CONTENT AMB EL FILTRE ( O FILTRES ) QUE ELL HAGI ESCOLLI
 EN CAS DE QUE NO LI AGRADI*/
 function filtre(p,g){
 	
-	background(0, 120+g, 255);
+	background(255);
 				
 				var opcions=["Rojo","Verde","Azul","Blanco","Negro"];
 				var image1=new Image();
@@ -525,7 +525,7 @@ L'USUARI SIMPLEMENT HAURÀ DE POLSAR UNA OPCIÓ D'UNA BANDA I UNA D'UNA ALTRA PE
 UN COP NO QUEDIN OPCIONS POSSIBLES, ES PASSARÁ DE PREGUNTA*/
 function relacio(p,g){
 	
-	background(0, 120+g, 255);
+	background(255);
 				
 				textSize(innerWidth*0.03);
 				text(p.gran,innerWidth*0.4-textWidth(p.gran)/2, quarterheight2-40);
@@ -638,7 +638,7 @@ PER A ORDENAR-LOS SIMPLEMENT HAURÀ D'ESCRIURE EN EL RECUARDRE DE TEXT L'ORDRE Q
 (L'ESTIL DE RESPOSTA QUEDA A MANS DEL QUE HAGI CREAT EL CUESTIONARI I HAURIA D'AVISAR QUIN ES ABANS NO RESPONGUIN ELS ALUMNES)*/
 function ordenar(p,g){
 	
-	background(0, 120+g, 255);
+	background(255);
 				textSize(20);
 			
 				let half1 = innerWidth * .4
@@ -699,7 +699,7 @@ function ordenar(p,g){
 /*WORK IN PROGRESS*/
 function buscador(p,g){
 
-	background(0, 120+g, 255);
+	background(255);
 	if(uncop==0){
 		
 		var newdiv=document.createElement("div");

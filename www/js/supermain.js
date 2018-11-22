@@ -86,26 +86,8 @@ function draw(){
 			background(255,255,255,0.5);
 			
 						if(start==true){
-						var newdiv= document.createElement("div");
-						newdiv.id="StartingDiv";
-						document.body.appendChild(newdiv);
-					
-						newinput= document.createElement("input");
-						newinput.id="url"
-						newinput.type="url";
-						newinput.classList.add('ginput');
-						newinput.placeholder="URL del cuestionario: ";
-						document.getElementById(newdiv.id).appendChild(newinput);
-						
-						newinput= document.createElement("input");
-						newinput.id="sendurl"
-						newinput.classList.add('ginput');
-						newinput.placeholder="Dónde guardar las respuestas: ";
-						document.getElementById(newdiv.id).appendChild(newinput);
-						
-						
-						start=false;
-						
+							document.getElementById("defaultCanvas0").style.border="none";
+							createStart();
 						}
 						
 							
@@ -128,9 +110,9 @@ function draw(){
 						if(document.getElementById("url").value!="" && document.getElementById("sendurl").value !=""){
 						util_xmlhttp(document.getElementById("url").value, set_preguntes,{}, function(){} );
 					
-						
+							$( ".loader" ).css( "display", "inline" );
 							document.getElementById("StartingDiv").setAttribute("style", "display:none");
-							background(10, g, 255);
+							ctx.clearRect(0, 0, width, height);
 							upTime(new Date());
 							totalupTime(new Date());
 							SENDURL=document.getElementById("sendurl").value;
@@ -147,7 +129,7 @@ function draw(){
 
 		//DRAW QUAN EL SISTEMA ESTIGUI EN PAUSA
 		if(estatdelsistema == "pause"){
-    
+			$( ".loader" ).css( "display", "none" );
 			background(199, 233, 222);
 			textC("Pausa", innerHeight * .5, 30);
 			textC("Pulsa espacio o enter para seguir", innerHeight * .5 + 45, 15);
@@ -162,16 +144,17 @@ function draw(){
 		
 		//DRAW QUAN EL SISTEMA ESTA JUGANT
 		if(preguntes.length > 0 && estatdelsistema == "playing"){
-			
+			document.getElementById("defaultCanvas0").style.border="5px solid black";
 			document.getElementById("totalcountup").setAttribute("style","display:block");
+			document.getElementById("passar").setAttribute("style", "display:inline");
 			if(current>=preguntes.length){
 				
 				estatdelsistema="submit";
 			}
 			else{
 
-				document.getElementById("passar").setAttribute("style", "display:inline");
 				
+				$( ".loader" ).css( "display", "none" );
 				var p = preguntes[current];
 				
 				var tipo = p.tipologia;
@@ -250,22 +233,36 @@ function draw(){
 		//CONTADOR D'ERROR EN CAS DE NO PODER LLEGIR PREGUTNES
 		if(document.getElementById("totalseconds").innerHTML=="5"&&preguntes.length<=0){
 			document.getElementById("totalcountup").setAttribute("style", "display:none");
+			ctx.clearRect(0, 0, width, height);
+			document.getElementById("defaultCanvas0").style.border="5px solid black";
 			estatdelsistema="error";
 		
 		}
 		
 		//DRAW PER A QUAN L'USUARI VULGUI ENVIAR
 		if(estatdelsistema == "submit"){
+			$( ".loader" ).css( "display", "none" );
 			stateprint=creaSubmit(stateprint);
 		}
 		
 		//DRAW PER A SI HI HAGUES UN ERROR
 		if(estatdelsistema == "error"){
+			$( ".loader" ).css( "display", "none" );
 			document.getElementById("passar").setAttribute("style", "display:none");
-			
+				ctx.fillStyle = "rgba(0,0,0,0)";
+				ctx.clearRect(0, 0, width, height);
+				
+				fill(255, 255, 0);
 				textC("Error", innerHeight * .4, 30);
 				textC("Algo no funciona bien", innerHeight * .5 + 45, 15);
-				document.getElementById("defaultCanvas0").style.backgroundImage="url('img/error.gif')";
+				
+				
+				var bgImg = new Image();
+				bgImg.onload = function(){
+				   document.getElementById("defaultCanvas0").style.backgroundImage="url('"+bgImg.src+"')";
+				};
+				bgImg.src = "img/error.gif";
+				
 			
 		}
 
