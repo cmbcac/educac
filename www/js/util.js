@@ -1,8 +1,9 @@
 var quarterwidth = innerWidth * .15;
-var quarterwidth2 = innerWidth * .40;
+var halfcanvas = innerWidth * .40;
+var halfwidth = innerWidth * 0.5;
 var quarterwidth3 = innerWidth * .65;
 var quarterheight = innerHeight * .25;
-var quarterheight2 = innerHeight * .50;
+var halfheightcanvas = innerHeight * .50;
 var quarterheight3 = innerHeight * .75;
 var puntatje=0;
 
@@ -19,8 +20,6 @@ function centraText(t, pos){
 
 //CENTRA EL TEXT EN LA POSICIÓ Y DESITJADA
 function textC(missatge, y, size){
-	///
-
 	push();
 	textSize(size);
 	ctx.font=size+'px Verdana';;
@@ -48,24 +47,24 @@ function textC2(missatge, x, y, size ){
 function rectC(x, y, w, h){
 	let half1 = w *.5;
 	let half2 = h *.5;
-	
 	rect(x-half1, y - half2, w, h,10);
 }
 
 //QUÈ FA LA FINESTRA QUAN CANVIA DE MIDA
 window.onresize = function(){
-  resizeCanvas(window.innerWidth*0.8, window.innerHeight*0.85);
+	resizeCanvas(window.innerWidth*0.8, window.innerHeight*0.85);
 	resizevArialbles();
 }
 
 //CANVIA TOTES LES MESURES PREDEFINIDES QUAN LA FINESTRA CANVIA DE MIDA
 function resizevArialbles(){
-	quarterwidth = innerWidth * .25;
-	quarterwidth2 = innerWidth * .50;
-	quarterwidth3 = innerWidth * .75;
-	quarterheight = innerHeight * .25;
-	quarterheight2 = innerHeight * .50;
-	quarterheight3 = innerHeight * .75;
+	var quarterwidth = window.innerWidth * .15;
+	var halfcanvas = window.innerWidth * .40;
+	var halfwidth = window.innerWidth * 0.5;
+	var quarterwidth3 = window.innerWidth * .65;
+	var quarterheight = window.innerHeight * .25;
+	var halfheightcanvas = window.innerHeight * .50;
+	var quarterheight3 = window.innerHeight * .75;
 }
 
 //CENTRA UN RECTANGLE
@@ -105,7 +104,6 @@ function circlesInPolygonC(x, y, radius, npoints, radiusellipse, angleinicial){
 		if(angleinicial != undefined ) a2 += Number(angleinicial);
 		var sx = x + cos(a2) * radius;
 		var sy = y + sin(a2) * radius;
-
 		ellipse(sx, sy, radiusellipse);
 	}
 }
@@ -113,9 +111,7 @@ function circlesInPolygonC(x, y, radius, npoints, radiusellipse, angleinicial){
 //RETORNA LA POSICIÓ DELS VERTEXS D'UN POLIGON DESIGNAT
 function returnPointsInPolygon(x, y, radius, npoints, radiusellipse, angleinicial){
 	var posipunts = [];
-	
 	var angle = TWO_PI / npoints;
-	
 	for (var a = 0; a < TWO_PI; a += angle) {
 		//a = a - TWO_PI/4;
 		let a2 = a - TWO_PI/4;
@@ -130,7 +126,6 @@ function returnPointsInPolygon(x, y, radius, npoints, radiusellipse, angleinicia
 
 //CARREGA LES DADES JSON DE LA URL QUE LI PASSEM (ID)
 function util_xmlhttp(id, todo, params, handle){
-
 	/*id: id del document que llegeix*/
 	/*todo: funcio a fer*/
 	/*string: per identificar que esta fent*/
@@ -139,17 +134,16 @@ function util_xmlhttp(id, todo, params, handle){
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4
             if (xmlhttp.status == 200) {
-							todo(xmlhttp.responseText, params);
-							handle();
-							//handleComplete(params);
+				todo(xmlhttp.responseText, params);
+				handle();
+				//handleComplete(params);
             }
             else if (xmlhttp.status == 400) {
               console.log('There was an error 400');
             }
             else {
-               console.log('something else other than 200 was returned');
+              console.log('something else other than 200 was returned');
             }
-
         }
     };
 
@@ -174,7 +168,6 @@ function textHeight(text, maxWidth) {
 						line = testLine;
 				}
 		}
-
 		return h;
 }
 
@@ -194,89 +187,78 @@ function creaSubmit(stateprint){
 			sbmit.style.top = 20+'vh';
 			document.getElementById("totalcountup").setAttribute("style", "display:none");
 			
-			 if(stateprint==true){
+			if(stateprint==true){
 			
-					totalPuntatje();
+				totalPuntatje();
 					
-					for( var i = 0; i<preguntes.length; i++){
+				for( var i = 0; i<preguntes.length; i++){
+
+					var newdiv= document.createElement("div");
+					newdiv.id="Div"+i;
+					newdiv.style.display = 'none';
+					document.getElementById("foo").appendChild(newdiv);				
 						
+					newinput= document.createElement("input");	
+					newinput.name="resposta"+(i+1);
+					newinput.value = preguntes[i].respostaUsuari;
+					newinput.readOnly=true;
+					document.getElementById(newdiv.id).appendChild(newinput);
 						
-						
-						var newdiv= document.createElement("div");
-						newdiv.id="Div"+i;
-						newdiv.style.display = 'none';
-						document.getElementById("foo").appendChild(newdiv);
+					newdate= document.createElement("input");	
+					newdate.name="temps"+(i+1);
+					newdate.value = preguntes[i].date;
+					newdate.readOnly=true;
+					document.getElementById(newdiv.id).appendChild(newdate);
+
+				}
 					
-					
-						newinput= document.createElement("input");
-						
-						newinput.name="resposta"+(i+1);
-						newinput.value = preguntes[i].respostaUsuari;
-						newinput.readOnly=true;
-						document.getElementById(newdiv.id).appendChild(newinput);
-						
-						newdate= document.createElement("input");
-						
-						newdate.name="temps"+(i+1);
-						newdate.value = preguntes[i].date;
-						newdate.readOnly=true;
-						document.getElementById(newdiv.id).appendChild(newdate);
-						
-						
-						
-					}
-					
-						newdiv= document.createElement("div");
-						newdiv.id="Div"+i;
-						newdiv.style.display = 'none';
-						document.getElementById("foo").appendChild(newdiv);
-						
-						totaldate= document.createElement("input");
-						totaldate.name="Total";
-						totaldate.value = document.getElementById("totalhours").innerHTML+" : "+document.getElementById("totalminutes").innerHTML+" : "+document.getElementById("totalseconds").innerHTML;
-						totaldate.readOnly=true;
-						document.getElementById(newdiv.id).appendChild(totaldate);
-						
-						newdiv= document.createElement("div");
-						newdiv.id="Div"+i;
-						newdiv.style.display = 'none';
-						document.getElementById("foo").appendChild(newdiv);
-						
-						totalpunt= document.createElement("input");
-						totalpunt.name="puntatje";
-						totalpunt.value = puntatje
-						totalpunt.readOnly=true;
-						document.getElementById(newdiv.id).appendChild(totalpunt);
+				newdiv= document.createElement("div");
+				newdiv.id="Div"+i;
+				newdiv.style.display = 'none';
+				document.getElementById("foo").appendChild(newdiv);
 				
-						newinput= document.createElement("input");
-						newinput.name="usuari"
-						newinput.id="usuari";
-						newinput.placeholder="Usuario: ";
-						newinput.classList.add('ginput');
-						newinput.style.padding="9.8px";
-						document.getElementById("foo").appendChild(newinput);
-					
+				totaldate= document.createElement("input");
+				totaldate.name="Total";
+				totaldate.value = document.getElementById("totalhours").innerHTML+" : "+document.getElementById("totalminutes").innerHTML+" : "+document.getElementById("totalseconds").innerHTML;
+				totaldate.readOnly=true;
+				document.getElementById(newdiv.id).appendChild(totaldate);
 						
-						var sbmit= document.createElement("button");
-						sbmit.id="submit";		
-						sbmit.type="submit";
-						sbmit.style.display="none";
-						sbmit.innerHTML="Envia";
-						document.getElementById("foo").appendChild(sbmit);
+				newdiv= document.createElement("div");
+				newdiv.id="Div"+i;
+				newdiv.style.display = 'none';
+				document.getElementById("foo").appendChild(newdiv);
 						
-						
-					return stateprint=false;
+				totalpunt= document.createElement("input");
+				totalpunt.name="puntatje";
+				totalpunt.value = puntatje
+				totalpunt.readOnly=true;
+				document.getElementById(newdiv.id).appendChild(totalpunt);
+				
+				newinput= document.createElement("input");
+				newinput.name="usuari"
+				newinput.id="usuari";
+				newinput.placeholder="Usuario: ";
+				newinput.classList.add('ginput');
+				newinput.style.padding="9.8px";
+				document.getElementById("foo").appendChild(newinput);
+									
+				var sbmit= document.createElement("button");
+				sbmit.id="submit";		
+				sbmit.type="submit";
+				sbmit.style.display="none";
+				sbmit.innerHTML="Envia";
+				document.getElementById("foo").appendChild(sbmit);
+		
+				return stateprint=false;
 			}
 
-			 if(document.getElementById("usuari").value!=""){
-							document.getElementById("submit").style.display="block";
-						}
+			if(document.getElementById("usuari").value!=""){
+				document.getElementById("submit").style.display="block";
+			}
 }
 
 //CALCULA LA PUNTUACIÓ FINAL DEPENENT DE LES RESPOSTES DE L'USUARI
 function totalPuntatje(){
-	
-
 	for(var i=0; i<preguntes.length; i++){
 		if(preguntes[i].respostes!=undefined){
 			if( preguntes[i].respostes==preguntes[i].respostaUsuari){
@@ -284,55 +266,50 @@ function totalPuntatje(){
 			}	
 		}
 	}
-	
 }
 
 //AJUSTA EL TEXT PERQUÈ NO S'ESCAPI DE LA PANTALLA
 function ajustaText(txt, height, mida){
-
 	var pregunta=[];
 	textSize(mida);
-								if(txt.length>=Math.ceil(innerWidth*0.05)){
-							
-								for(var i=0;i<=txt.length-1;i++){
-									pregunta+=txt[i];
-									if(i==Math.ceil(txt.length/2)){
-										pregunta+=' / ';
-									}
-								}
-									lines=pregunta.split('/');
-								
-								for (var i = 0; i<lines.length; i++){
-									textC(lines[i], height*0.9+(i*mida*1.2),20 );
-								}
-							
-								}else{
-									lines=txt;
-									textC(lines, height,20 );
-								}
+	if(txt.length>=Math.ceil(innerWidth*0.05)){					
+		for(var i=0;i<=txt.length-1;i++){
+			pregunta+=txt[i];
+			if(i==Math.ceil(txt.length/2)){
+				pregunta+=' / ';
+			}
+		}
+		lines=pregunta.split('/');				
+		for (var i = 0; i<lines.length; i++){
+			textC(lines[i], height*0.9+(i*mida*1.2),20 );
+		}					
+		}else{
+			lines=txt;
+			textC(lines, height,20 );
+		}
 
 
 }
 function createStart(){
 
 	var newdiv= document.createElement("div");
-						newdiv.id="StartingDiv";
-						document.body.appendChild(newdiv);
+		newdiv.id="StartingDiv";
+		document.body.appendChild(newdiv);
 					
-						newinput= document.createElement("input");
-						newinput.id="url"
-						newinput.type="url";
-						newinput.classList.add('ginput');
-						newinput.placeholder="URL del cuestionario: ";
-						document.getElementById(newdiv.id).appendChild(newinput);
+		newinput= document.createElement("input");
+		newinput.id="url"
+		newinput.type="url";
+		newinput.classList.add('ginput');
+		newinput.placeholder="URL del cuestionario: ";
+		document.getElementById(newdiv.id).appendChild(newinput);
 						
-						newinput= document.createElement("input");
-						newinput.id="sendurl"
-						newinput.classList.add('ginput');
-						newinput.placeholder="Dónde guardar las respuestas: ";
-						document.getElementById(newdiv.id).appendChild(newinput);
-						
-						
-						start=false;
+		newinput= document.createElement("input");
+		newinput.id="sendurl"
+		newinput.classList.add('ginput');
+		newinput.placeholder="Dónde guardar las respuestas: ";
+		document.getElementById(newdiv.id).appendChild(newinput);
+										
+		start=false;
 
 }
+

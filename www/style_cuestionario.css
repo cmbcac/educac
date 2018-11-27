@@ -1,189 +1,176 @@
-html, body {
-		
-		padding: 0;
-		margin: 0;
-		overflow: hidden;
-		position: fixed;
-		background:
-		linear-gradient(
-			cyan,
-			transparent
-		),
-		linear-gradient(
-			-45deg,
-			DarkViolet,
-			transparent
-		),
-		linear-gradient(
-			45deg,
-			Turquoise ,
-			transparent
-		);
-		background-blend-mode: multiply;
-		width:100%;
-		height:100%;
-		//background-image: url("img/bg.jpg");
-		//background-position:center;
-		font-family: "Arial", cursive, sans-serif;
-	}
+html, body {	
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	position: fixed;
+	background:
+	linear-gradient(
+		cyan,
+		transparent
+	),
+	linear-gradient(
+		-45deg,
+		DarkViolet,
+		transparent
+	),
+	linear-gradient(
+		45deg,
+		Turquoise ,
+		transparent
+	);
+	background-blend-mode: multiply;
+	width:100%;
+	height:100%;
+	//background-image: url("img/bg.jpg");
+	//background-position:center;
+	font-family: "Arial", cursive, sans-serif;
+}
 .container-welcome{
-		
-		color:black;
-		position: inherit;
-		width: calc(100vw);
-		height: 8%;
-		background: transparent;
-		text-align: center;
-		
-	}
+	color:black;
+	position: inherit;
+	width: calc(100vw);
+	height: 8%;
+	background: transparent;
+	text-align: center;		
+}
 h1, h3, h4{
 		position:relative;
 		top: calc(10%);
-	}
+}
 h4:hover{
 		color: #62d6a9;
 		cursor: pointer;
-	}
+}
 .icon{
-		position: inherit;
-		cursor: pointer;
-	}
+	position: inherit;
+	cursor: pointer;
+}
 .arrow{
-		top: calc(90vh);
-	}
+	top: calc(90vh);
+}
 .esc.icon{
-		left: calc(1vw);
-		top: 10%;
-		background: url(img/menu.png);
-		width: 3.879vw;
-		height: 7.048458149779735vh;
-		background-size:  3.879vw 7.048458149779735vh;
-		margin: -0.4vw -1vw 0 0;
-		transition: all 0.5s;
-		border-radius:100%;
-	}
+	left: calc(1vw);
+	top: 10%;
+	background: url(img/menu.png);
+	width: 3.879vw;
+	height: 7.048458149779735vh;
+	background-size:  3.879vw 7.048458149779735vh;
+	margin: -0.4vw -1vw 0 0;
+	transition: all 0.5s;
+	border-radius:100%;
+}
 .esc.icon:hover{
 	transform:scale(1.2,1.2)
-	}
+}
 #col{
-		display:none
-	}
+	display:none
+}
 #esc:checked ~ #col{
-		display: block;
-	}
+	display: block;
+}
 #esc:checked ~ #iframe{
-		display: none;
-	}
+	display: none;
+}
 #foo{
-		display:none;
-		position:absolute;
-		top:0%;
-		left:0%;
-		width:50%;
-		height:50%;
-		margin-left:-20%;
-		margin-top:-3%;
-	}
+	display:none;
+	position:absolute;
+	top:0%;
+	left:0%;
+	width:50%;
+	height:50%;
+	margin-left:-20%;
+	margin-top:-3%;
+}
 #countup{
-		position:absolute;
-		top: 5vh;
-		left:50%;
-		width: 10vw;
-		
-	}
+	position:absolute;
+	top: 5vh;
+	left:50%;
+	width: 10vw;	
+}
 #totalcountup{
-		position:absolute;
-		top: 90%;
-		left:20%;
-		width: 10vw;
-		margin-left:-5vw;
-		z-index: 999;
-		display:none;
-	}
+	position:absolute;
+	top: 90%;
+	left:20%;
+	width: 10vw;
+	margin-left:-5vw;
+	z-index: 999;
+	display:none;
+}
 #passar{
-		left: calc(1vw);
-		top: calc(1vw);
-		position:absolute;
-		background-image: url(img/right.png);
-		width: 3.879vw;
-		height: 7.048458149779735vh;
-		background-size:  3.879vw 7.048458149779735vh;
-		transition: all 0.5s;
-		display:none;
-	}
+	left: calc(1vw);
+	top: calc(1vw);
+	position:absolute;
+	background-image: url(img/right.png);
+	width: 3.879vw;
+	height: 7.048458149779735vh;
+	background-size:  3.879vw 7.048458149779735vh;
+	transition: all 0.5s;
+	display:none;
+}
 #passar:hover{
 	transform:scale(1.2,1.2)
-	}
+}
 #infopass{
-		left: calc(5vw);
-		top: calc(1vw);
-		position:absolute;
-		background-image: url(img/info.png);
-		width: 25vw;
-		height: 6vh;
-		background-size: 25vw 6vh;
-		display:none;
-
-	}
+	left: calc(5vw);
+	top: calc(1vw);
+	position:absolute;
+	background-image: url(img/info.png);
+	width: 21vw;
+	height: 6vh;
+	background-size: 21vw 6vh;
+	display:none;
+}
 #txtpassar{
-		left: calc(10vw);
-		top: calc(2vw);
-		width:auto;
-		position:absolute;
-		display:none;
-		color:black;
-		font-size:1vw;
-	}
+	left: calc(10vw);
+	top: calc(2vw);
+	width:auto;
+	position:absolute;
+	display:none;
+	color:black;
+	font-size:1vw;
+}
 #submit {
 	background-color: rgba(246,246,246,0.6);
     color: black;
 	border: solid black;
 	position:absolute;
     text-align: center;
-    font-size: 16px;
+    font-size: 1.76vh;
 	top:60%;
 	left:50%;
 	width:10vw;
 	height:10vw;
 	margin:-2,5vw;
 	border-radius:100%;
-	
-	
-	
-	}
+}
 #submit:hover {
-	
-	animation-name: example,spin;
+	animation-name: example,spinsu;
     animation-duration: 10s;
     animation-iteration-count: infinite;
-	
-	}
+}
 @keyframes example {
     0%   {background-color:#cc00cc;}
     25%  {background-color:#0066ff;}
     50%  {background-color:#339933;}
     75%  {background-color:#ffff00;}
     100% {background-color:#ff0066;}
-	}
-@keyframes spin {
+}
+@keyframes spinsub {
 	0%   {transform: rotate(0%);}
 	20%  {transform: rotate(500deg);}
 	40%  {transform: rotate(-500deg);}
 	60%  {transform: rotate(1000deg);}
     80%  {transform: rotate(-1000deg);}
 	100% {transform: rotate(7000deg);}
-	}
+}
 @keyframes shrink {
 	0%   {transform: scale(1.0);}
-	
     50% {transform: scale(2.0);}
-	
 	100% {transform: scale(0);}
-	}
+}
 #respostaescrita{
 	position: absolute;
 	z-index: 999;
-	
 }	
 #StartingDiv{
 	position:absolute; 
@@ -191,15 +178,12 @@ h4:hover{
 	top: 50%;
 	left: 48%;
 	margin: -5vw;
-	
 }
 #usuari{
-
 	position:absolute;
 	top:35%;
 	left:50%;
 	margin-left:-50px;
-
 }
 .ginput {
 	background: #222;	
@@ -219,7 +203,7 @@ h4:hover{
 	width: 200px;
 }
 .ginput:focus {
-	animation: glow 800ms ease-out infinite alternate;
+	animation: glow 800ms ease-out infinite reverse;
 	background: #222922;
 	background: linear-gradient(#333933, #222922);
 	border-color: #393;
@@ -246,66 +230,76 @@ h4:hover{
 #col1 {
 	border: 1vh solid transparent; 
 	position:absolute;
-    border-top: 1vh solid #ff0000; 
+    border-top: 1vh solid #ff0000;
+	border-bottom: 1vh solid #ff0000; 	
     border-radius: 50%;
     width: 7vw;
     height: 7vw;
 	margin: -3.5vw;
-    animation: spin 7s linear infinite;
+    animation: spin 1s linear infinite;
 }
 #col2 {
 	position:absolute;
 	border: 1vh solid transparent; 
     border-top: 1vh solid #ff6600; 
+    border-bottom: 1vh solid #ff6600; 
     border-radius: 50%;
     width: 6vw;
     height: 6vw;
 	margin: -3vw;
-    animation: spin 6s linear infinite;
+    animation: spin 2s linear infinite;
+	 animation-direction: reverse;
 }
 #col3 {
 	position:absolute;
     border: 1vh solid transparent; 
     border-top: 1vh solid #ffff00; 
+    border-bottom: 1vh solid #ffff00; 
     border-radius: 50%;
     width: 5vw;
     height: 5vw;
 	margin: -2.5vw;
-    animation: spin 5s linear infinite;
+    animation: spin 3s linear infinite;
 }
 #col4 {
 	position:absolute;
     border: 1vh solid transparent; 
+    border-bottom: 1vh solid #00ff00; 
     border-top: 1vh solid #00ff00; 
     border-radius: 50%;
     width: 4vw;
     height: 4vw;
 	margin: -2vw;
-    animation: spin 4s linear infinite;
+    animation: spin 1s linear infinite;
+	 animation-direction: reverse;
 }
 #col5 {
 	position:absolute;
     border: 1vh solid transparent;  
+    border-bottom: 1vh solid #0000ff; 
     border-top: 1vh solid #0000ff; 
     border-radius: 50%;
     width: 3vw;
     height: 3vw;
 	margin: -1.5vw;
-    animation: spin 3s linear infinite;
+    animation: spin 2s linear infinite;
 }
 #col6{
 	position:absolute;
     border: 1vh solid transparent; 
+    border-bottom: 1vh solid #cc66ff; 
     border-top: 1vh solid #cc66ff; 
     border-radius: 50%;
      width: 2vw;
     height: 2vw;
 	margin: -1vw;
-    animation: spin 2s linear infinite;
+    animation: spin 3s linear infinite;
+	 animation-direction: reverse;
 }
 #col7 {
 	position:absolute;
     border: 1vh solid transparent;  
+    border-bottom: 1vh solid #9900cc; 
     border-top: 1vh solid #9900cc; 
     border-radius: 50%;
     width: 1vw;
@@ -318,9 +312,9 @@ h4:hover{
     100% { transform: rotate(360deg); }
 }
 .loader{
-display:none;
-position:absolute;
-top:50%;
-left:50%;
-z-index:99;
+	display:none;
+	position:absolute;
+	top:50%;
+	left:50%;
+	z-index:99;
 }

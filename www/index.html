@@ -2,87 +2,85 @@
 <html>
   <head>
     <meta charset="utf-8">
-	 <meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="pragma" content="no-cache" />
     <!--<meta name="viewport" height=device-height, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
 	<link rel="icon" href="img/favicon.png" type="image/gif" sizes="16x16"/>
 	<title>CM Inicio </title>
     <style>
-	html, body {
-		padding: 0;
-		margin: 0;
-		overflow: hidden;
-		position: fixed;
-		background:
-		linear-gradient(
-			cyan,
-			transparent
-		),
-		linear-gradient(
-			-45deg,
-			magenta,
-			transparent
-		),
-		linear-gradient(
-			45deg,
-			yellow,
-			transparent
-		);
-		background-blend-mode: multiply;
-		height:100%;
-		width:100%;
-	}
-	.container-welcome{
-		position: inherit;
-		width: calc(30vw);
-		height:calc(30vh);
-		left: calc(35vw);
-		top: calc(35vh);
-		background:transparent;
-		text-align: center;
+		html, body {
+			padding: 0;
+			margin: 0;
+			overflow: hidden;
+			position: fixed;
+			background:
+			linear-gradient(
+				cyan,
+				transparent
+			),
+			linear-gradient(
+				-45deg,
+				magenta,
+				transparent
+			),
+			linear-gradient(
+				45deg,
+				yellow,
+				transparent
+			);
+			background-blend-mode: multiply;
+			height:100%;
+			width:100%;
+		}
+		.container-welcome{
+			position: inherit;
+			width: calc(30vw);
+			height:calc(30vh);
+			left: calc(35vw);
+			top: calc(35vh);
+			background:transparent;
+			text-align: center;
 
-	}
-	h1, h3, h4{
-		position:relative;
-		top: calc(30%);
-		
-	}
+		}
+		h1, h3, h4{
+			position:relative;
+			top: calc(30%);
+			
+		}
 
-	h4:hover{
-		color: yellow;
-		cursor: pointer;
-	}
-	a {
-		text-decoration: none;
-		color:inherit;
-	}
-
+		h4:hover{
+			color: yellow;
+			cursor: pointer;
+		}
+		a {
+			text-decoration: none;
+			color:inherit;
+		}
 	</style>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="libs/p5.min.js"></script>
     <script src="libs/addons/p5.dom.min.js"></script>
     <script src="libs/addons/p5.sound.min.js"></script>
-  </head>
-  <body>
-	<div class = "container-welcome">
-		<h1> EDUCAC </h1>
-		<h3>Cuestionario de competencia mediática</h3>
-		<h4><a href="cuestionario.html"> Empezar </a> </h4>
-	</div>
+	</head>
+	<body>
+		<div class = "container-welcome">
+			<h1> EDUCAC </h1>
+			<h3>Cuestionario de competencia mediática</h3>
+			<h4><a href="cuestionario.html"> Empezar </a> </h4>
+		</div>
 
-  </body>
-  <script>
+	</body>
+	<script>
 
-	function setup(){}
-	function draw(){}
+		function setup(){}
+		function draw(){}
 
-	function keyPressed(){
-		if(keyCode === ENTER){
-			$("a").css("color", "#62d6a9");
-			 window.location.href = "cuestionario.html";
+		function keyPressed(){
+			if(keyCode === ENTER){
+				$("a").css("color", "#62d6a9");
+				 window.location.href = "cuestionario.html";
+			}
 		}
-	}
-
 
   </script>
 </html>
