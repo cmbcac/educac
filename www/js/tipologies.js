@@ -45,7 +45,6 @@ function opcio_multiple(p,g){
 		}				
 	}
 }
-
 //COM DIBUIXAR LES PREGUNTES DE DRAG
 
 /*DRAG ARA MATEIX ES UN TIPUS DE PREGUNTA PROVISIONAL I UNA MANERA MÉS SOFISTICADA DE FER
@@ -91,8 +90,7 @@ function drag(p,g){
 				fill(0);
 				textC2(p.subpreguntes[i], x, y, 11);
 				pop();	
-			}
-								
+			}						
 		}
 		catch(error){
 			console.log(error);
@@ -101,114 +99,105 @@ function drag(p,g){
 		}
 	}
 	else{
-		
-			try{
-
-				var posipunts;
-				var rad = innerWidth*0.1;
-				var radiusellipse = innerWidth*0.06;
-				var angleinicial =120;  
-				posipunts = returnPointsInPolygon(halfcanvas/2, halfheightcanvas*0.9, rad, p.subpreguntes.length, radiusellipse, angleinicial);
-				for(var i = 0; i < posipunts.length; i++){				
-					let x=posipunts[i].x;
-					let y=posipunts[i].y;
-					let dinsresp = dist(x, y, mouseX, mouseY) < radiusellipse/2;
-					let dinsfotX = entre(mouseX, innerWidth*0.4, innerWidth*0.6);
-					let dinsfotY = entre(mouseY, innerHeight*0.3, innerHeight*0.5);
-					if(p.categories[isubp2][0]=="!"){
-						
-						textC(p.categories[isubp2].substr(1), halfheightcanvas, 23);
-						estatdrag=true;
-						push();
-					}else{
-						var dragimage = new Image();
-						dragimage.src=p.categories[isubp2];
-						if(estatdrag==false){
-							if(dinsfotX && dinsfotY){
-								push();
-								ctx.drawImage(dragimage,innerWidth*0.35, innerHeight*0.25,innerWidth*0.3,innerHeight*0.3);
-								pop();
-								if(mouseIsPressed){
-									estatdrag=true;
-								}
-							}else{
-								ctx.drawImage(dragimage,innerWidth*0.4, innerHeight*0.3,innerWidth*0.2,innerHeight*0.2); 
-							}						
-						}
-						else{
-							ctx.save();
-							ctx.beginPath();
-							ctx.arc(mouseX, mouseY, 25, 0, Math.PI * 2, true);
-							ctx.closePath();
-							ctx.clip();
-							ctx.drawImage(dragimage, mouseX-25, mouseY-25, 100, 100);
-							ctx.beginPath();
-							ctx.arc(mouseX, mouseY, 25, 0, Math.PI * 2, true);
-							ctx.clip();
-							ctx.closePath();
-							ctx.restore();
-						}
-						push();
-					}
-
-					if(dinsresp && mouseIsPressed && estatdrag){
-							
-							var rsp=p.subpreguntes[i];
-							preguntes[current].respostaUsuari.push(rsp);
-							estatdrag=false;						
-							isubp2++;
-							sleep(200);
-							if(isubp2 == p.categories.length){							
-								isubp2 = 0;
-								p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
-								upTime(new Date());
-								current++;	
-								
+		try{
+			var posipunts;
+			var rad = innerWidth*0.1;
+			var radiusellipse = innerWidth*0.06;
+			var angleinicial =120;  
+			posipunts = returnPointsInPolygon(halfcanvas/2, halfheightcanvas*0.9, rad, p.subpreguntes.length, radiusellipse, angleinicial);
+			for(var i = 0; i < posipunts.length; i++){				
+				let x=posipunts[i].x;
+				let y=posipunts[i].y;
+				let dinsresp = dist(x, y, mouseX, mouseY) < radiusellipse/2;
+				let dinsfotX = entre(mouseX, innerWidth*0.4, innerWidth*0.6);
+				let dinsfotY = entre(mouseY, innerHeight*0.3, innerHeight*0.5);
+				if(p.categories[isubp2][0]=="!"){			
+					textC(p.categories[isubp2].substr(1), halfheightcanvas, 23);
+					estatdrag=true;
+					push();
+				}else{
+					var dragimage = new Image();
+					dragimage.src=p.categories[isubp2];
+					if(estatdrag==false){
+						if(dinsfotX && dinsfotY){
+							push();
+							ctx.drawImage(dragimage,innerWidth*0.35, innerHeight*0.25,innerWidth*0.3,innerHeight*0.3);
+							pop();
+							if(mouseIsPressed){
+								estatdrag=true;
 							}
+						}else{
+							ctx.drawImage(dragimage,innerWidth*0.4, innerHeight*0.3,innerWidth*0.2,innerHeight*0.2); 
+						}						
 					}
-					if(dinsresp && !mouseIsPressed && !lastframemouse){
-						ctx.scale(2,2);
-						ctx.translate(-x/2,-y/2);							
-						fill(100,200,200);
-					}	
 					else{
-						fill(255);
-					}
-					if(p.subpreguntes[i][0]=="!"){
-						ellipse(x, y, radiusellipse);
-						fill(0);
-						textC2(p.subpreguntes[i].substr(1), x, y, 11);
-						pop();	
-					}else{
-						var subpimage = new Image();
-						subpimage.src=p.subpreguntes[i];
 						ctx.save();
 						ctx.beginPath();
-						ctx.arc(x, y, radiusellipse/2, 0, Math.PI * 2, true);
+						ctx.arc(mouseX, mouseY, 25, 0, Math.PI * 2, true);
 						ctx.closePath();
 						ctx.clip();
-						ctx.drawImage(subpimage, x-radiusellipse/2, y-radiusellipse/2, radiusellipse, radiusellipse);
+						ctx.drawImage(dragimage, mouseX-25, mouseY-25, 100, 100);
 						ctx.beginPath();
-						ctx.arc(x, y, radiusellipse/2, 0, Math.PI * 2, true);
+						ctx.arc(mouseX, mouseY, 25, 0, Math.PI * 2, true);
 						ctx.clip();
 						ctx.closePath();
 						ctx.restore();
-						pop();
 					}
-				}						
-			}
-			catch(error){
-				console.log(error);
-				missatgeerror = error;
-				estatdelsistema = "error";
-			}	
-		
-		
+					push();
+				}
+				if(dinsresp && mouseIsPressed && estatdrag){							
+						var rsp=p.subpreguntes[i];
+						preguntes[current].respostaUsuari.push(rsp);
+						estatdrag=false;						
+						isubp2++;
+						sleep(200);
+						if(isubp2 == p.categories.length){							
+							isubp2 = 0;
+							p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+							upTime(new Date());
+							current++;			
+						}
+				}
+				if(dinsresp && !mouseIsPressed && !lastframemouse){
+					ctx.scale(2,2);
+					ctx.translate(-x/2,-y/2);							
+					fill(100,200,200);
+				}	
+				else{
+					fill(255);
+				}
+				if(p.subpreguntes[i][0]=="!"){
+					ellipse(x, y, radiusellipse);
+					fill(0);
+					textC2(p.subpreguntes[i].substr(1), x, y, 11);
+					pop();	
+				}else{
+					var subpimage = new Image();
+					subpimage.src=p.subpreguntes[i];
+					ctx.save();
+					ctx.beginPath();
+					ctx.arc(x, y, radiusellipse/2, 0, Math.PI * 2, true);
+					ctx.closePath();
+					ctx.clip();
+					ctx.drawImage(subpimage, x-radiusellipse/2, y-radiusellipse/2, radiusellipse, radiusellipse);
+					ctx.beginPath();
+					ctx.arc(x, y, radiusellipse/2, 0, Math.PI * 2, true);
+					ctx.clip();
+					ctx.closePath();
+					ctx.restore();
+					pop();
+				}
+			}						
+		}
+		catch(error){
+			console.log(error);
+			missatgeerror = error;
+			estatdelsistema = "error";
+		}		
 	}
 	lastframemouse = mouseIsPressed;
 }
-
-//COM DIBUIXAR LES PREGUNTES DESWIPE
+//COM DIBUIXAR LES PREGUNTES DE SWIPE
 
 /*SWIPE CONSTA D'UN ENUNCIAT I UN RECUADRE AL CENTRE AMB L'ELEMENT A CLASSIFICAR. A LA QUE L'USUARI
 POLSI A SOBRE EL RECUADRE, EL RECUADRE ES MINIMITZARÀ I ENS PERMETRÀ VEURE LES POSSIBLES RESPOSTES A TRIAR.
@@ -522,8 +511,6 @@ function swipe(p,g){
 								current+=1; 
 							}
 						}
-		  
-		 
 				}		
 				catch(error){
 					console.log(error);
@@ -659,7 +646,6 @@ function swipe(p,g){
 		}
 		ajustaText(p.gran, quarterheight+40,20);
 }
-
 //COM DIBUIXAR LES PREGUNTES DE FILTRE
 
 /*LES PREGUNTES DE FILTRE CONSTEN D'UNA IMATGE QUE SERÀ LLEGIDA A TRAVÉS DE LA SEVA URL I UN SEGUIT D'OPCIONS.
@@ -773,15 +759,13 @@ function filtre(p,g){
 		}
 	}	
 }
-
 //COM DIBUIXAR LES PREGUNTES DE RELACIO
 
 /*LES PREGUNTES DE RELACIÓ CONSTEN DE DUES COLUMNES DE TEXT AMB OPCIONS A RELACIONAR PER A L'USUARI.
 L'USUARI SIMPLEMENT HAURÀ DE POLSAR UNA OPCIÓ D'UNA BANDA I UNA D'UNA ALTRA PER A UNIR-LES I FER QUE DESAPAREIXIN
 UN COP NO QUEDIN OPCIONS POSSIBLES, ES PASSARÁ DE PREGUNTA*/
 //FOTOS FETES!!  '\o/'''\o/'''\o/'''\o/'
-function relacio(p,g){
-	
+function relacio(p,g){	
 	background(255);
 	textSize(innerWidth*0.03);
 	ajustaText(p.gran,halfheightcanvas-100, 20);
@@ -969,7 +953,6 @@ function relacio(p,g){
 		estatdelsistema=="error";
 	}				
 }
-
 //COM DIBUIXAR LES PREGUNTES D'ORDENAR
 
 /*TOT I TENIR UNA IMPLEMENTACIÓ FORÇA BÀSICA, LES PREGUNTES D'ORDENAR CONSTEN D'UN ENUNCIAT I UN SEGUIT D'ELEMENTS
@@ -1014,7 +997,6 @@ function ordenar(p,g){
 		}
 	}			
 }
-
 //COM DIBUIXAR LES PREGUNTES DE BUSCADOR
 
 /*WORK IN PROGRESS*/

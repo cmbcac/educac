@@ -1,39 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-		<meta charset="utf-8">
-		<meta http-equiv="pragma" content="no-cache" />
-		<!--<meta name="viewport" height=device-height, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>-->
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
-		<title> Cuestionario CM </title>
-		<link rel="stylesheet" type="text/css" href="style_cuestionario.css" />
-		<link rel="icon" href="img/favicon.png" type="image/gif" sizes="16x16"/>
-		<script src="libs/p5.min.js"></script>
-		<script src="libs/addons/p5.dom.min.js"></script>
-		<script src="libs/addons/p5.sound.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		
-		<div id="countup" style="display:none">
-					<p id="hours" style="float:left">00</p>
-					<p id="timeRefHours" style="float:left">:</p>
-					<p id="minutes" style="float:left">00</p>
-					<p id="timeRefMinutes" style="float:left">:</p>
-					<p id="seconds" style="float:left">00</p>
-					
-		</div>
-		
+	<meta charset="utf-8">
+	<meta http-equiv="pragma" content="no-cache" />
+	<!--<meta name="viewport" height=device-height, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+	<title> Cuestionario CM </title>
+	<link rel="stylesheet" type="text/css" href="style_cuestionario.css" />
+	<link rel="icon" href="img/favicon.png" type="image/gif" sizes="16x16"/>
+	<script src="libs/p5.min.js"></script>
+	<script src="libs/addons/p5.dom.min.js"></script>
+	<script src="libs/addons/p5.sound.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<div id="countup" style="display:none">
+		<p id="hours" style="float:left">00</p>
+		<p id="timeRefHours" style="float:left">:</p>
+		<p id="minutes" style="float:left">00</p>
+		<p id="timeRefMinutes" style="float:left">:</p>
+		<p id="seconds" style="float:left">00</p>					
+	</div>
 	</head>
 	<script src="js/util.js"></script>
 	<script src="js/supermain.js"></script>
 	<script src="js/tipologies.js"></script>
 	<!-- <script src="js/canvasDraw.js"></script> -->
- 
 	<body>
-	
 		<div class = "container-welcome">
 			<h1> CUESTIONARIO DE COMPETENCIAS MEDIATICAS </h1>	
 		</div>
-
 		<div class="loader">
 			<div id= "col1"></div>
 			<div id= "col2"></div>
@@ -43,9 +37,7 @@
 			<div id= "col6"></div>
 			<div id= "col7"></div>
 		</div>
-
 		<input id='respostaescrita' style="display:none">
-			
 		<div id="passar"></div>
 		<div id="infopass"></div>
 		<text id="txtpassar">Pasar pregunta implica nota nula</text>
@@ -57,15 +49,11 @@
 			<p id="totaltimeRefMinutes" style="float:left">:</p>
 			<p id="totalseconds" style="float:left">00</p>				
 		</div>
-		
 		<form id='foo'>
-		</form>			
-			
+		</form>				
     </body>
-	
 	<script src='js/google-sheet.js'></script> 
 	<script>
-
 		function keyPressed(){
 			if(keyCode===ESCAPE){
 				document.getElementsByClassName('esc icon')[0].onclick = function(){window.location.href="index.html";}
@@ -78,62 +66,46 @@
 				window.location.href = "index.html";
 			}
 		}
-
 		function pinta(s){console.log(s)};
-
 	</script>
-  
 	<script> 
 		function upTime(countTo) {
-				now = new Date();
-			
-				difference = (now-countTo);
-
-				hours=Math.floor((difference%(60*60*1000*24))/(60*60*1000)*1);
-				mins=Math.floor(((difference%(60*60*1000*24))%(60*60*1000))/(60*1000)*1);
-				secs=Math.floor((((difference%(60*60*1000*24))%(60*60*1000))%(60*1000))/1000*1);
-
-				document.getElementById('hours').firstChild.nodeValue = hours;
-				document.getElementById('minutes').firstChild.nodeValue = mins;
-				document.getElementById('seconds').firstChild.nodeValue = secs;
-				
-				if(document.getElementById('hours').firstChild.nodeValue==0){
-					document.getElementById('hours').setAttribute('style', 'display:none');
-					document.getElementById('timeRefHours').setAttribute('style', 'display:none');
-				}else{
-					document.getElementById('hours').setAttribute('style', 'display:inline');
-					document.getElementById('timeRefHours').setAttribute('style', 'display:inline');
-				}
-				
-				clearTimeout(upTime.to);
-				upTime.to=setTimeout(function(){ upTime(countTo); },1000);
+			now = new Date();
+			difference = (now-countTo);
+			hours=Math.floor((difference%(60*60*1000*24))/(60*60*1000)*1);
+			mins=Math.floor(((difference%(60*60*1000*24))%(60*60*1000))/(60*1000)*1);
+			secs=Math.floor((((difference%(60*60*1000*24))%(60*60*1000))%(60*1000))/1000*1);
+			document.getElementById('hours').firstChild.nodeValue = hours;
+			document.getElementById('minutes').firstChild.nodeValue = mins;
+			document.getElementById('seconds').firstChild.nodeValue = secs;				
+			if(document.getElementById('hours').firstChild.nodeValue==0){
+				document.getElementById('hours').setAttribute('style', 'display:none');
+				document.getElementById('timeRefHours').setAttribute('style', 'display:none');
+			}else{
+				document.getElementById('hours').setAttribute('style', 'display:inline');
+				document.getElementById('timeRefHours').setAttribute('style', 'display:inline');
+			}			
+			clearTimeout(upTime.to);
+			upTime.to=setTimeout(function(){ upTime(countTo); },1000);
 		}
-	
 		function totalupTime(countTo) {
-				now = new Date();
-				
-				difference = (now-countTo);
-
-				hours=Math.floor((difference%(60*60*1000*24))/(60*60*1000)*1);
-				mins=Math.floor(((difference%(60*60*1000*24))%(60*60*1000))/(60*1000)*1);
-				secs=Math.floor((((difference%(60*60*1000*24))%(60*60*1000))%(60*1000))/1000*1);
-
-				
-				document.getElementById('totalhours').firstChild.nodeValue = hours;
-				document.getElementById('totalminutes').firstChild.nodeValue = mins;
-				document.getElementById('totalseconds').firstChild.nodeValue = secs;
-				
-				if(document.getElementById('totalhours').firstChild.nodeValue==0){
-					document.getElementById('totalhours').setAttribute('style', 'display:none');
-					document.getElementById('totaltimeRefHours').setAttribute('style', 'display:none');
-				}else{
-					document.getElementById('totalhours').setAttribute('style', 'display:inline');
-					document.getElementById('totaltimeRefHours').setAttribute('style', 'display:inline');
-				}
-				
-				clearTimeout(totalupTime.to);
-				totalupTime.to=setTimeout(function(){ totalupTime(countTo); },1000);
+			now = new Date();	
+			difference = (now-countTo);
+			hours=Math.floor((difference%(60*60*1000*24))/(60*60*1000)*1);
+			mins=Math.floor(((difference%(60*60*1000*24))%(60*60*1000))/(60*1000)*1);
+			secs=Math.floor((((difference%(60*60*1000*24))%(60*60*1000))%(60*1000))/1000*1);			
+			document.getElementById('totalhours').firstChild.nodeValue = hours;
+			document.getElementById('totalminutes').firstChild.nodeValue = mins;
+			document.getElementById('totalseconds').firstChild.nodeValue = secs;	
+			if(document.getElementById('totalhours').firstChild.nodeValue==0){
+				document.getElementById('totalhours').setAttribute('style', 'display:none');
+				document.getElementById('totaltimeRefHours').setAttribute('style', 'display:none');
+			}else{
+				document.getElementById('totalhours').setAttribute('style', 'display:inline');
+				document.getElementById('totaltimeRefHours').setAttribute('style', 'display:inline');
+			}				
+			clearTimeout(totalupTime.to);
+			totalupTime.to=setTimeout(function(){ totalupTime(countTo); },1000);
 		}
 	</script>
-  
   </html>
