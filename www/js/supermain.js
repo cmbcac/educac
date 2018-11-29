@@ -124,16 +124,19 @@ function draw(){
 				opcio_multiple(p, g)
 			}
 			else if(tipo == "Swipe"){
-				swipe(p,g);
+				p.disseny=="Text"? swipe(p,g) : fotoswipe(p,g);
+				//swipe(p,g);
 			}
 			else if(tipo == "Drag-categories"){
-				drag(p,g);
+				p.disseny=="Text"? drag(p,g) : fotodrag(p,g);
+				//drag(p,g);
 			}
 			else if(tipo == "Filtre"){			
 				filtre(p,g);
 			}	
 			else if(tipo == "Relació"){
-				relacio(p,g);
+				p.disseny=="Text"? relacio(p,g) : fotorelacio(p,g);
+				//relacio(p,g);
 			}
 			else if(tipo == "Ordenar"){
 				ordenar(p,g);
