@@ -1,5 +1,5 @@
 function fotodrag(p,g){
-	background(255);
+	
 	let numopcions = p.numopcions;
 	ajustaTextC(p.gran, quarterheight*0.3,20);	
 	try{
@@ -436,7 +436,7 @@ function fotoswipe( p , g ){
 	ajustaTextC(p.gran, quarterheight+40,20);
 }
 function fotorelacio( p , g ){
-	background(255);
+	
 	textSize(innerWidth*0.03);
 	ajustaTextC(p.gran,halfheightcanvas-100, 20);
 	for(var i=0;i<p.subpreguntes.length;i++){
@@ -571,7 +571,7 @@ function fotorelacio( p , g ){
 	}
 }
 function fotomultop( p , g ){
-	background(255);
+	
 	let half1 = innerWidth * .4
 	let half2 = textWidth(p.gran) * .5;
 	let height1 = innerHeight*.40;

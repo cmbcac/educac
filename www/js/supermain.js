@@ -53,22 +53,24 @@ function setup(){
 	canvas = createCanvas(window.innerWidth*0.8, window.innerHeight*0.85);
 	canvas.position(window.innerWidth*0.1,window.innerHeight*0.1);
 	canvas = document.getElementById("defaultCanvas0");
+	canvas.style.border = "2px solid";
 	canvas.style.borderRadius = "15px";
-	canvas.style.border="2px solid";
+	
 	ctx=canvas.getContext('2d');
 	backswipe =  color(144, 145, 232, 0.2);
 	lastframemouse = mouseIsPressed;	
 	ctx.font = "30px Arial" 
 }
 function draw(){
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	resp=document.getElementById("respostaescrita");
 	resp.setAttribute('style', 'display:none');
 	//DRAW QUAN EL SISEMA ESTA EN INICI
 	if(estatdelsistema == "inici" ){
 		var g = 202.5 + (Math.sin(frameCount/100) * 52.5);
-		background(255,255,255,0.5);
+		
 		if(start==true){
-			document.getElementById("defaultCanvas0").style.border="none";
+			document.getElementById("defaultCanvas0").style.border="2px solid black";
 			createStart();
 		}
 		rectC(innerWidth/2.5,innerHeight/1.5,100,50);
@@ -98,7 +100,7 @@ function draw(){
 	//DRAW QUAN EL SISTEMA ESTIGUI EN PAUSA
 	if(estatdelsistema == "pause"){
 		$( ".loader" ).css( "display", "none" );
-		background(199, 233, 222);
+		
 		textC("Pausa", innerHeight * .5, 30);
 		textC("Pulsa espacio o enter para seguir", innerHeight * .5 + 45, 15);
 		if(preguntes.length > 0){
@@ -107,7 +109,7 @@ function draw(){
 	}		
 	//DRAW QUAN EL SISTEMA ESTA JUGANT
 	if(preguntes.length > 0 && estatdelsistema == "playing"){
-		document.getElementById("defaultCanvas0").style.border="5px solid black";
+		document.getElementById("defaultCanvas0").style.border="2px solid black";
 		document.getElementById("totalcountup").setAttribute("style","display:block");
 		document.getElementById("passar").setAttribute("style", "display:inline");
 		if(current>=preguntes.length){	
@@ -166,7 +168,7 @@ function draw(){
 	if(document.getElementById("totalseconds").innerHTML=="5"&&preguntes.length<=0){
 		document.getElementById("totalcountup").setAttribute("style", "display:none");
 		ctx.clearRect(0, 0, width, height);
-		document.getElementById("defaultCanvas0").style.border="5px solid black";
+		document.getElementById("defaultCanvas0").style.border="2px solid black";
 		estatdelsistema="error";
 	}
 	//DRAW PER A QUAN L'USUARI VULGUI ENVIAR

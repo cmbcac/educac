@@ -8,7 +8,7 @@ var estatdrag=false;
 A LA QUE L'USUARI CLICKI UNA DE LES OPCIONS, LA RESPOSTA S'ACTUALITZARÀ I
 L'USUARI PASSARÁ A LA SEGUENT PREGUNTA^*/
 function opcio_multiple(p,g){
-	background(255);
+	
 	let half1 = innerWidth * .4
 	let half2 = textWidth(p.gran) * .5;
 	let height1 = innerHeight*.40;
@@ -50,7 +50,7 @@ function opcio_multiple(p,g){
 /*DRAG ARA MATEIX ES UN TIPUS DE PREGUNTA PROVISIONAL I UNA MANERA MÉS SOFISTICADA DE FER
 UNA PREGUNTA DE OPCIO MULTIPLE, EL FUNCIONAMENT ES PRÀCTICAMENT EL MATEIX QUE L'ANTERIOR*/
 function drag(p,g){
-	background(255);
+	
 	let numopcions = p.numopcions;
 	ajustaTextC(p.gran, quarterheight*0.3,20);
 	
@@ -274,7 +274,7 @@ EDITANT.
 UN COP L'USUARI ESTIGUI CONTENT AMB EL FILTRE ( O FILTRES ) QUE ELL HAGI ESCOLLIT, POT DECIDIR ENVIAR LA RESPOSTAR O BORRAR-LA
 EN CAS DE QUE NO LI AGRADI*/
 function filtre(p,g){
-	background(255);
+	
 	var opcions=["Rojo","Verde","Azul","Blanco","Negro"];
 	var image1=new Image();
 	image1.src = p.subpreguntes;
@@ -388,7 +388,7 @@ function filtre(p,g){
 L'USUARI SIMPLEMENT HAURÀ DE POLSAR UNA OPCIÓ D'UNA BANDA I UNA D'UNA ALTRA PER A UNIR-LES I FER QUE DESAPAREIXIN
 UN COP NO QUEDIN OPCIONS POSSIBLES, ES PASSARÁ DE PREGUNTA*/
 function relacio(p,g){	
-	background(255);
+	
 	textSize(innerWidth*0.03);
 	ajustaTextC(p.gran,halfheightcanvas-100, 20);
 	for(var i=0;i<p.subpreguntes.length;i++){
@@ -478,7 +478,7 @@ QUE L'USUARI HAURÀ D'ORDENAR.
 PER A ORDENAR-LOS SIMPLEMENT HAURÀ D'ESCRIURE EN EL RECUARDRE DE TEXT L'ORDRE QUE A ELL/ELLA LI SEMBLI CORRECTE.
 (L'ESTIL DE RESPOSTA QUEDA A MANS DEL QUE HAGI CREAT EL CUESTIONARI I HAURIA D'AVISAR QUIN ES ABANS NO RESPONGUIN ELS ALUMNES)*/
 function ordenar(p,g){
-	background(255);
+	
 	textSize(20);
 	let half1 = innerWidth * .4
 	let half2 = textWidth(p.gran) * .5;
@@ -519,7 +519,7 @@ function ordenar(p,g){
 //COM DIBUIXAR LES PREGUNTES DE BUSCADOR
 /*WORK IN PROGRESS*/
 function buscador(p,g){
-	background(255);
+	
 	if(uncop==0){
 		var newdiv=document.createElement("div");
 			newdiv.src="prova1.html";
