@@ -16,7 +16,7 @@ function opcio_multiple(p,g){
 	ctx.strokeStyle="black";
 	ctx.fillStyle = "white";
 	ctx.fill();
-	ajustaText(p.gran, height1,20);
+	ajustaTextC(p.gran, height1,20);
 	if(p.subpreguntes.length > 0){
 		for(var i = 0; i < p.subpreguntes.length; i++){
 			let e = p.subpreguntes[i];
@@ -49,11 +49,10 @@ function opcio_multiple(p,g){
 //COM DIBUIXAR LES PREGUNTES DE DRAG
 /*DRAG ARA MATEIX ES UN TIPUS DE PREGUNTA PROVISIONAL I UNA MANERA MÉS SOFISTICADA DE FER
 UNA PREGUNTA DE OPCIO MULTIPLE, EL FUNCIONAMENT ES PRÀCTICAMENT EL MATEIX QUE L'ANTERIOR*/
-//FOTOS FETES!!  '\o/'''\o/'''\o/'''\o/'
 function drag(p,g){
 	background(255);
 	let numopcions = p.numopcions;
-	ajustaText(p.gran, quarterheight*0.3,20);
+	ajustaTextC(p.gran, quarterheight*0.3,20);
 	
 		textC(p.categories[isubp2], halfheightcanvas, 23);
 		try{
@@ -105,7 +104,6 @@ function drag(p,g){
 POLSI A SOBRE EL RECUADRE, EL RECUADRE ES MINIMITZARÀ I ENS PERMETRÀ VEURE LES POSSIBLES RESPOSTES A TRIAR.
 EL COLOR DE FONS CANVIA DEPENENT DE LA POSICIÓ DEL RECUADRE I EL RECUADRE NOMÉS ENS SEGUIRÁ SI NOSALRES MANTENIM
 POLSAT EL RATOLÍ*/
-//FOTOS FETES!!  '\o/'''\o/'''\o/'''\o/'
 function swipe(p,g){
 	background(255,255,255);
 	try{
@@ -263,7 +261,7 @@ function swipe(p,g){
 		missatgeerror = error;
 		estatdelsistema = "error";
 	}
-	ajustaText(p.gran, quarterheight+40,20);
+	ajustaTextC(p.gran, quarterheight+40,20);
 }
 
 //COM DIBUIXAR LES PREGUNTES DE FILTRE
@@ -286,7 +284,7 @@ function filtre(p,g){
 	ctx.fillStyle = "#999999";
 	ctx.fill();
 	ctx.drawImage(image1,innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4); 
-	ajustaText(p.gran, innerHeight*0.15,15);
+	ajustaTextC(p.gran, innerHeight*0.15,15);
 	let dinsDonex = entre(mouseX,innerWidth*0.1, innerWidth*0.1+innerWidth*0.07 ); 
 	let dinsDoney = entre(mouseY,innerHeight/2-25,innerHeight/2+innerHeight*0.07); 
 	let dinsResx = entre(mouseX,innerWidth*0.65, innerWidth*0.65+innerWidth*0.07 ); 
@@ -383,11 +381,10 @@ function filtre(p,g){
 /*LES PREGUNTES DE RELACIÓ CONSTEN DE DUES COLUMNES DE TEXT AMB OPCIONS A RELACIONAR PER A L'USUARI.
 L'USUARI SIMPLEMENT HAURÀ DE POLSAR UNA OPCIÓ D'UNA BANDA I UNA D'UNA ALTRA PER A UNIR-LES I FER QUE DESAPAREIXIN
 UN COP NO QUEDIN OPCIONS POSSIBLES, ES PASSARÁ DE PREGUNTA*/
-//FOTOS FETES!!  '\o/'''\o/'''\o/'''\o/'
 function relacio(p,g){	
 	background(255);
 	textSize(innerWidth*0.03);
-	ajustaText(p.gran,halfheightcanvas-100, 20);
+	ajustaTextC(p.gran,halfheightcanvas-100, 20);
 	for(var i=0;i<p.subpreguntes.length;i++){
 		let fontsize = innerWidth*0.01;
 		textSize(fontsize);

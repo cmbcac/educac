@@ -242,7 +242,7 @@ function totalPuntatje(){
 	}
 }
 //AJUSTA EL TEXT PERQUÈ NO S'ESCAPI DE LA PANTALLA
-function ajustaText(txt, height, mida){
+function ajustaTextC(txt, height, mida){
 	var pregunta=[];
 	textSize(mida);
 	if(txt.length>=Math.ceil(innerWidth*0.05)){					

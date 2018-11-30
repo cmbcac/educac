@@ -1,7 +1,7 @@
 function fotodrag(p,g){
 	background(255);
 	let numopcions = p.numopcions;
-	ajustaText(p.gran, quarterheight*0.3,20);	
+	ajustaTextC(p.gran, quarterheight*0.3,20);	
 	try{
 		var posipunts;
 		var rad = innerWidth*0.1;
@@ -221,9 +221,29 @@ function fotoswipe( p , g ){
 				ellipse(mouseX, mouseY, innerWidth*0.05 , innerWidth*0.05);
 				textSize(14);
 				ctx.fillStyle = "black";
-				text(p.subpreguntes[0], quarterwidth, halfheightcanvas);
-				text(p.subpreguntes[2], quarterwidth3, halfheightcanvas);
-				if(p.numopcions <= 3) text(p.subpreguntes[1], innerWidth*0.4 - textWidth(p.subpreguntes[1])/2, quarterheight3);
+				if(p.subpreguntes[0][0]=="!"){
+					text(p.subpreguntes[0].substr(1), quarterwidth, halfheightcanvas);
+					}else{
+						var subpimg = new Image();
+						subpimg.src=p.subpreguntes[0];
+						ctx.drawImage(subpimg, quarterwidth-innerWidth*0.1, halfheightcanvas-innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
+					}
+					if(p.subpreguntes[2][0]=="!"){
+						text(p.subpreguntes[2].substr(1), quarterwidth3, halfheightcanvas );
+					}else{
+						var subpimg2 = new Image();
+						subpimg2.src=p.subpreguntes[2];
+						ctx.drawImage(subpimg2,quarterwidth3-innerWidth*0.1, halfheightcanvas-innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
+					}
+					if(p.numopcions <= 3) {
+						if(p.subpreguntes[1][0]=="!"){
+							text(p.subpreguntes[1].substr(1), innerWidth*0.4 - textWidth(p.subpreguntes[1])/2, quarterheight3);
+						}else{
+							var subpimg3 = new Image();
+							subpimg3.src=p.subpreguntes[1];
+							ctx.drawImage(subpimg3, innerWidth*0.3, innerHeight*0.6, innerWidth*0.2, innerHeight*0.2);
+						}
+					}	
 				pop();
 			}
 			if( estatswipe == "esquerra"){
@@ -346,10 +366,30 @@ function fotoswipe( p , g ){
 					ctx.restore();
 					textSize(14);
 					ctx.fillStyle = "black";
-					text(p.subpreguntes[0], quarterwidth, halfheightcanvas);
-					text(p.subpreguntes[2], quarterwidth3, halfheightcanvas);
-					if(p.numopcions <= 3) text(p.subpreguntes[1], innerWidth*0.4 - textWidth(p.subpreguntes[1])/2, quarterheight3);							
-						pop();
+					if(p.subpreguntes[0][0]=="!"){
+					text(p.subpreguntes[0].substr(1), quarterwidth, halfheightcanvas);
+					}else{
+						var subpimg = new Image();
+						subpimg.src=p.subpreguntes[0];
+						ctx.drawImage(subpimg, quarterwidth-innerWidth*0.1, halfheightcanvas-innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
+					}
+					if(p.subpreguntes[2][0]=="!"){
+						text(p.subpreguntes[2].substr(1), quarterwidth3, halfheightcanvas );
+					}else{
+						var subpimg2 = new Image();
+						subpimg2.src=p.subpreguntes[2];
+						ctx.drawImage(subpimg2,quarterwidth3-innerWidth*0.1, halfheightcanvas-innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
+					}
+					if(p.numopcions <= 3) {
+						if(p.subpreguntes[1][0]=="!"){
+							text(p.subpreguntes[1].substr(1), innerWidth*0.4 - textWidth(p.subpreguntes[1])/2, quarterheight3);
+						}else{
+							var subpimg3 = new Image();
+							subpimg3.src=p.subpreguntes[1];
+							ctx.drawImage(subpimg3, innerWidth*0.3, innerHeight*0.6, innerWidth*0.2, innerHeight*0.2);
+						}
+					}		
+					pop();
 				}
 				if( estatswipe == "esquerra"){
 					preguntes[current].respostaUsuari.push(p.subpreguntes[0]);
@@ -380,23 +420,18 @@ function fotoswipe( p , g ){
 			estatdelsistema = "error";
 		}
 	}	
-	ajustaText(p.gran, quarterheight+40,20);
-	for( var i = 0 ; i<p.subpreguntes.length ; i++){
-		if(p.subpreguntes[i][0]=="!"){
-			p.subpreguntes[i]=p.subpreguntes[i].substr(1);
-		}
-	}
+	ajustaTextC(p.gran, quarterheight+40,20);
 }
 function fotorelacio( p , g ){
 	background(255);
 	textSize(innerWidth*0.03);
-	ajustaText(p.gran,halfheightcanvas-100, 20);
+	ajustaTextC(p.gran,halfheightcanvas-100, 20);
 	for(var i=0;i<p.subpreguntes.length;i++){
 		let fontsize = innerWidth*0.01;
 		textSize(fontsize);
 		let x = innerWidth*0.15;
 		let y = halfheightcanvas+40*(i+1)+fontsize;
-		let w =  textWidth(p.subpreguntes[i]);	
+		let w =  textWidth("AAAAAAAAAAAAAAAAAAAA");	
 		let dinsx = entre(mouseX, x, x+w);
 		let dinsy = entre(mouseY, y-fontsize, y+fontsize);
 		push()
@@ -410,12 +445,19 @@ function fotorelacio( p , g ){
 		if(p.subpreguntes[i][0]=="!"){
 			if(p.subpreguntes[i]!=""){
 				ellipse(x+w+10, y-5, 6, 6);
-				}
+			}
 			text(p.subpreguntes[i].substr(1),	x, y);
 		}else{
+			
+			text("Opció "+(i+1), x,y);
+			
+			ellipse(x+textWidth("Opció"+(i+1))+10, y-5, 6, 6);
+			
+			/*
 			var image1=new Image();
 				image1.src = p.subpreguntes[i];
-			ctx.drawImage(image1,x, y,innerWidth*0.3,innerHeight*0.4); 
+			ctx.drawImage(image1,x, y,innerWidth*0.1,innerHeight*0.1); 
+			*/
 		}
 		pop();
 	}
@@ -461,10 +503,31 @@ function fotorelacio( p , g ){
 	}
 	if(lock1!=undefined && lock2 != undefined){
 		respostarel=(lock1+1)+"-"+(lock2+1);
-		if(lock2%2==0){ 
-			line(quarterwidth+textWidth(p.subpreguntes[lock1])+10, halfheightcanvas+40*(lock1+1)+9, halfcanvas, halfheightcanvas+40*(lock2)+9); 
-		}else{ 
-			line(quarterwidth+textWidth(p.subpreguntes[lock1])+10, halfheightcanvas+40*(lock1+1)+9, quarterwidth3, halfheightcanvas+40*(lock2)+9); 
+		var fotsub;
+		var fotcat;
+		if( p.subpreguntes[lock1][0]=="!"){
+			text(p.subpreguntes[lock1].substr(1), innerWidth*0.2, innerHeight*0.2);
+			if(p.categories[lock2][0]=="!"){
+				text(p.categories[lock2].substr(1), innerWidth*0.5, innerHeight*0.2);
+			}else{
+				fotcat= new Image();
+				fotcat.src=p.categories[lock2];
+				ctx.drawImage(fotcat, innerWidth*0.5, innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
+			}
+			line(innerWidth*0.31, innerHeight*0.2,innerWidth*0.49, innerHeight*0.2); 
+		}
+		else{
+			fotsub= new Image();
+			fotsub.src=p.subpreguntes[lock1];
+			ctx.drawImage(fotsub, innerWidth*0.1, innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
+			if(p.categories[lock2][0]=="!"){	
+				text(p.categories[lock2].substr(1), innerWidth*0.5, innerHeight*0.2);
+			}else{
+				fotcat= new Image();
+				fotcat.src=p.categories[lock2];
+				ctx.drawImage(fotcat, innerWidth*0.5, innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
+			}
+			line(innerWidth*0.31, innerHeight*0.2,innerWidth*0.49, innerHeight*0.2); 
 		}
 		rect(halfcanvas-50, quarterheight-25, 100 ,50,15);
 		text("Confirmar",halfcanvas-textWidth("Confirmar")/2,quarterheight);
