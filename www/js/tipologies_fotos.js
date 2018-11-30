@@ -553,6 +553,7 @@ function fotorelacio( p , g ){
 			if(mouseIsPressed){
 				if(track<p.subpreguntes.length-1){
 					p.respostaUsuari.push(respostarel);
+					p.categories[lock2]="";
 					lock1=undefined;
 					lock2=undefined;
 					sleep(200);
