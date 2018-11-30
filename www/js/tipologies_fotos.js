@@ -18,7 +18,8 @@ function fotodrag(p,g){
 				textC(p.categories[isubp2].substr(1), halfheightcanvas, 23);
 				estatdrag=true;
 				push();
-			}else{
+			}
+			else{
 				var dragimage = new Image();
 				dragimage.src=p.categories[isubp2];
 				if(estatdrag==false){	
@@ -29,11 +30,12 @@ function fotodrag(p,g){
 						if(mouseIsPressed){
 							estatdrag=true;
 						}
-					}else{
+					}
+					else{
 						ctx.drawImage(dragimage,innerWidth*0.4, innerHeight*0.3,innerWidth*0.2,innerHeight*0.2); 
 					}						
 				}
-					else{
+				else{
 					ctx.save();
 					ctx.beginPath();
 					ctx.arc(mouseX, mouseY, 25, 0, Math.PI * 2, true);
@@ -74,7 +76,8 @@ function fotodrag(p,g){
 				fill(0);
 				textC2(p.subpreguntes[i].substr(1), x, y, 11);
 				pop();	
-			}else{
+			}
+			else{
 				var subpimage = new Image();
 				subpimage.src=p.subpreguntes[i];
 				ctx.save();
@@ -149,7 +152,8 @@ function fotoswipe( p , g ){
 					for (var i = 0; i<lines.length; i++){
 						textC(lines[i], halfheightcanvas+(i*20),20 );
 					}
-				}else{
+				}
+				else{
 					lines=aux;
 					textC(lines, halfheightcanvas,20 );
 				}
@@ -170,7 +174,8 @@ function fotoswipe( p , g ){
 					for (var i = 0; i<lines.length; i++){
 						textC(lines[i], halfheightcanvas+(i*20),20 );
 					}
-				}else{
+				}
+				else{
 					lines=aux;
 					textC(lines, halfheightcanvas,20 );
 				}
@@ -199,7 +204,8 @@ function fotoswipe( p , g ){
 						percent = 10- (mouseY-quarterheight)/quarterheight;
 						c1 = lerpColor(from,to3,percent);
 					}
-				}else{
+				}
+				else{
 					if(mouseX < halfcanvas){
 						percent = 10 - (mouseX - quarterwidth) / quarterwidth;
 						c1 = lerpColor(from, to, percent);
@@ -223,22 +229,25 @@ function fotoswipe( p , g ){
 				ctx.fillStyle = "black";
 				if(p.subpreguntes[0][0]=="!"){
 					text(p.subpreguntes[0].substr(1), quarterwidth, halfheightcanvas);
-					}else{
-						var subpimg = new Image();
-						subpimg.src=p.subpreguntes[0];
-						ctx.drawImage(subpimg, quarterwidth-innerWidth*0.1, halfheightcanvas-innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
-					}
-					if(p.subpreguntes[2][0]=="!"){
+				}
+				else{
+					var subpimg = new Image();
+					subpimg.src=p.subpreguntes[0];
+					ctx.drawImage(subpimg, quarterwidth-innerWidth*0.1, halfheightcanvas-innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
+				}
+				if(p.subpreguntes[2][0]=="!"){
 						text(p.subpreguntes[2].substr(1), quarterwidth3, halfheightcanvas );
-					}else{
+					}
+				else{
 						var subpimg2 = new Image();
 						subpimg2.src=p.subpreguntes[2];
 						ctx.drawImage(subpimg2,quarterwidth3-innerWidth*0.1, halfheightcanvas-innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
 					}
-					if(p.numopcions <= 3) {
+				if(p.numopcions <= 3) {
 						if(p.subpreguntes[1][0]=="!"){
 							text(p.subpreguntes[1].substr(1), innerWidth*0.4 - textWidth(p.subpreguntes[1])/2, quarterheight3);
-						}else{
+						}
+						else{
 							var subpimg3 = new Image();
 							subpimg3.src=p.subpreguntes[1];
 							ctx.drawImage(subpimg3, innerWidth*0.3, innerHeight*0.6, innerWidth*0.2, innerHeight*0.2);
@@ -335,7 +344,8 @@ function fotoswipe( p , g ){
 							percent = 10- (mouseY-quarterheight)/quarterheight;
 							c1 = lerpColor(from,to3,percent);
 						}
-					}else{
+					}
+					else{
 						if(mouseX < halfcanvas){
 							percent = 10 - (mouseX - quarterwidth) / quarterwidth;
 							c1 = lerpColor(from, to, percent);
@@ -368,14 +378,16 @@ function fotoswipe( p , g ){
 					ctx.fillStyle = "black";
 					if(p.subpreguntes[0][0]=="!"){
 					text(p.subpreguntes[0].substr(1), quarterwidth, halfheightcanvas);
-					}else{
+					}
+					else{
 						var subpimg = new Image();
 						subpimg.src=p.subpreguntes[0];
 						ctx.drawImage(subpimg, quarterwidth-innerWidth*0.1, halfheightcanvas-innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
 					}
 					if(p.subpreguntes[2][0]=="!"){
 						text(p.subpreguntes[2].substr(1), quarterwidth3, halfheightcanvas );
-					}else{
+					}
+					else{
 						var subpimg2 = new Image();
 						subpimg2.src=p.subpreguntes[2];
 						ctx.drawImage(subpimg2,quarterwidth3-innerWidth*0.1, halfheightcanvas-innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
@@ -383,7 +395,8 @@ function fotoswipe( p , g ){
 					if(p.numopcions <= 3) {
 						if(p.subpreguntes[1][0]=="!"){
 							text(p.subpreguntes[1].substr(1), innerWidth*0.4 - textWidth(p.subpreguntes[1])/2, quarterheight3);
-						}else{
+						}
+						else{
 							var subpimg3 = new Image();
 							subpimg3.src=p.subpreguntes[1];
 							ctx.drawImage(subpimg3, innerWidth*0.3, innerHeight*0.6, innerWidth*0.2, innerHeight*0.2);
@@ -449,9 +462,9 @@ function fotorelacio( p , g ){
 			text(p.subpreguntes[i].substr(1),	x, y);
 		}else{
 			
-			text("Opció "+(i+1), x,y);
+			text("Opcion con foto", x,y);
 			
-			ellipse(x+textWidth("Opció"+(i+1))+10, y-5, 6, 6);
+			ellipse(x+textWidth("Opcion con foto")+10, y-5, 6, 6);
 			
 			/*
 			var image1=new Image();
@@ -556,5 +569,53 @@ function fotorelacio( p , g ){
 				}
 			}
 		}
+	}
+}
+function fotomultop( p , g ){
+	background(255);
+	let half1 = innerWidth * .4
+	let half2 = textWidth(p.gran) * .5;
+	let height1 = innerHeight*.40;
+	ctx.lineWidth="2";
+	ctx.strokeStyle="black";
+	ctx.fillStyle = "white";
+	ctx.fill();
+	ajustaTextC(p.gran, height1,20);
+	if(p.subpreguntes.length > 0){
+		for(var i = 0; i < p.subpreguntes.length; i++){
+			let e = p.subpreguntes[i];
+			if( e == "") continue;			
+			let fontsize = 20;
+			textSize(fontsize);
+			let half3 = textWidth(e)*.5;
+			let posx = half1 - 50;
+			let posy = height1 + 40 * (i+1);
+			let w =  textWidth(e)
+			let h = fontsize;
+			push();		  
+			if(mouseX > posx && mouseX < posx+w && mouseY > (posy-14) && mouseY < (posy-14+h)){
+				fill(255,244, 123);
+				if(e[0]!="!"){
+					var opimage = new Image();
+					opimage.src=e;
+					ctx.drawImage(opimage, quarterwidth-innerWidth*0.1, innerHeight*0.4, innerWidth*0.2, innerHeight*0.2);
+				}
+				if(mouseIsPressed){
+					preguntes[current].respostaUsuari.push(e);
+					p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+					upTime(new Date());
+					sleep(500);					
+					current++;							 
+				}
+			}
+			ellipse(posx - 10, posy - 5, 6, 6);
+			if(e[0]=="!"){
+				text(e.substr(1), posx, posy );
+			}
+			else{
+				text("Ponga el ratón aqui para ver la imagen", posx, posy);
+			}
+			pop();
+		}				
 	}
 }

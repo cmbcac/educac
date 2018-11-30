@@ -136,21 +136,21 @@ function util_xmlhttp(id, todo, params, handle){
 }
 //CALCULA L'ALTURA QUE OCUPA EL TEXT DESIGNAT
 function textHeight(text, maxWidth) {
-		var words = text.split(' ');
-		var line = '';
-		var h = textLeading();
-		for (var i = 0; i < words.length; i++) {
-				var testLine = line + words[i] + ' ';
-				var testWidth = drawingContext.measureText(testLine).width;
-
-				if (testWidth > maxWidth && i > 0) {
-						line = words[i] + ' ';
-						h += textLeading();
-				} else {
-						line = testLine;
-				}
+	var words = text.split(' ');
+	var line = '';
+	var h = textLeading();
+	for (var i = 0; i < words.length; i++) {
+		var testLine = line + words[i] + ' ';
+		var testWidth = drawingContext.measureText(testLine).width;
+		if (testWidth > maxWidth && i > 0) {
+			line = words[i] + ' ';
+			h += textLeading();
 		}
-		return h;
+		else {
+			line = testLine;
+		}
+	}
+	return h;
 }
 //CREA EL FORMULARI QUE CONTINDRÀ LES RESPOSTES DEL CUESTIONARI
 function creaSubmit(stateprint){
@@ -256,7 +256,8 @@ function ajustaTextC(txt, height, mida){
 		for (var i = 0; i<lines.length; i++){
 			textC(lines[i], height*0.9+(i*mida*1.2),20 );
 		}					
-	}else{
+	}
+	else{
 		lines=txt;
 		textC(lines, height,20 );
 	}

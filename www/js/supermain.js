@@ -121,7 +121,8 @@ function draw(){
 			ctx.fillStyle = "#999999";	
 			//DRAW PER A CADA ESTAT DEL JOC
 			if(tipo == "Opció múltiple"){
-				opcio_multiple(p, g)
+				p.disseny=="Text" ? opcio_multiple(p,g) : fotomultop(p,g);
+				//opcio_multiple(p, g)
 			}
 			else if(tipo == "Swipe"){
 				p.disseny=="Text"? swipe(p,g) : fotoswipe(p,g);

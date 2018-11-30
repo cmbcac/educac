@@ -157,7 +157,8 @@ function swipe(p,g){
 					for (var i = 0; i<lines.length; i++){
 						textC(lines[i], halfheightcanvas+(i*20),20 );
 					}
-				}else{
+				}
+				else{
 					lines=p.categories[isubp];
 					textC(lines, halfheightcanvas,20 );
 				}
@@ -178,7 +179,8 @@ function swipe(p,g){
 					for (var i = 0; i<lines.length; i++){
 						textC(lines[i], halfheightcanvas+(i*20),20 );
 					}
-				}else{
+				}
+				else{
 					lines=p.categories[isubp];
 					textC(lines, halfheightcanvas,20 );
 				}
@@ -206,7 +208,8 @@ function swipe(p,g){
 						percent = 10- (mouseY-quarterheight)/quarterheight;
 						c1 = lerpColor(from,to3,percent);
 					}
-				}else{
+				}
+				else{
 					if(mouseX < halfcanvas){
 						percent = 10 - (mouseX - quarterwidth) / quarterwidth;
 						c1 = lerpColor(from, to, percent);
@@ -303,7 +306,8 @@ function filtre(p,g){
 			sleep(500);
 			current++;
 		}
-	}else{
+	}
+	else{
 		rect(innerWidth*0.1, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
 	}
 	if(dinsResx&&dinsResy){
@@ -315,7 +319,8 @@ function filtre(p,g){
 			lockfil=[];
 			lock=0;
 		}
-	}else{
+	}
+	else{
 		rect(innerWidth*0.65, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
 	}
 	textC2("Acabar",innerWidth*0.13, innerHeight/2+35,20);
@@ -335,7 +340,8 @@ function filtre(p,g){
 				sleep(300);
 				lock++;
 			}
-		}else{
+		}
+		else{
 			push();
 			fill(255,255,255);
 		}
@@ -396,9 +402,11 @@ function relacio(p,g){
 		push()
 		if(dinsx && dinsy && !mouseIsPressed){
 			fill(255, 255, 102);
-		}else if(dinsx && dinsy && mouseIsPressed){
+		}
+		else if(dinsx && dinsy && mouseIsPressed){
 			lock1=i;
-		}else{
+		}
+		else{
 			fill(0);
 		}
 		text(p.subpreguntes[i],	x, y);
@@ -418,9 +426,11 @@ function relacio(p,g){
 		push()
 		if(dinsx && dinsy && !mouseIsPressed){
 			fill(255, 255, 102);
-		}else if(dinsx && dinsy && mouseIsPressed){
+		}
+		else if(dinsx && dinsy && mouseIsPressed){
 			lock2=i;
-		}else{
+		}
+		else{
 			fill(0);
 		}
 		text(p.categories[i],	x, y);
@@ -449,7 +459,8 @@ function relacio(p,g){
 					lock2=undefined;
 					sleep(200);
 					track++;
-				}else if(track>=p.subpreguntes.length-1){
+				}
+				else if(track>=p.subpreguntes.length-1){
 					p.respostaUsuari.push(respostarel);
 					p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
 					upTime(new Date());
