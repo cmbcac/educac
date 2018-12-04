@@ -1,3 +1,32 @@
+//		INSTRUCCIONES DE MODIFICACION:
+/*
+		EN EL CASO DE HABER MODIFICADO LOS ELEMENTOS ID DE FICHEROS ANTERIORES,
+		SE TENDRA QUE MODIFICAR LAS SIGUIENTES "function":
+		
+		1. function set_preguntes:
+			
+			1.1. En "- let tip = e['gsx$tipus'].$t -", se tiene que cambiar "tipus" por
+				 el nuevo nombre del elemento ID correspondiente
+			1.2. En "- let txtfot = e['gsx$disseny'].$t -", se tiene que cambiar "disseny" 	por el nuevo nombre del elemento ID correspondiente
+			
+		2. function afegir_pregunta:
+			2.1. TODOS los elementos de tipo 'respostaX' que hayan sido modificados anteriormente
+			
+			2.2. TODOS los elementos de tipo 'catX' que hayan sido modificados anteriormente
+			
+			2.3. El elemento 'corr' si es que ha sido modificado anteriormente
+			
+			2.4. El elemento 'enun' si es que ha sido modificado anteriormente
+			
+			2.5. el elemento 'punt' si es que ha sido modificado anteriormente
+			
+			2.6. el elemento 'url' si es que ha sido modificado anteriormente
+
+		3. var multichoice_gsx:
+			MODIFICAR TODOS LOS ELEMENTOS QUE CONTENGAN LOS VALORES DE TEXTO IGUALES A LOS VALORES ANTERIORES DE LAS ID
+*/
+
+
 {
 var canvas;
 var ctx;
@@ -146,7 +175,10 @@ function draw(){
 			}
 			else if(tipo == "Busca"){
 				buscador(p,g);
-			}		
+			}
+			else if(tipo == "Youtube"){
+				Youtube(p,g);
+			}
 		}
 		document.getElementById("passar").onmouseover=function(){
 			 $("#infopass").toggle("slow");
@@ -180,7 +212,7 @@ function draw(){
 	if(estatdelsistema == "error"){
 		$( ".loader" ).css( "display", "none" );
 		document.getElementById("passar").setAttribute("style", "display:none");
-		ctx.fillStyle = "rgba(0,0,0,0)";
+		
 		ctx.clearRect(0, 0, width, height);
 		fill(255, 255, 0);
 		textC("Error", innerHeight * .4, 30);
@@ -247,9 +279,9 @@ function set_preguntes(data, params){
 		afegir_pregunta(tip, txtfot, e, list_gsx);
 	}
 }
-//LA FUNCIÓ D'AFEGIR PREGUNTA ES LLEGIR ELS ELEMENTS DE TIPUS JSON QUE ESTEM REBENT I TRANSFORMAR-LOS EN STRINGS A DINS
-//DE LA ESTRUCTURA DE PERGUNTES DE LA MANERA QUE VOLGUEM, EN CAS D'AFEGIR UN NOU TIPUS DE PREGUNTA NECESSITARÁ SER ESPECIFICAT
-//A DINS D'AQUESTA FUNCIÓ
+//LA FUNCION DE "AFEGIR_PREGUNTA" CONSISTE EN LEER LOS ELEMENTOS DE TIPO JSON QUE ESTAMOS RECIBIENDO Y TRANSFORMARLOS EN STRINGS
+//DENTRO DE LA ESTRUCTURA DE PREGUNTAS DE LA MANERA QUE NOS CONVENGA, EN CASO DE AÑADIR UN NUEVO TIPO DE PREGUNTA, SE PRECISARA
+//DE ESPEDCIFICAR COMO SE RECIBE LA INFORMACION JSON DENTRO DE ELLA
 function afegir_pregunta(tip, txtfot, e,list_gsx){
 	var g = 'gsx$';
 	var gran;
@@ -371,7 +403,7 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 		p.disseny=txtfot;
 		preguntes.push(p);
 	}
-	if(tip == "Filtre"){
+	if(tip == "Filtre" || tip == "Youtube"){
 		var gran, subpreguntes = [], resp;
 		gran="Funciona";
 		subpreguntes="FuncionaSubP";
@@ -483,8 +515,8 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 		p.disseny=txtfot;
 	}
 }
-//ELEMENT QUE ENS PERMET LLEGIR ELS APARTATS DE LES DADES TIPUS JSON
-//EN CAS D'AFEGIR UN NOU TIPUS D'ELEMENT, TAMBÉ S'HAURÀ D'AFEGIR EN AQUEST ELEMENT MULTICHOICE
+//ELEMENTO QUE NOS PERMITE LEER LOS APARTADOS DE LOS DATOS DE TIPO JSON
+//EN CASO DE AÑADIR UN NUEVO TIPO DE ELEMENTO, TAMBIEN SE TENDRA QUE AÑADIR ESE ELEMENTO AL MULTICHOICE
 var multichoice_gsx = [
 "enunciat",
 "resposta1",
@@ -500,7 +532,7 @@ var multichoice_gsx = [
 'url',
 'corr',
 'puntatje'];
-//NO ES RECOMANABLE, PERO AQUESTA FUNCIÓ OCUPA A L'ORDINADOR X MILISEGONS PER A PERMETRE QUE ELS EVENTS COM MOUSEISPRESSED O KEYPRESSED S'ACTUALITZIN CORRECTAMENT
+//NO ES RECOMENDABLE PERO ESTA FUNCION OCUPA AL ORDENADOR X MILISEGUNDOS PARA PERMITIR QUE LOS EVENTOS COMP MOUSEISPRESSED O KEYPRESSED SE ACTUALIZEN CORRECTAMENTE
 function sleep(milliseconds) {
   var start = new Date().getTime();
 	for (var i = 0; i < 1e7; i++) {
@@ -509,7 +541,7 @@ function sleep(milliseconds) {
 		}
 	}
 }
-//STRUCT DE TIPUS PREGUNTES
+//STRUCT DE TIPOS DE PREGUNTAS
 class Pregunta{
 	constructor(gran, subpreguntes, categories, numopcions, puntatje, date){
 		this.gran = gran;

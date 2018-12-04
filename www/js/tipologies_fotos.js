@@ -1,3 +1,6 @@
+//CCOMO DIBUJAR LAS PREGUNTAS DE TIPO DRAG
+/*DRAG PERMITE CLASIFICAR LAS OPCIONES A 5 TIPOS DE CATEGORIAS DE MANERA QUE PODEMOS TENER UNA OPCION MULTIPLE MEZCLADA CON
+UN SWIPE. EN EL APARTADO DE FOTOS NOS PERMITE ARRASTRAR LA IMAGEN HASTA LA CATEGORIA DESEADA, PERO EN LA DE TEXTO NO, SE TIENE QUE MIRAR */
 function fotodrag(p,g){
 	
 	let numopcions = p.numopcions;
@@ -102,6 +105,12 @@ function fotodrag(p,g){
 	}		
 	lastframemouse = mouseIsPressed;
 }
+
+//COMO DIBUJAR LAS PREGUNTA DE TIPO SWIPE
+/*SWIPE CONSTA DE UN ENUNCIADO Y UN RECUADRO AL CENTRO CON EL ELEMENTO A CLASIFICAR. A LA QUE EL USUARIO
+HAGA CLICK ENCIMA DEL RECUADRO, EL RECUADRO SE MINIMIZARA Y NOS PERMITIRA VER LAS POSIBLES RESPUESTAS A ESCOGER.
+EL COLOR DE FONDO CAMBIA DEPENDIENDO DE LA POSICION DEL RECUADRO, Y EL RECUADRO SOLO NOS SEGUIRA SI EL USUARIO MANTIENE
+PULSADO EL RATON*/
 function fotoswipe( p , g ){
 	background(255,255,255);
 	if(p.categories[isubp][0]=="!"){
@@ -138,7 +147,7 @@ function fotoswipe( p , g ){
 			if(entre(mouseX, halfcanvas, innerWidth)&&entre(mouseY,quarterheight3,innerHeight)&& estatswipe=="migamb"&&p.numopcions==3){
 				estatswipe="avall";
 			}
-			//AQUI DEFINIM EL QUÈ FA CADA ESTAT
+			//AQUI DEFINIMOS LO QUE HACE CADA ESTADO
 			if( estatswipe == "nomig"){
 				rectC(halfcanvas, halfheightcanvas, w , h );
 				if(aux.length>=Math.ceil(innerWidth*0.02)){
@@ -312,7 +321,7 @@ function fotoswipe( p , g ){
 				if(entre(mouseX, halfcanvas, innerWidth)&&entre(mouseY,quarterheight3,innerHeight)&& estatswipe=="migamb"&&p.numopcions==3){
 					estatswipe="avall";
 				}	
-				//AQUI DEFINIM EL QUÈ FA CADA ESTAT
+				//AQUI DEFINIMOS LO QUE HACE CADA ESTADO
 				if( estatswipe == "nomig"){
 					ctx.drawImage(swimage,innerWidth*0.3, innerHeight*0.3,innerWidth*0.2,innerHeight*0.2); 	
 				}
@@ -435,6 +444,12 @@ function fotoswipe( p , g ){
 	}	
 	ajustaTextC(p.gran, quarterheight+40,20);
 }
+
+//COMO DIBUJAR LAS PREGUNTAS DE TIPO RELACION
+/*LAS PREGUNTAS DE RELACION CONSTAN DE DOS COLUMNAS DE TEXTO CON OPCIONES A RELACIONAR PARA EL USUARIO.
+EL USUARIO SIMPLEMENTE TENDRA QUE HACER CLICK EN UNA OPCION DE CADA COLUMNA PARA UNIRLAS Y HACER QUE 
+DESAPAREZCAN. POR ESTE MOTIVO TENDRA UN SISTEMA DE BLOQUEO QUE PERIMITRA AL USUARIO VER SI REALMENTE ESTA
+DE ACUERDO CON LA DECISION QUE EL HA TOMADO*/
 function fotorelacio( p , g ){
 	
 	textSize(innerWidth*0.03);
@@ -570,6 +585,12 @@ function fotorelacio( p , g ){
 		}
 	}
 }
+
+//COMO DIBUJAR LAS PREGUNTAS DE OPCION MULTIPLE
+/*CONSTA DE UN ENUNCIADO ESCRITO ENCIMA Y X OPCIONES PARA QUE EL USUARIO ESCOJA
+A LA QUE EL USUARIO HAGA CLICK EN UNA DE LAS OPCIONES, SE GUARDARA LA RESPUESTA Y
+EL USUARIO PARASA A LA SIGUIENTE PREGUNTA. SI LA OPCION ES UNA FOTO, LA IMAGEN SE MOSTRARA
+AL MANTENER EL RATON POR ENCIMA DEL APARTADO */
 function fotomultop( p , g ){
 	
 	let half1 = innerWidth * .4

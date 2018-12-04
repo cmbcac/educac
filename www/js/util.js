@@ -217,6 +217,14 @@ function creaSubmit(stateprint){
 				newinput.classList.add('ginput');
 				newinput.style.padding="9.8px";
 				document.getElementById("foo").appendChild(newinput);
+				
+				newinput= document.createElement("input");
+				newinput.name="localitzacio"
+				newinput.id="localitzacio";
+				newinput.placeholder="¿De donde eres?: ";
+				newinput.classList.add('ginput');
+				newinput.style.padding="9.8px";
+				document.getElementById("foo").appendChild(newinput);
 									
 				var sbmit= document.createElement("button");
 				sbmit.id="submit";		
@@ -229,6 +237,8 @@ function creaSubmit(stateprint){
 			}
 			if(document.getElementById("usuari").value!=""){
 				document.getElementById("submit").style.display="block";
+			}else{
+				document.getElementById("submit").style.display="none";
 			}
 }
 //CALCULA LA PUNTUACIÓ FINAL DEPENENT DE LES RESPOSTES DE L'USUARI
@@ -262,6 +272,7 @@ function ajustaTextC(txt, height, mida){
 		textC(lines, height,20 );
 	}
 }
+
 function createStart(){
 	var newdiv= document.createElement("div");
 		newdiv.id="StartingDiv";

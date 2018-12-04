@@ -2,53 +2,60 @@ var uncop=0;
 var lockfil=[];
 var lock=0;
 var estatdrag=false;
-
-//COM DIBUIXAR LES PREGUNTES DE OPCIÓ MÚLTIPLE
-/*CONSTA DE UN ENUNCIAT ESCRIT A DALT I X OPCIONS PER A QUE L'USUARI TRII
-A LA QUE L'USUARI CLICKI UNA DE LES OPCIONS, LA RESPOSTA S'ACTUALITZARÀ I
-L'USUARI PASSARÁ A LA SEGUENT PREGUNTA^*/
+var once=0;
+//COMO DINUJAR LAS PREGUNTAS DE OPCION MULTIPLE
+/*CONSTA DE UN ENUNCIADO ESCRITO ENCIMA Y X OPCIONES PARA QUE EL USUARIO ESCOJA
+A LA QUE EL USUARIO HAGA CLICK EN UNA DE LAS OPCIONES, LA RESPUESTA SE ACTUALIZARÀ Y
+EL USUARIO PASARA A LA SIGUIENTE PREGUNTA*/
 function opcio_multiple(p,g){
 	
-	let half1 = innerWidth * .4
-	let half2 = textWidth(p.gran) * .5;
-	let height1 = innerHeight*.40;
-	ctx.lineWidth="2";
-	ctx.strokeStyle="black";
-	ctx.fillStyle = "white";
-	ctx.fill();
-	ajustaTextC(p.gran, height1,20);
-	if(p.subpreguntes.length > 0){
-		for(var i = 0; i < p.subpreguntes.length; i++){
-			let e = p.subpreguntes[i];
-			if( e == "") continue;			
-			let fontsize = 20;
-			textSize(fontsize);
-			let half3 = textWidth(e)*.5;
-			let posx = half1 - 50;
-			let posy = height1 + 40 * (i+1);
-			let w =  textWidth(e)
-			let h = fontsize;
-			push();		  
-			if(mouseX > posx && mouseX < posx+w && mouseY > (posy-14) && mouseY < (posy-14+h)){
-				fill(255,244, 123);
-				if(mouseIsPressed){
-					preguntes[current].respostaUsuari.push(e);
-					p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
-					upTime(new Date());
-					sleep(500);					
-					current++;							 
+	try{
+		let half1 = innerWidth * .4
+		let half2 = textWidth(p.gran) * .5;
+		let height1 = innerHeight*.40;
+		ctx.lineWidth="2";
+		ctx.strokeStyle="black";
+		ctx.fillStyle = "white";
+		ctx.fill();
+		ajustaTextC(p.gran, height1,20);
+		if(p.subpreguntes.length > 0){
+			for(var i = 0; i < p.subpreguntes.length; i++){
+				let e = p.subpreguntes[i];
+				if( e == "") continue;			
+				let fontsize = 20;
+				textSize(fontsize);
+				let half3 = textWidth(e)*.5;
+				let posx = half1 - 50;
+				let posy = height1 + 40 * (i+1);
+				let w =  textWidth(e)
+				let h = fontsize;
+				push();		  
+				if(mouseX > posx && mouseX < posx+w && mouseY > (posy-14) && mouseY < (posy-14+h)){
+					fill(255,244, 123);
+					if(mouseIsPressed){
+						preguntes[current].respostaUsuari.push(e);
+						p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+						upTime(new Date());
+						sleep(500);					
+						current++;							 
+					}
 				}
-			}
-			ellipse(posx - 10, posy - 5, 6, 6);
-			text(e, posx, posy );
-			pop();
-		}				
+				ellipse(posx - 10, posy - 5, 6, 6);
+				text(e, posx, posy );
+				pop();
+			}				
+		}
+	}
+	catch(error){
+			console.log(error);
+			missatgeerror = error;
+			estatdelsistema = "error";
 	}
 }
 
-//COM DIBUIXAR LES PREGUNTES DE DRAG
-/*DRAG ARA MATEIX ES UN TIPUS DE PREGUNTA PROVISIONAL I UNA MANERA MÉS SOFISTICADA DE FER
-UNA PREGUNTA DE OPCIO MULTIPLE, EL FUNCIONAMENT ES PRÀCTICAMENT EL MATEIX QUE L'ANTERIOR*/
+//COMO DINUJAR LAS PREGUNTAS DE TIPO DRAG
+/*DRAG CONSISTE EN SER UNA MEZCLA ENTRE UNA PREGUNTA DE OPCION MULTIPLE Y UNA PREGUNTA DE TIPO SWIPE.
+SU FUNCIONAMIENTO ES MUY SIMILAR A LA DE OPCION MULTIPLE POR AHORA*/
 function drag(p,g){
 	
 	let numopcions = p.numopcions;
@@ -99,11 +106,11 @@ function drag(p,g){
 		lastframemouse = mouseIsPressed;
 }
 
-//COM DIBUIXAR LES PREGUNTES DE SWIPE
-/*SWIPE CONSTA D'UN ENUNCIAT I UN RECUADRE AL CENTRE AMB L'ELEMENT A CLASSIFICAR. A LA QUE L'USUARI
-POLSI A SOBRE EL RECUADRE, EL RECUADRE ES MINIMITZARÀ I ENS PERMETRÀ VEURE LES POSSIBLES RESPOSTES A TRIAR.
-EL COLOR DE FONS CANVIA DEPENENT DE LA POSICIÓ DEL RECUADRE I EL RECUADRE NOMÉS ENS SEGUIRÁ SI NOSALRES MANTENIM
-POLSAT EL RATOLÍ*/
+//COMO DIBUJAR LAS PREGUNTAS DE TIPO SWIPE
+/*SWIPE CONSTA DE UN ENUNCIADO Y UN RECUADRO AL CENTRO CON EL ELEMENTO A CLASIFICAR. A LA QUE EL USUARIO HAGA
+CLICK ENCIMA DEL RECUADRO, EL RECUADRO SE MINIMIZARA Y NOS PERMITIRA VER LAS POSIBLES RESPUESTAS PARA ESCOJER.
+EL COLOR DEL FONDO CAMBIA DEPENDIENDO DE LA POSICION DEL RECUADRO Y ESTE SOLO SE MOVERA SI EL USUARIO MANTIENE
+PULSADO EL RATON*/
 function swipe(p,g){
 	background(255,255,255);
 	try{
@@ -267,89 +274,88 @@ function swipe(p,g){
 	ajustaTextC(p.gran, quarterheight+40,20);
 }
 
-//COM DIBUIXAR LES PREGUNTES DE FILTRE
-/*LES PREGUNTES DE FILTRE CONSTEN D'UNA IMATGE QUE SERÀ LLEGIDA A TRAVÉS DE LA SEVA URL I UN SEGUIT D'OPCIONS.
-CADA OPCIÓ PINTARÀ UNA CAPA D'OPACITAT ÍNFIMA A SOBRE LA IMATGE QUE PERMETRÁ A L'USUARI TENIR UNA SENSACIÓ D'ESTAR-LA
-EDITANT.
-UN COP L'USUARI ESTIGUI CONTENT AMB EL FILTRE ( O FILTRES ) QUE ELL HAGI ESCOLLIT, POT DECIDIR ENVIAR LA RESPOSTAR O BORRAR-LA
-EN CAS DE QUE NO LI AGRADI*/
+//COMO DIBUJAR LAS PREGUNTAS DE TIPO FILTRO
+/*LAS PREGUNTAS DE FILTRO CONSISTEN EN UNA IMAGEN QUE SERA LEIDA A TRAVES DE SU URL Y UN CONJUNTO DE OPCIONES.
+CADA OPCION PINTARA UNA CAPA DE OPACIDAD INFIMA ENCIMA DE LA IMAGEN QUE PERMITIRA AL USUARIO TENER LA SENSACION DE ESTAR
+MODIFICANDOLA.
+CUANDO EL USUARIO ACABE. PODRA DECIDIR SI ENVIAR LA RESPEUSTA, BORRAR-LA O SEGUIR MODIFICANDOLA EN CASO DE QUE NO LE GUSTE*/
 function filtre(p,g){
-	
-	var opcions=["Rojo","Verde","Azul","Blanco","Negro"];
-	var image1=new Image();
-	image1.src = p.subpreguntes;
-	textSize(20);
-	let half1 = innerWidth * .4
-	let half2 = textWidth(p.gran) * .5;
-	let height1 = innerHeight*.50;
-	ctx.lineWidth="2";
-	ctx.strokeStyle="black";
-	ctx.fillStyle = "#999999";
-	ctx.fill();
-	ctx.drawImage(image1,innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4); 
-	ajustaTextC(p.gran, innerHeight*0.15,15);
-	let dinsDonex = entre(mouseX,innerWidth*0.1, innerWidth*0.1+innerWidth*0.07 ); 
-	let dinsDoney = entre(mouseY,innerHeight/2-25,innerHeight/2+innerHeight*0.07); 
-	let dinsResx = entre(mouseX,innerWidth*0.65, innerWidth*0.65+innerWidth*0.07 ); 
-	let dinsResy = entre(mouseY,innerHeight/2-25,innerHeight/2+innerHeight*0.07); 
-	if(dinsDonex&&dinsDoney){
-		push();
-		fill(255, 255, 204);
-		rect(innerWidth*0.1, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
-		pop();
-		if(mouseIsPressed){
-			for(var i=0; i<lockfil.length;i++){
-				p.respostaUsuari.push(opcions[lockfil[i]]);
-			}
-			p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
-			upTime(new Date());
-			sleep(500);
-			current++;
-		}
-	}
-	else{
-		rect(innerWidth*0.1, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
-	}
-	if(dinsResx&&dinsResy){
-		push();
-		fill(255, 255, 204);
-		rect(innerWidth*0.65, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
-		pop();
-		if(mouseIsPressed){
-			lockfil=[];
-			lock=0;
-		}
-	}
-	else{
-		rect(innerWidth*0.65, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
-	}
-	textC2("Acabar",innerWidth*0.13, innerHeight/2+35,20);
-	textC2("Reset",innerWidth*0.68, innerHeight/2+35,20);
-	//FOR DE DIBUIXAR
-	for(var i = 0; i < 5 ; i++){
-		let x= innerWidth*(0.8*i/5)+100;
-		let y= innerHeight*0.7;
-		let dinsx = entre(mouseX, x, x+100);
-		let dinsy = entre(mouseY, y, y+50);
-		if(dinsx&&dinsy){
+	try{
+		var opcions=["Rojo","Verde","Azul","Blanco","Negro"];
+		var image1=new Image();
+		image1.src = p.subpreguntes;
+		textSize(20);
+		let half1 = innerWidth * .4
+		let half2 = textWidth(p.gran) * .5;
+		let height1 = innerHeight*.50;
+		ctx.lineWidth="2";
+		ctx.strokeStyle="black";
+		ctx.fillStyle = "#999999";
+		ctx.fill();
+		ctx.drawImage(image1,innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4); 
+		ajustaTextC(p.gran, innerHeight*0.15,15);
+		let dinsDonex = entre(mouseX,innerWidth*0.1, innerWidth*0.1+innerWidth*0.07 ); 
+		let dinsDoney = entre(mouseY,innerHeight/2-25,innerHeight/2+innerHeight*0.07); 
+		let dinsResx = entre(mouseX,innerWidth*0.65, innerWidth*0.65+innerWidth*0.07 ); 
+		let dinsResy = entre(mouseY,innerHeight/2-25,innerHeight/2+innerHeight*0.07); 
+		if(dinsDonex&&dinsDoney){
 			push();
 			fill(255, 255, 204);
+			rect(innerWidth*0.1, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
+			pop();
 			if(mouseIsPressed){
-				fill(255, 255, 102);
-				lockfil[lock]=i;
-				sleep(300);
-				lock++;
+				for(var i=0; i<lockfil.length;i++){
+					p.respostaUsuari.push(opcions[lockfil[i]]);
+				}
+				p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+				upTime(new Date());
+				sleep(500);
+				current++;
 			}
 		}
 		else{
-			push();
-			fill(255,255,255);
+			rect(innerWidth*0.1, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
 		}
-		rect(x,y,100,50,15);
-		pop();
-		textC2(opcions[i],x+40,y+35,24);
-	}
-	for( var i=0; i<lockfil.length;i++){
+		if(dinsResx&&dinsResy){
+			push();
+			fill(255, 255, 204);
+			rect(innerWidth*0.65, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
+			pop();
+			if(mouseIsPressed){
+				lockfil=[];
+				lock=0;
+			}
+		}
+		else{
+			rect(innerWidth*0.65, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
+		}
+		textC2("Acabar",innerWidth*0.13, innerHeight/2+35,20);
+		textC2("Reset",innerWidth*0.68, innerHeight/2+35,20);
+		//FOR DE DIBUIXAR
+		for(var i = 0; i < 5 ; i++){
+			let x= innerWidth*(0.8*i/5)+100;
+			let y= innerHeight*0.7;
+			let dinsx = entre(mouseX, x, x+100);
+			let dinsy = entre(mouseY, y, y+50);
+			if(dinsx&&dinsy){
+				push();
+				fill(255, 255, 204);
+				if(mouseIsPressed){
+					fill(255, 255, 102);
+					lockfil[lock]=i;
+					sleep(300);
+					lock++;
+				}
+			}
+			else{
+				push();
+				fill(255,255,255);
+			}
+			rect(x,y,100,50,15);
+			pop();
+			textC2(opcions[i],x+40,y+35,24);
+		}
+		for( var i=0; i<lockfil.length;i++){
 		if(lockfil[i]==0){
 			ctx.beginPath();
 			ctx.rect(innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
@@ -381,139 +387,157 @@ function filtre(p,g){
 			ctx.fill();
 		}
 	}	
+	}
+	catch(error){
+			console.log(error);
+			missatgeerror = error;
+			estatdelsistema = "error";
+	}
+	
 }
 
-//COM DIBUIXAR LES PREGUNTES DE RELACIO
-/*LES PREGUNTES DE RELACIÓ CONSTEN DE DUES COLUMNES DE TEXT AMB OPCIONS A RELACIONAR PER A L'USUARI.
-L'USUARI SIMPLEMENT HAURÀ DE POLSAR UNA OPCIÓ D'UNA BANDA I UNA D'UNA ALTRA PER A UNIR-LES I FER QUE DESAPAREIXIN
-UN COP NO QUEDIN OPCIONS POSSIBLES, ES PASSARÁ DE PREGUNTA*/
+//COMO DUNUJAR LAS PREGUNTAS DE RELACION
+/*LAS PREGUNTAS DE RELACION CONSISTEN EN DOS COLUMNAS DE TEXTO CON OPCIONES A RELACIONAR PARA EL USUARIO.
+EL USUARIO SIMPLEMENTE TENDRA QUE HACER CLICK EN UNA OPCION EN CADA COLUMNA PERA UNIRLAS Y HACER QUE DESAPAREZCAN.
+AUN ASI EL SISTEMA CONSTA DE UN SEGURO PARA EVITAR QUE EL USUARIO ENVIE RESPUESTAS SIN TENER QUE REVISARLAS */
 function relacio(p,g){	
-	
-	textSize(innerWidth*0.03);
-	ajustaTextC(p.gran,halfheightcanvas-100, 20);
-	for(var i=0;i<p.subpreguntes.length;i++){
-		let fontsize = innerWidth*0.01;
-		textSize(fontsize);
-		let x = innerWidth*0.15;
-		let y = halfheightcanvas+40*(i+1)+fontsize;
-		let w =  textWidth(p.subpreguntes[i]);	
-		let dinsx = entre(mouseX, x, x+w);
-		let dinsy = entre(mouseY, y-fontsize, y+fontsize);
-		push()
-		if(dinsx && dinsy && !mouseIsPressed){
-			fill(255, 255, 102);
-		}
-		else if(dinsx && dinsy && mouseIsPressed){
-			lock1=i;
-		}
-		else{
-			fill(0);
-		}
-		text(p.subpreguntes[i],	x, y);
-		pop();
-		if(p.subpreguntes[i]!=""){
-			ellipse(x+w+10, y-5, 6, 6);
-		}
-	}
-	for(var i=0;i<p.categories.length;i++){
-		let fontsize = innerWidth*0.01;
-		textSize(fontsize);
-		let w =  textWidth(p.categories[i]);
-		let x = quarterwidth3-w;
-		let y = halfheightcanvas+40*(i+1)+fontsize;
-		let dinsx = entre(mouseX, x, x+w);
-		let dinsy = entre(mouseY, y-fontsize, y+fontsize);
-		push()
-		if(dinsx && dinsy && !mouseIsPressed){
-			fill(255, 255, 102);
-		}
-		else if(dinsx && dinsy && mouseIsPressed){
-			lock2=i;
-		}
-		else{
-			fill(0);
-		}
-		text(p.categories[i],	x, y);
-		pop();
-		if(p.categories[i]!=""){
-			ellipse(x-10, y-5, 6, 6);
-		}
-	}
-	if(lock1!=undefined && lock2 != undefined){
-		respostarel=(lock1+1)+"-"+(lock2+1);
-		line(quarterwidth+textWidth(p.subpreguntes[lock1])+10, halfheightcanvas+40*(lock1+1)+9, quarterwidth3-textWidth(p.categories[lock2])-10, halfheightcanvas+40*(lock2+1)+9);
-		rect(halfcanvas-50, quarterheight-25, 100 ,50,15);
-		text("Confirmar",halfcanvas-textWidth("Confirmar")/2,quarterheight);
-		if(dist(halfcanvas, quarterheight-25, mouseX, mouseY) < 50){
-			push();
-			fill(179, 179, 179);
-			rect(halfcanvas-50, quarterheight-25, 100 ,50,15);
+	try{
+		textSize(innerWidth*0.03);
+		ajustaTextC(p.gran,halfheightcanvas-100, 20);
+		for(var i=0;i<p.subpreguntes.length;i++){
+			let fontsize = innerWidth*0.01;
+			textSize(fontsize);
+			let x = innerWidth*0.15;
+			let y = halfheightcanvas+40*(i+1)+fontsize;
+			let w =  textWidth(p.subpreguntes[i]);	
+			let dinsx = entre(mouseX, x, x+w);
+			let dinsy = entre(mouseY, y-fontsize, y+fontsize);
+			push()
+			if(dinsx && dinsy && !mouseIsPressed){
+				fill(255, 255, 102);
+			}
+			else if(dinsx && dinsy && mouseIsPressed){
+				lock1=i;
+			}
+			else{
+				fill(0);
+			}
+			text(p.subpreguntes[i],	x, y);
 			pop();
+			if(p.subpreguntes[i]!=""){
+				ellipse(x+w+10, y-5, 6, 6);
+			}
+		}
+		for(var i=0;i<p.categories.length;i++){
+			let fontsize = innerWidth*0.01;
+			textSize(fontsize);
+			let w =  textWidth(p.categories[i]);
+			let x = quarterwidth3-w;
+			let y = halfheightcanvas+40*(i+1)+fontsize;
+			let dinsx = entre(mouseX, x, x+w);
+			let dinsy = entre(mouseY, y-fontsize, y+fontsize);
+			push()
+			if(dinsx && dinsy && !mouseIsPressed){
+				fill(255, 255, 102);
+			}
+			else if(dinsx && dinsy && mouseIsPressed){
+				lock2=i;
+			}
+			else{
+				fill(0);
+			}
+			text(p.categories[i],	x, y);
+			pop();
+			if(p.categories[i]!=""){
+				ellipse(x-10, y-5, 6, 6);
+			}
+		}
+		if(lock1!=undefined && lock2 != undefined){
+			respostarel=(lock1+1)+"-"+(lock2+1);
+			line(quarterwidth+textWidth(p.subpreguntes[lock1])+10, halfheightcanvas+40*(lock1+1)+9, quarterwidth3-textWidth(p.categories[lock2])-10, halfheightcanvas+40*(lock2+1)+9);
+			rect(halfcanvas-50, quarterheight-25, 100 ,50,15);
 			text("Confirmar",halfcanvas-textWidth("Confirmar")/2,quarterheight);
-			if(mouseIsPressed){
-				if(track<p.subpreguntes.length-1){
-					p.respostaUsuari.push(respostarel);
-					p.subpreguntes[lock1]="";
-					p.categories[lock2]="";
-					lock1=undefined;
-					lock2=undefined;
-					sleep(200);
-					track++;
+			if(dist(halfcanvas, quarterheight-25, mouseX, mouseY) < 50){
+				push();
+				fill(179, 179, 179);
+				rect(halfcanvas-50, quarterheight-25, 100 ,50,15);
+				pop();
+				text("Confirmar",halfcanvas-textWidth("Confirmar")/2,quarterheight);
+				if(mouseIsPressed){
+					if(track<p.subpreguntes.length-1){
+						p.respostaUsuari.push(respostarel);
+						p.subpreguntes[lock1]="";
+						p.categories[lock2]="";
+						lock1=undefined;
+						lock2=undefined;
+						sleep(200);
+						track++;
+					}
+					else if(track>=p.subpreguntes.length-1){
+						p.respostaUsuari.push(respostarel);
+						p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+						upTime(new Date());
+						sleep(500);
+						current++;
+					}
 				}
-				else if(track>=p.subpreguntes.length-1){
-					p.respostaUsuari.push(respostarel);
-					p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
-					upTime(new Date());
-					sleep(500);
-					current++;
-				}
+			}	
+		}
+	}
+	catch(error){
+			console.log(error);
+			missatgeerror = error;
+			estatdelsistema = "error";
+		}
+}
+
+//COMO DIBUJAR LAS PREGUNTAS DE ORDENACION
+/*LAS RPREGUNTAS DE ORDENACION CONSISTEN EN UN ENUNCIADO Y UN CONJUNTO DE ELEMENTOS QUE EL USUARIO TENDRA QUE ORDENAR.
+PARA ORDENARLOS SIMPLEMENTE TENDRA QUE ESCRIBIR EN EL CUADRO DE TEXTO EL ORDNEN EN EL QUE LE PAREZA CORRECTO.
+(EL ESTILO DE RESPUESTA QUEDA A MANOS DEL CREADOR DEL CUESTIONARIO Y LA COMUNICACION CON LOS QUE VAN A REALIZARLO LOS USUARIOS)*/
+function ordenar(p,g){
+	try{
+		textSize(20);
+		let half1 = innerWidth * .4
+		let half2 = textWidth(p.gran) * .5;
+		let height1 = innerHeight*.25;
+		text(p.gran, half1-half2, height1);
+		if(p.subpreguntes.length > 0){
+			resp.setAttribute('style', 'display:initial');
+			resp.style.left = innerWidth*0.45+'px';
+			resp.style.top = innerHeight*0.45+'px';
+			ctx.lineWidth="2";
+			ctx.strokeStyle="black";
+			ctx.fill();
+			rectC(half1,innerHeight*0.5,450,350);
+			for(var i = 0; i < p.subpreguntes.length; i++){
+				let e = ordre[i]+ p.subpreguntes[i];
+				if( e == "") continue;
+				let fontsize = 20;
+				textSize(fontsize);
+				let half3 = textWidth(e)*.5;
+				let x = half1;
+				let y = (height1+150) + 40 * (i+1);
+				let w =  textWidth(e)
+				let h = fontsize;
+				text(e, x-textWidth(e)/2, y );
+			}
+			if(keyCode==13){
+				resp.setAttribute("style", "display:none");
+				respfin=resp.value;
+				preguntes[current].respostaUsuari.push(respfin);
+				p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+				upTime(new Date());
+				sleep(500);
+				current++;
 			}
 		}	
 	}
-}
-
-//COM DIBUIXAR LES PREGUNTES D'ORDENAR
-/*TOT I TENIR UNA IMPLEMENTACIÓ FORÇA BÀSICA, LES PREGUNTES D'ORDENAR CONSTEN D'UN ENUNCIAT I UN SEGUIT D'ELEMENTS
-QUE L'USUARI HAURÀ D'ORDENAR.
-PER A ORDENAR-LOS SIMPLEMENT HAURÀ D'ESCRIURE EN EL RECUARDRE DE TEXT L'ORDRE QUE A ELL/ELLA LI SEMBLI CORRECTE.
-(L'ESTIL DE RESPOSTA QUEDA A MANS DEL QUE HAGI CREAT EL CUESTIONARI I HAURIA D'AVISAR QUIN ES ABANS NO RESPONGUIN ELS ALUMNES)*/
-function ordenar(p,g){
-	
-	textSize(20);
-	let half1 = innerWidth * .4
-	let half2 = textWidth(p.gran) * .5;
-	let height1 = innerHeight*.25;
-	text(p.gran, half1-half2, height1);
-	if(p.subpreguntes.length > 0){
-		resp.setAttribute('style', 'display:initial');
-		resp.style.left = innerWidth*0.45+'px';
-		resp.style.top = innerHeight*0.45+'px';
-		ctx.lineWidth="2";
-		ctx.strokeStyle="black";
-		ctx.fill();
-		rectC(half1,innerHeight*0.5,450,350);
-		for(var i = 0; i < p.subpreguntes.length; i++){
-			let e = ordre[i]+ p.subpreguntes[i];
-			if( e == "") continue;
-			let fontsize = 20;
-			textSize(fontsize);
-			let half3 = textWidth(e)*.5;
-			let x = half1;
-			let y = (height1+150) + 40 * (i+1);
-			let w =  textWidth(e)
-			let h = fontsize;
-			text(e, x-textWidth(e)/2, y );
+	catch(error){
+			console.log(error);
+			missatgeerror = error;
+			estatdelsistema = "error";
 		}
-		if(keyCode==13){
-			resp.setAttribute("style", "display:none");
-			respfin=resp.value;
-			preguntes[current].respostaUsuari.push(respfin);
-			p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
-			upTime(new Date());
-			sleep(500);
-			current++;
-		}
-	}			
 }
 
 //COM DIBUIXAR LES PREGUNTES DE BUSCADOR
@@ -546,5 +570,25 @@ function buscador(p,g){
 			input.value="Buscador";
 			document.getElementById("formsearch").appendChild(input);
 		uncop++;	
+	}
+}
+
+function Youtube(p,g){
+
+	ajustaTextC(p.gran, innerHeight*0.2,20);
+
+	
+	for(once; once<1; once++){
+		var iframe= document.createElement("iframe");
+			iframe.src=p.subpreguntes;
+			iframe.id="youtube";
+			iframe.style.position="absolute";
+			iframe.style.width=30+'vw';
+			iframe.style.height=30+'vh';
+			iframe.style.top= 50+'vh';
+			iframe.style.left=45+'vw';
+			iframe.style.marginLeft=-10+'vw';
+			iframe.style.zIndex=1000;
+			document.body.appendChild(iframe);	
 	}
 }
