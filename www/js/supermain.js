@@ -179,6 +179,9 @@ function draw(){
 			else if(tipo == "Youtube"){
 				Youtube(p,g);
 			}
+			else if( tipo == "RespuestaLibre"){
+				RespLibr( p , g );
+			}
 		}
 		document.getElementById("passar").onmouseover=function(){
 			 $("#infopass").toggle("slow");
@@ -514,6 +517,37 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 		preguntes.push(p);
 		p.disseny=txtfot;
 	}
+	if(tip == "RespuestaLibre"){
+		var gran, subpreguntes = [], resp;
+		multichoice_gsx.forEach(element => {
+			if(element.includes("enun")){
+				if(e[g+element].$t!=""){
+					gran = e[g+element].$t
+				}
+			}
+			if(element.includes("resp")){
+				if(e[g+element].$t!=""){ 
+					subpreguntes.push(e[g+element].$t);
+				}
+			}
+			if(element.includes("corr")){
+				if(e[g+element].$t!=""){
+					resp = e[g+element].$t;
+				}
+			}
+			if(element.includes("puntatje")){
+				if(e[g+element].$t!=""){
+					punt=parseInt(e[g+element].$t, 10);
+				}
+			}
+			
+		});
+		var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, punt);
+		p.tipologia = tip;
+		p.respostes = resp;
+		preguntes.push(p);
+		p.disseny=txtfot;
+	}
 }
 //ELEMENTO QUE NOS PERMITE LEER LOS APARTADOS DE LOS DATOS DE TIPO JSON
 //EN CASO DE AÑADIR UN NUEVO TIPO DE ELEMENTO, TAMBIEN SE TENDRA QUE AÑADIR ESE ELEMENTO AL MULTICHOICE
@@ -532,7 +566,7 @@ var multichoice_gsx = [
 'url',
 'corr',
 'puntatje'];
-//NO ES RECOMENDABLE PERO ESTA FUNCION OCUPA AL ORDENADOR X MILISEGUNDOS PARA PERMITIR QUE LOS EVENTOS COMP MOUSEISPRESSED O KEYPRESSED SE ACTUALIZEN CORRECTAMENTE
+//NO ES RECOMENDABLE PERO ESTA FUNCION OCUPA AL ORDENADOR X MILISEGUNDOS PARA PERMITIR QUE LOS EVENTOS COMO MOUSEISPRESSED O KEYPRESSED SE ACTUALIZEN CORRECTAMENTE
 function sleep(milliseconds) {
   var start = new Date().getTime();
 	for (var i = 0; i < 1e7; i++) {
@@ -541,7 +575,7 @@ function sleep(milliseconds) {
 		}
 	}
 }
-//STRUCT DE TIPOS DE PREGUNTAS
+//ESQUELETO DE COMO ESTAN FORMADAS LAS PREGUNTAS EN GENERAL
 class Pregunta{
 	constructor(gran, subpreguntes, categories, numopcions, puntatje, date){
 		this.gran = gran;

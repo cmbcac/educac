@@ -3,7 +3,7 @@ var lockfil=[];
 var lock=0;
 var estatdrag=false;
 var once=0;
-//COMO DINUJAR LAS PREGUNTAS DE OPCION MULTIPLE
+//COMO DIBUJAR LAS PREGUNTAS DE OPCION MULTIPLE
 /*CONSTA DE UN ENUNCIADO ESCRITO ENCIMA Y X OPCIONES PARA QUE EL USUARIO ESCOJA
 A LA QUE EL USUARIO HAGA CLICK EN UNA DE LAS OPCIONES, LA RESPUESTA SE ACTUALIZARÀ Y
 EL USUARIO PASARA A LA SIGUIENTE PREGUNTA*/
@@ -53,7 +53,7 @@ function opcio_multiple(p,g){
 	}
 }
 
-//COMO DINUJAR LAS PREGUNTAS DE TIPO DRAG
+//COMO DIBUJAR LAS PREGUNTAS DE TIPO DRAG
 /*DRAG CONSISTE EN SER UNA MEZCLA ENTRE UNA PREGUNTA DE OPCION MULTIPLE Y UNA PREGUNTA DE TIPO SWIPE.
 SU FUNCIONAMIENTO ES MUY SIMILAR A LA DE OPCION MULTIPLE POR AHORA*/
 function drag(p,g){
@@ -572,23 +572,103 @@ function buscador(p,g){
 		uncop++;	
 	}
 }
-
+//COMO DIBUJAR LAS PREGUNTAS QUE MUESTRAN VIDEOS
+/* LAS PREGUNTAS QUE MUESTRAN VIDEOS DE YOUTUBE SIMPLEMENTE CARGAN LA URL DE LA PREGUNTA Y LA MUESTRAN COMO UN VIDEO DENTRO DE
+UN IFRAME. CUANDO EL USUARIO HAYA ACABADO DE VER EL VIDEO, SE PASA A LA SIGUIENTE PREGUNTA	*/
 function Youtube(p,g){
 
 	ajustaTextC(p.gran, innerHeight*0.2,20);
-
+	document.getElementById("passar").setAttribute("style", "display:none");
 	
 	for(once; once<1; once++){
+		
 		var iframe= document.createElement("iframe");
 			iframe.src=p.subpreguntes;
 			iframe.id="youtube";
 			iframe.style.position="absolute";
 			iframe.style.width=30+'vw';
 			iframe.style.height=30+'vh';
-			iframe.style.top= 50+'vh';
+			iframe.style.top= 40+'vh';
 			iframe.style.left=45+'vw';
 			iframe.style.marginLeft=-10+'vw';
 			iframe.style.zIndex=1000;
 			document.body.appendChild(iframe);	
+			
 	}
+	let w = textWidth("Ya he visto el video");
+	let x = halfcanvas-50-w/4;
+	let y= halfheightcanvas + innerHeight*0.2-25;
+	
+	
+	text("Ya he visto el video", x, y);
+	let dinsEndX = entre(mouseX, x-10, x+w+20);
+	let dinsEndY = entre(mouseY, y-30, y+20);
+	if(dinsEndX && dinsEndY){
+		push();
+		fill(255, 255, 102);
+		rect(x-10,y-30,w+20,50,15);
+		pop();
+		if(mouseIsPressed){
+			document.getElementById("youtube").remove();
+			p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+			upTime(new Date());
+			sleep(500);
+			once=0;
+			current++;
+		}
+	}else{
+		rect(x-10,y-30,w+20,50,15);
+	}
+	
+	text("Ya he visto el video", x, y);
+}
+
+function RespLibr( p , g ){
+	
+	ajustaTextC(p.gran, innerHeight*0.2,20);
+	document.getElementById("passar").setAttribute("style", "display:none");
+	
+	for(once; once<1; once++){
+		
+		var txtbx= document.createElement("textarea");
+			
+			txtbx.id="txtbx";
+			txtbx.style.position="absolute";
+			txtbx.style.width=30+'vw';
+			txtbx.style.height=30+'vh';
+			txtbx.style.top= 40+'vh';
+			txtbx.style.left=45+'vw';
+			txtbx.style.marginLeft=-10+'vw';
+			txtbx.style.zIndex=1000;
+			document.body.appendChild(txtbx);	
+			
+	}
+		let w = textWidth("Confirmar");
+	let x = halfcanvas-50-w/4;
+	let y= halfheightcanvas + innerHeight*0.2-25;
+	
+	
+	text("Confirmar", x, y);
+	let dinsEndX = entre(mouseX, x-10, x+w+20);
+	let dinsEndY = entre(mouseY, y-30, y+20);
+	if(dinsEndX && dinsEndY){
+		push();
+		fill(255, 255, 102);
+		rect(x-10,y-30,w+20,50,15);
+		pop();
+		if(mouseIsPressed){
+			p.respostaUsuari=document.getElementById("txtbx").value;
+			document.getElementById("txtbx").remove();
+			p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+			upTime(new Date());
+			sleep(500);
+			once=0;
+			current++;
+		}
+	}else{
+		rect(x-10,y-30,w+20,50,15);
+	}
+	
+	text("Confirmar", x, y);
+	
 }
