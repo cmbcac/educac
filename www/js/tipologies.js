@@ -478,6 +478,9 @@ function relacio(p,g){
 						p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
 						upTime(new Date());
 						sleep(500);
+						track=0;
+						lock1=undefined;
+						lock2=undefined;
 						current++;
 					}
 				}
@@ -626,8 +629,6 @@ function Youtube(p,g){
 function RespLibr( p , g ){
 	
 	ajustaTextC(p.gran, innerHeight*0.2,20);
-	document.getElementById("passar").setAttribute("style", "display:none");
-	
 	for(once; once<1; once++){
 		
 		var txtbx= document.createElement("textarea");

@@ -283,7 +283,7 @@ function fotoswipe( p , g ){
 					upTime(new Date());
 					sleep(500);
 					isubp = 0;
-					current+=1; 
+					current++; 
 				}
 			}
 		}		
@@ -432,7 +432,7 @@ function fotoswipe( p , g ){
 						upTime(new Date());
 						sleep(500);
 						isubp = 0;
-						current+=1;	 
+						current++;	 
 					}
 				}
 		}		
@@ -580,6 +580,8 @@ function fotorelacio( p , g ){
 					sleep(500);
 					current++;
 					track=0;
+					lock1=undefined;
+					lock2=undefined;
 				}
 			}
 		}
