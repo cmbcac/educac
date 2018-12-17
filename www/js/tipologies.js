@@ -546,34 +546,46 @@ function ordenar(p,g){
 //COM DIBUIXAR LES PREGUNTES DE BUSCADOR
 /*WORK IN PROGRESS*/
 function buscador(p,g){
+	ajustaTextC(p.gran, innerWidth*0.1, 20);
+
+	textC("PULSA ENTER PARA BUSCAR", innerHeight*0.8, 12);
+	for(uncop; uncop<1; uncop++){
+	var newButton = document.createElement("input");
+		newButton.type="text";
+		newButton.id="search";
+		newButton.style.top="48%";
+		newButton.style.left="43%";
+		newButton.style.position="absolute";
+		newButton.style.zIndex=9999;
+		newButton.style
+		document.body.appendChild(newButton);				
+	}	
+			
 	
-	if(uncop==0){
-		var newdiv=document.createElement("div");
-			newdiv.src="prova1.html";
-			newdiv.id="formdiv";
-			newdiv.style.left=50+"%";
-			newdiv.style.top=50+"%";
-			newdiv.style.width=30+"%";
-			newdiv.style.height=25+"%";
-			newdiv.style.position="absolute";
-			document.body.appendChild(newdiv);
-		var newform=document.createElement("from");
-			newform.id="formsearch";
-			newform.action="https://google.com/search";
-			newform.method="get";
-			document.getElementById("formdiv").appendChild(newform);
-		var input=document.createElement("input");
-			input.type="text";
-			input.name="q";
-			input.required=true;
-			input.autofocus=true;
-			document.getElementById("formsearch").appendChild(input);
-		input=document.createElement("input");
-			input.type="submit";
-			input.value="Buscador";
-			document.getElementById("formsearch").appendChild(input);
-		uncop++;	
+	  var q = document.getElementById("search").value;
+		if(keyCode==13){
+			window.open('http://google.com/search?q='+q);
+			keyCode=undefined;
+			p.respostaUsuari.push(q);
+		}
+		
+	
+	let dinsX= entre(mouseX, innerWidth*0.4-80, innerWidth*0.4+20);
+	let dinsY= entre(mouseY, innerHeight*0.5-30, innerHeight*0.5+20);
+	if( dinsX && dinsY ) {
+		if(mouseIsPressed){
+			current++;
+			document.getElementById("search").style.display="none";
+		}
+		push();
+		fill(0,255,0);
+		pop();
 	}
+		rect(innerWidth*0.4-80, innerHeight*0.5-30, 100, 50, 10);
+		
+		textSize(14);
+		text("He acabado", innerWidth*0.4-70, innerHeight*0.5);
+		
 }
 //COMO DIBUJAR LAS PREGUNTAS QUE MUESTRAN VIDEOS
 /* LAS PREGUNTAS QUE MUESTRAN VIDEOS DE YOUTUBE SIMPLEMENTE CARGAN LA URL DE LA PREGUNTA Y LA MUESTRAN COMO UN VIDEO DENTRO DE

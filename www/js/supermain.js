@@ -172,7 +172,7 @@ function draw(){
 			else if(tipo == "Ordenar"){
 				ordenar(p,g);
 			}
-			else if(tipo == "Busca"){
+			else if(tipo == "Buscador"){
 				buscador(p,g);
 			}
 			else if(tipo == "Youtube"){
@@ -485,7 +485,7 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 		preguntes.push(p);
 		p.disseny=txtfot;
 	}
-	if(tip == "Busca"){
+	if(tip == "Buscador"){
 		var gran, subpreguntes = [], resp;
 		multichoice_gsx.forEach(element => {
 			if(element.includes("enun")){

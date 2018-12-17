@@ -74,12 +74,10 @@ h4:hover{
 #foo{
 	display:none;
 	position:absolute;
-	top:0%;
-	left:0%;
+	top:50%;
+	left:40%;
 	width:50%;
 	height:50%;
-	margin-left:-20%;
-	margin-top:-3%;
 }
 #countup{
 	position:absolute;
