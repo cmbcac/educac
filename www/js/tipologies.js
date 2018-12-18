@@ -10,14 +10,14 @@ EL USUARIO PASARA A LA SIGUIENTE PREGUNTA*/
 function opcio_multiple(p,g){
 	
 	try{
-		let half1 = innerWidth * .4
+		let half1 = halfcanvas;
 		let half2 = textWidth(p.gran) * .5;
 		let height1 = innerHeight*.40;
 		ctx.lineWidth="2";
 		ctx.strokeStyle="black";
 		ctx.fillStyle = "white";
 		ctx.fill();
-		ajustaTextC(p.gran, height1,20);
+		enunciat(p.gran, height1,20);
 		if(p.subpreguntes.length > 0){
 			for(var i = 0; i < p.subpreguntes.length; i++){
 				let e = p.subpreguntes[i];
@@ -59,7 +59,7 @@ SU FUNCIONAMIENTO ES MUY SIMILAR A LA DE OPCION MULTIPLE POR AHORA*/
 function drag(p,g){
 	
 	let numopcions = p.numopcions;
-	ajustaTextC(p.gran, quarterheight*0.3,20);
+	enunciat(p.gran, quarterheight*0.3,20);
 	
 		textC(p.categories[isubp2], halfheightcanvas, 23);
 		try{
@@ -271,7 +271,7 @@ function swipe(p,g){
 		missatgeerror = error;
 		estatdelsistema = "error";
 	}
-	ajustaTextC(p.gran, quarterheight+40,20);
+	enunciat(p.gran, quarterheight+40,20);
 }
 
 //COMO DIBUJAR LAS PREGUNTAS DE TIPO FILTRO
@@ -285,7 +285,7 @@ function filtre(p,g){
 		var image1=new Image();
 		image1.src = p.subpreguntes;
 		textSize(20);
-		let half1 = innerWidth * .4
+		let half1 = innerWidth * .45
 		let half2 = textWidth(p.gran) * .5;
 		let height1 = innerHeight*.50;
 		ctx.lineWidth="2";
@@ -293,7 +293,7 @@ function filtre(p,g){
 		ctx.fillStyle = "#999999";
 		ctx.fill();
 		ctx.drawImage(image1,innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4); 
-		ajustaTextC(p.gran, innerHeight*0.15,15);
+		enunciat(p.gran, innerHeight*0.15,15);
 		let dinsDonex = entre(mouseX,innerWidth*0.1, innerWidth*0.1+innerWidth*0.07 ); 
 		let dinsDoney = entre(mouseY,innerHeight/2-25,innerHeight/2+innerHeight*0.07); 
 		let dinsResx = entre(mouseX,innerWidth*0.65, innerWidth*0.65+innerWidth*0.07 ); 
@@ -403,7 +403,7 @@ AUN ASI EL SISTEMA CONSTA DE UN SEGURO PARA EVITAR QUE EL USUARIO ENVIE RESPUEST
 function relacio(p,g){	
 	try{
 		textSize(innerWidth*0.03);
-		ajustaTextC(p.gran,halfheightcanvas-100, 20);
+		enunciat(p.gran,halfheightcanvas-100, 20);
 		for(var i=0;i<p.subpreguntes.length;i++){
 			let fontsize = innerWidth*0.01;
 			textSize(fontsize);
@@ -432,7 +432,7 @@ function relacio(p,g){
 			let fontsize = innerWidth*0.01;
 			textSize(fontsize);
 			let w =  textWidth(p.categories[i]);
-			let x = quarterwidth3-w;
+			let x = innerWidth*0.8-w;
 			let y = halfheightcanvas+40*(i+1)+fontsize;
 			let dinsx = entre(mouseX, x, x+w);
 			let dinsy = entre(mouseY, y-fontsize, y+fontsize);
@@ -501,18 +501,20 @@ PARA ORDENARLOS SIMPLEMENTE TENDRA QUE ESCRIBIR EN EL CUADRO DE TEXTO EL ORDNEN 
 function ordenar(p,g){
 	try{
 		textSize(20);
-		let half1 = innerWidth * .4
+		let half1 = innerWidth * .45
 		let half2 = textWidth(p.gran) * .5;
 		let height1 = innerHeight*.25;
-		text(p.gran, half1-half2, height1);
+		enunciat(p.gran, height1, 20);
 		if(p.subpreguntes.length > 0){
 			resp.setAttribute('style', 'display:initial');
 			resp.style.left = innerWidth*0.45+'px';
 			resp.style.top = innerHeight*0.45+'px';
 			ctx.lineWidth="2";
 			ctx.strokeStyle="black";
-			ctx.fill();
-			rectC(half1,innerHeight*0.5,450,350);
+			push();
+			fill(242);
+			rectC(half1,halfheightcanvas,450,350);
+			pop();
 			for(var i = 0; i < p.subpreguntes.length; i++){
 				let e = ordre[i]+ p.subpreguntes[i];
 				if( e == "") continue;
@@ -546,7 +548,7 @@ function ordenar(p,g){
 //COM DIBUIXAR LES PREGUNTES DE BUSCADOR
 /*WORK IN PROGRESS*/
 function buscador(p,g){
-	ajustaTextC(p.gran, innerWidth*0.1, 20);
+	enunciat(p.gran, innerWidth*0.1, 20);
 
 	textC("PULSA ENTER PARA BUSCAR", innerHeight*0.8, 12);
 	for(uncop; uncop<1; uncop++){
@@ -570,7 +572,7 @@ function buscador(p,g){
 		}
 		
 	
-	let dinsX= entre(mouseX, innerWidth*0.4-80, innerWidth*0.4+20);
+	let dinsX= entre(mouseX, halfcanvas-80, halfcanvas+20);
 	let dinsY= entre(mouseY, innerHeight*0.5-30, innerHeight*0.5+20);
 	if( dinsX && dinsY ) {
 		if(mouseIsPressed){
@@ -581,10 +583,10 @@ function buscador(p,g){
 		fill(0,255,0);
 		pop();
 	}
-		rect(innerWidth*0.4-80, innerHeight*0.5-30, 100, 50, 10);
+		rect(halfcanvas-80, innerHeight*0.5-30, 100, 50, 10);
 		
 		textSize(14);
-		text("He acabado", innerWidth*0.4-70, innerHeight*0.5);
+		text("He acabado", halfcanvas-70, innerHeight*0.5);
 		
 }
 //COMO DIBUJAR LAS PREGUNTAS QUE MUESTRAN VIDEOS
@@ -592,7 +594,7 @@ function buscador(p,g){
 UN IFRAME. CUANDO EL USUARIO HAYA ACABADO DE VER EL VIDEO, SE PASA A LA SIGUIENTE PREGUNTA	*/
 function Youtube(p,g){
 
-	ajustaTextC(p.gran, innerHeight*0.2,20);
+	enunciat(p.gran, innerHeight*0.2,20);
 	document.getElementById("passar").setAttribute("style", "display:none");
 	
 	for(once; once<1; once++){
@@ -640,7 +642,7 @@ function Youtube(p,g){
 
 function RespLibr( p , g ){
 	
-	ajustaTextC(p.gran, innerHeight*0.2,20);
+	enunciat(p.gran, innerHeight*0.2,20);
 	for(once; once<1; once++){
 		
 		var txtbx= document.createElement("textarea");

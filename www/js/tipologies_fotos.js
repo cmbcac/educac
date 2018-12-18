@@ -4,7 +4,7 @@ UN SWIPE. EN EL APARTADO DE FOTOS NOS PERMITE ARRASTRAR LA IMAGEN HASTA LA CATEG
 function fotodrag(p,g){
 	
 	let numopcions = p.numopcions;
-	ajustaTextC(p.gran, quarterheight*0.3,20);	
+	enunciat(p.gran, quarterheight*0.3,20);	
 	try{
 		var posipunts;
 		var rad = innerWidth*0.1;
@@ -198,18 +198,18 @@ function fotoswipe( p , g ){
 					to3 = color(0, 0, 255, 0.2*255);
 				
 				if(p.numopcions>=3){
-					if(mouseX < halfcanvas&&mouseY <= innerHeight/2){
+					if(mouseX < halfcanvas&&mouseY <= halfheightcanvas){
 						percent = 10 - (mouseX - quarterwidth) / quarterwidth;
 						c1 = lerpColor(from, to, percent);
 					}
-					if(mouseX > halfcanvas&&mouseY <= innerHeight/2){
+					if(mouseX > halfcanvas&&mouseY <= halfheightcanvas){
 						percent = 10 + (mouseX - halfcanvas) / quarterwidth;
 						c1 = lerpColor(from, to2, percent);
 					}
-					if(mouseX == halfcanvas&&mouseY <= innerHeight/2){
+					if(mouseX == halfcanvas&&mouseY <= halfheightcanvas){
 						c1 = color(255);
 					}
-					if(mouseY > innerHeight/2){
+					if(mouseY > halfheightcanvas){
 						percent = 10- (mouseY-quarterheight)/quarterheight;
 						c1 = lerpColor(from,to3,percent);
 					}
@@ -254,7 +254,7 @@ function fotoswipe( p , g ){
 					}
 				if(p.numopcions <= 3) {
 						if(p.subpreguntes[1][0]=="!"){
-							text(p.subpreguntes[1].substr(1), innerWidth*0.4 - textWidth(p.subpreguntes[1])/2, quarterheight3);
+							text(p.subpreguntes[1].substr(1), halfcanvas - textWidth(p.subpreguntes[1])/2, quarterheight3);
 						}
 						else{
 							var subpimg3 = new Image();
@@ -277,7 +277,7 @@ function fotoswipe( p , g ){
 				isubp+=1;
 				estatswipe = "nomig";
 				mouseX=innerWidth*0.25;
-				mouseY=innerHeight/2;
+				mouseY=halfheightcanvas;
 				if(isubp == p.categories.length){	
 					p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
 					upTime(new Date());
@@ -338,18 +338,18 @@ function fotoswipe( p , g ){
 						   to2 = color(255, 0, 0, 0.2 * 255);
 						   to3 = color(0, 0, 255, 0.2*255);			
 					if(p.numopcions>=3){
-						if(mouseX < halfcanvas&&mouseY <= innerHeight/2){
+						if(mouseX < halfcanvas&&mouseY <= halfheightcanvas){
 							percent = 10 - (mouseX - quarterwidth) / quarterwidth;
 							c1 = lerpColor(from, to, percent);	
 						}
-						if(mouseX > halfcanvas&&mouseY <= innerHeight/2){
+						if(mouseX > halfcanvas&&mouseY <= halfheightcanvas){
 							percent = 10 + (mouseX - halfcanvas) / quarterwidth;
 							c1 = lerpColor(from, to2, percent);
 						}
-						if(mouseX == halfcanvas&&mouseY <= innerHeight/2){
+						if(mouseX == halfcanvas&&mouseY <= halfheightcanvas){
 							c1 = color(255);
 						}
-						if(mouseY > innerHeight/2){
+						if(mouseY > halfheightcanvas){
 							percent = 10- (mouseY-quarterheight)/quarterheight;
 							c1 = lerpColor(from,to3,percent);
 						}
@@ -403,7 +403,7 @@ function fotoswipe( p , g ){
 					}
 					if(p.numopcions <= 3) {
 						if(p.subpreguntes[1][0]=="!"){
-							text(p.subpreguntes[1].substr(1), innerWidth*0.4 - textWidth(p.subpreguntes[1])/2, quarterheight3);
+							text(p.subpreguntes[1].substr(1), halfcanvas - textWidth(p.subpreguntes[1])/2, quarterheight3);
 						}
 						else{
 							var subpimg3 = new Image();
@@ -426,7 +426,7 @@ function fotoswipe( p , g ){
 					isubp+=1;
 					estatswipe = "nomig";
 					mouseX=innerWidth*0.25;
-					mouseY=innerHeight/2;
+					mouseY=halfheightcanvas;
 					if(isubp == p.categories.length){	
 						p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
 						upTime(new Date());
@@ -442,7 +442,7 @@ function fotoswipe( p , g ){
 			estatdelsistema = "error";
 		}
 	}	
-	ajustaTextC(p.gran, quarterheight+40,20);
+	enunciat(p.gran, quarterheight+40,20);
 }
 
 //COMO DIBUJAR LAS PREGUNTAS DE TIPO RELACION
@@ -453,7 +453,7 @@ DE ACUERDO CON LA DECISION QUE EL HA TOMADO*/
 function fotorelacio( p , g ){
 	
 	textSize(innerWidth*0.03);
-	ajustaTextC(p.gran,halfheightcanvas-100, 20);
+	enunciat(p.gran,halfheightcanvas-100, 20);
 	for(var i=0;i<p.subpreguntes.length;i++){
 		let fontsize = innerWidth*0.01;
 		textSize(fontsize);
@@ -602,7 +602,7 @@ function fotomultop( p , g ){
 	ctx.strokeStyle="black";
 	ctx.fillStyle = "white";
 	ctx.fill();
-	ajustaTextC(p.gran, height1,20);
+	enunciat(p.gran, height1,20);
 	if(p.subpreguntes.length > 0){
 		for(var i = 0; i < p.subpreguntes.length; i++){
 			let e = p.subpreguntes[i];

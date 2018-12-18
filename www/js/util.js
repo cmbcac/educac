@@ -1,5 +1,5 @@
 var quarterwidth = innerWidth * .15;
-var halfcanvas = innerWidth * .40;
+var halfcanvas = innerWidth * .45;
 var halfwidth = innerWidth * 0.5;
 var quarterwidth3 = innerWidth * .65;
 var quarterheight = innerHeight * .25;
@@ -20,7 +20,7 @@ function textC(missatge, y, size){
 	push();
 	textSize(size);
 	ctx.font=size+'px Verdana';;
-	let half1 = innerWidth * .4;
+	let half1 = halfcanvas;
 	let half2 = textWidth(missatge) * .5;
 	let x = half1 - half2;
 	text(missatge, x, y);
@@ -46,18 +46,20 @@ function rectC(x, y, w, h){
 }
 //QUÈ FA LA FINESTRA QUAN CANVIA DE MIDA
 window.onresize = function(){
-	resizeCanvas(window.innerWidth*0.8, window.innerHeight*0.85);
+	resizeCanvas(window.innerWidth*0.9, window.innerHeight*0.85);
 	resizevArialbles();
+	redraw();
 }
 //CANVIA TOTES LES MESURES PREDEFINIDES QUAN LA FINESTRA CANVIA DE MIDA
 function resizevArialbles(){
 	var quarterwidth = window.innerWidth * .15;
-	var halfcanvas = window.innerWidth * .40;
+	var halfcanvas = window.innerWidth * .45;
 	var halfwidth = window.innerWidth * 0.5;
 	var quarterwidth3 = window.innerWidth * .65;
 	var quarterheight = window.innerHeight * .25;
 	var halfheightcanvas = window.innerHeight * .50;
 	var quarterheight3 = window.innerHeight * .75;
+	
 }
 //CENTRA UN RECTANGLE
 function rectangleCentrat(w, h){
@@ -162,9 +164,7 @@ function creaSubmit(stateprint){
 			background(0, 204, 204+g)
 			sbmit=document.getElementById("foo");
 			sbmit.setAttribute('style', 'display:inline');
-			sbmit.style.position = 'absolute';
-			sbmit.style.left = 40+'vw';
-			sbmit.style.top = 20+'vh';
+
 			document.getElementById("totalcountup").setAttribute("style", "display:none");		
 			if(stateprint==true){			
 				totalPuntatje();					
@@ -239,6 +239,7 @@ function creaSubmit(stateprint){
 				document.getElementById("submit").style.display="block";
 			}else{
 				document.getElementById("submit").style.display="none";
+				
 			}
 }
 //CALCULA LA PUNTUACIÓ FINAL DEPENENT DE LES RESPOSTES DE L'USUARI
@@ -255,7 +256,7 @@ function totalPuntatje(){
 function ajustaTextC(txt, height, mida){
 	var pregunta=[];
 	textSize(mida);
-	if(txt.length>=Math.ceil(innerWidth*0.05)){					
+	if(txt.length>=Math.ceil(innerWidth*0.03)){					
 		for(var i=0;i<=txt.length-1;i++){
 			pregunta+=txt[i];
 			if(i==Math.ceil(txt.length/2)){
@@ -272,7 +273,14 @@ function ajustaTextC(txt, height, mida){
 		textC(lines, height,20 );
 	}
 }
-
+function enunciat(txt, height, mida){
+	ajustaTextC(txt, innerHeight*0.12,mida);
+	push();
+	noFill();
+	rect(halfcanvas-textWidth(txt)/2-25, innerHeight*0.1-25, textWidth(txt)+50, textHeight(txt)*2 + 25);
+	pop();
+	
+}
 function createStart(){
 	var newdiv= document.createElement("div");
 		newdiv.id="StartingDiv";
