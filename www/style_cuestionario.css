@@ -30,8 +30,19 @@ canvas{
 	-moz-animation: Gradient 15s ease infinite;
 	animation: Gradient 15s ease infinite;
 }
-
-
+input{
+	padding-left:1vw;
+	padding-right:1vw;
+	padding-top:1vh;
+	padding-bottom:1vh;
+	border-radius:10px;
+	border:2px solid black;
+	background-color: rgba(155,155,155,0.6);
+}
+input:focus{
+	background-color: rgba( 55, 55, 55, 0.6);
+	color:white;
+}
 h1, h3, h4{
 		position:relative;
 		top: calc(10%);
@@ -44,7 +55,47 @@ h4:hover{
 	position: inherit;
 	cursor: pointer;
 }
-
+.RCHLST, .animRCHLST{
+	position:absolute;
+	float:right;
+	top:10vh;
+	left:96vw;
+	height:85%;
+	width: 18%;
+	z-index: 1000;
+}
+.animRCHLST{
+	background-color: rgba(255,255,255,0.5);
+	border: 1px solid black;
+}
+#lleng{
+	position:absolute;
+	-webkit-appearance: none;
+	top:41.5vh;
+	height:8.5%;
+	width:20%;
+	border: 1px solid black;
+	border-radius:10px;
+	background-color: rgba(255,255,255,0.4);
+	background-image: url("img/check.png");
+	background-size: 98.5%;
+	background-position:center;
+	background-repeat: no-repeat;
+}
+.RCHLST{	
+	ms-transition: all 0.3s;
+	  -moz-transition: all 0.3s;
+	  -webkit-transition: all 0.3s;
+}
+.animRCHLST{
+	-ms-transform: translate3d(-240px,0,0);
+	-moz-transform: translate3d(-240px,0,0);
+	-webkit-transform: translate3d(-240px,0,0);
+	
+	ms-transition: all 0.3s;
+	  -moz-transition: all 0.3s;
+	  -webkit-transition: all 0.3s;
+}
 /*COSES PEL CUESTIONARI*/
 #foo{
 	display:none;
@@ -91,6 +142,14 @@ h4:hover{
 	border-radius:100%;
 }
 #submit:hover {
+	-webkit-animation-name: clrchange,spin;
+    -webkit-animation-duration: 10s;
+    -webkit-animation-iteration-count: infinite;
+	
+	-moz-animation-name: clrchange,spin;
+    -moz-animation-duration: 10s;
+    -moz-animation-iteration-count: infinite;
+	
 	animation-name: clrchange,spin;
     animation-duration: 10s;
     animation-iteration-count: infinite;
@@ -173,6 +232,8 @@ h4:hover{
 	width: 200px;
 }
 .ginput:focus {
+	-webkit-animation: glow 800ms ease-out infinite reverse;
+	-moz-animation: glow 800ms ease-out infinite reverse;
 	animation: glow 800ms ease-out infinite reverse;
 	background: #222922;
 	background: linear-gradient(#333933, #222922);
@@ -205,6 +266,8 @@ h4:hover{
     width: 7vw;
     height: 7vw;
 	margin: -3.5vw;
+    -webkit-animation: spin 1s linear infinite;
+    -moz-animation: spin 1s linear infinite;
     animation: spin 1s linear infinite;
 }
 #col2 {
@@ -216,8 +279,12 @@ h4:hover{
     width: 6vw;
     height: 6vw;
 	margin: -3vw;
+    -webkit-animation: spin 2s linear infinite;
+    -moz-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
-	 animation-direction: reverse;
+	-webkit-animation-direction: reverse;
+	-moz-animation-direction: reverse;
+	animation-direction: reverse;
 }
 #col3 {
 	position:absolute;
@@ -228,6 +295,8 @@ h4:hover{
     width: 5vw;
     height: 5vw;
 	margin: -2.5vw;
+    -webkit-animation: spin 3s linear infinite;
+    -moz-animation: spin 3s linear infinite;
     animation: spin 3s linear infinite;
 }
 #col4 {
@@ -239,8 +308,12 @@ h4:hover{
     width: 4vw;
     height: 4vw;
 	margin: -2vw;
+    -webkit-animation: spin 1s linear infinite;
+    -moz-animation: spin 1s linear infinite;
     animation: spin 1s linear infinite;
-	 animation-direction: reverse;
+	-webkit-animation-direction: reverse;
+	-moz-animation-direction: reverse;
+	animation-direction: reverse;
 }
 #col5 {
 	position:absolute;
@@ -251,6 +324,8 @@ h4:hover{
     width: 3vw;
     height: 3vw;
 	margin: -1.5vw;
+    -webkit-animation: spin 2s linear infinite;
+    -moz-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
 }
 #col6{
@@ -262,8 +337,12 @@ h4:hover{
      width: 2vw;
     height: 2vw;
 	margin: -1vw;
+    -webkit-animation: spin 3s linear infinite;
+    -moz-animation: spin 3s linear infinite;
     animation: spin 3s linear infinite;
-	 animation-direction: reverse;
+	-webkit-animation-direction: reverse;
+	-moz-animation-direction: reverse;
+	animation-direction: reverse;
 }
 #col7 {
 	position:absolute;
@@ -274,6 +353,8 @@ h4:hover{
     width: 1vw;
     height: 1vw;
 	margin: -0.5vw;
+    -webkit-animation: spin 1s linear infinite;
+    -moz-animation: spin 1s linear infinite;
     animation: spin 1s linear infinite;
 }
 
@@ -418,3 +499,6 @@ h4:hover{
 		box-shadow: 0 0 20px rgba(0,255,0,.6), inset 0 0 10px rgba(0,255,0,.4), 0 2px 0 #000;
     }
 }
+
+
+

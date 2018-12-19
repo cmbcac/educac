@@ -575,13 +575,15 @@ function buscador(p,g){
 	let dinsX= entre(mouseX, halfcanvas-80, halfcanvas+20);
 	let dinsY= entre(mouseY, innerHeight*0.5-30, innerHeight*0.5+20);
 	if( dinsX && dinsY ) {
+		
+		push();
+		fill(0,255,0);
+		rect(halfcanvas-80, innerHeight*0.5-30, 100, 50, 10);
+		pop();
 		if(mouseIsPressed){
 			current++;
 			document.getElementById("search").style.display="none";
 		}
-		push();
-		fill(0,255,0);
-		pop();
 	}
 		rect(halfcanvas-80, innerHeight*0.5-30, 100, 50, 10);
 		

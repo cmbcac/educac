@@ -1,3 +1,4 @@
+var un = 0;
 function inici(){
 		if(start==true){
 			document.getElementById("defaultCanvas0").style.border="2px solid black";
@@ -50,6 +51,10 @@ function playing(){
 			g = Math.cos(frameCount/70)*100;
 			ctx.fillStyle = "#999999";	
 			//DRAW PER A CADA ESTAT DEL JOC
+			
+			for ( un ; un<1 ; un++){
+				createCHLIST();
+			}
 			if(tipo == "Opció múltiple"){
 				p.disseny=="Text" ? opcio_multiple(p,g) : fotomultop(p,g);
 				//opcio_multiple(p, g)

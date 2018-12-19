@@ -69,6 +69,8 @@ var stateprint=true;
 var end=false;
 var start=true;
 var SENDURL;
+
+
 }
 
 function setup(){
@@ -81,10 +83,11 @@ function setup(){
 	ctx=canvas.getContext('2d');
 	backswipe =  color(144, 145, 232, 0.2);
 	lastframemouse = mouseIsPressed;	
-
+	
 
 }
 function draw(){
+	
 	textFont('Helvetica');
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	resp=document.getElementById("respostaescrita");
@@ -99,7 +102,9 @@ function draw(){
 	}		
 
 	if(preguntes.length > 0 && estatdelsistema == "playing"){
+		
 		playing();
+		
 	}
 
 	if(document.getElementById("totalseconds").innerHTML=="5"&&preguntes.length<=0){
@@ -120,6 +125,7 @@ function draw(){
 	push()
 	fill(0+g*0.1, 204, 102);
 	pop();
+	CHLIST();
 }
 function mouseReleased(){
   mouseout = true;

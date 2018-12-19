@@ -6,6 +6,7 @@ var quarterheight = innerHeight * .25;
 var halfheightcanvas = innerHeight * .50;
 var quarterheight3 = innerHeight * .75;
 var puntatje=0;
+var r = 0;
 //CALCULA SI L'ELEMENT X ESTÀ ENTRE A I B
 function entre(x, a, b){
 	return x > a && x < b;
@@ -273,6 +274,7 @@ function ajustaTextC(txt, height, mida){
 		textC(lines, height,20 );
 	}
 }
+
 function enunciat(txt, height, mida){
 	ajustaTextC(txt, innerHeight*0.12,mida);
 	push();
@@ -281,13 +283,14 @@ function enunciat(txt, height, mida){
 	pop();
 	
 }
+
 function createStart(){
 	var newdiv= document.createElement("div");
 		newdiv.id="StartingDiv";
 		document.body.appendChild(newdiv);
 					
 		newinput= document.createElement("input");
-		newinput.id="url"
+		newinput.id="url";
 		newinput.type="url";
 		newinput.classList.add('ginput');
 		newinput.placeholder="URL del cuestionario: ";
@@ -300,4 +303,36 @@ function createStart(){
 		document.getElementById(newdiv.id).appendChild(newinput);
 										
 		start=false;
+}
+
+function CHLIST(){
+	
+	var lleng = document.getElementById("lleng");
+	if(lleng.checked){
+		$(".RCHLST").toggleClass("RCHLST animRCHLST");
+	}else{
+		$(".animRCHLST").toggleClass("animRCHLST RCHLST");
+	}
+	
+	if($(".RCHLST").hasClass( "RCHLST" )){
+		$("#RCHDIV").css('display', 'none');
+		
+	}else{
+		$("#RCHDIV").css('display', 'block');
+	}
+	if(current>0 && current<=preguntes.length){
+		document.getElementById("check"+(current-1)).checked=true;
+	}
+	
+}
+
+function createCHLIST(){
+	
+	for( r ; r<preguntes.length; r++){
+		var nwcheck = document.createElement("input");
+		nwcheck.type="checkbox";
+		nwcheck.id="check"+r;
+		nwcheck.disabled=true;
+		document.getElementById("RCHDIV").appendChild(nwcheck);		
+	}
 }
