@@ -46,20 +46,27 @@ function rectC(x, y, w, h){
 	rect(x-half1, y - half2, w, h,10);
 }
 //QUÈ FA LA FINESTRA QUAN CANVIA DE MIDA
-window.onresize = function(){
+/*window.onresize = function(){
+	
 	resizeCanvas(window.innerWidth*0.9, window.innerHeight*0.85);
 	resizevArialbles();
-	redraw();
+	redraw(5);
+}*/
+function windowResized() {
+	
+	resizeCanvas(window.innerWidth*0.9, window.innerHeight*0.85);
+	resizevArialbles();
+	redraw(5);
 }
 //CANVIA TOTES LES MESURES PREDEFINIDES QUAN LA FINESTRA CANVIA DE MIDA
 function resizevArialbles(){
-	var quarterwidth = window.innerWidth * .15;
-	var halfcanvas = window.innerWidth * .45;
-	var halfwidth = window.innerWidth * 0.5;
-	var quarterwidth3 = window.innerWidth * .65;
-	var quarterheight = window.innerHeight * .25;
-	var halfheightcanvas = window.innerHeight * .50;
-	var quarterheight3 = window.innerHeight * .75;
+	quarterwidth = window.innerWidth * .15;
+	halfcanvas = window.innerWidth * .45;
+	halfwidth = window.innerWidth * 0.5;
+	quarterwidth3 = window.innerWidth * .65;
+	quarterheight = window.innerHeight * .25;
+	halfheightcanvas = window.innerHeight * .50;
+	quarterheight3 = window.innerHeight * .75;
 	
 }
 //CENTRA UN RECTANGLE
@@ -161,6 +168,14 @@ function creaSubmit(stateprint){
 			document.getElementById("infopass").setAttribute("style", "display:none");
 			document.getElementById("txtpassar").setAttribute("style", "display:none");
 			document.getElementById("defaultCanvas0").setAttribute("style","display:none");
+
+			if($(".RCHLST").hasClass( "RCHLST" )){
+				$(".RCHLST").css('display', 'none');
+				
+			}else{
+				$(".animRCHLST").css('display', 'none');
+			}
+			
 			g = 255 + (Math.sin(frameCount/100) * 100);
 			background(0, 204, 204+g)
 			sbmit=document.getElementById("foo");
@@ -308,6 +323,7 @@ function createStart(){
 function CHLIST(){
 	
 	var lleng = document.getElementById("lleng");
+	lleng.style.display="block";
 	if(lleng.checked){
 		$(".RCHLST").toggleClass("RCHLST animRCHLST");
 	}else{
@@ -324,6 +340,7 @@ function CHLIST(){
 		document.getElementById("check"+(current-1)).checked=true;
 	}
 	
+	
 }
 
 function createCHLIST(){
@@ -332,6 +349,7 @@ function createCHLIST(){
 		var nwcheck = document.createElement("input");
 		nwcheck.type="checkbox";
 		nwcheck.id="check"+r;
+		nwcheck.classList.add("CHBX");
 		nwcheck.disabled=true;
 		document.getElementById("RCHDIV").appendChild(nwcheck);		
 	}

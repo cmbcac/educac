@@ -4,16 +4,16 @@ function inici(){
 			document.getElementById("defaultCanvas0").style.border="2px solid black";
 			createStart();
 		}
-		rectC(halfcanvas,innerHeight/1.5,100,50);
-		textC("Empezar",innerHeight/1.48,20);
+		rectC(halfcanvas,halfheightcanvas,100,50);
+		textC("Empezar",halfheightcanvas+10,20);
 		let dinsX=entre(mouseX, halfcanvas-50, halfcanvas + 50);
-		let dinsY=entre(mouseY, innerHeight/1.5-25, innerHeight/1.5 + 25);				
+		let dinsY=entre(mouseY, halfheightcanvas-25, halfheightcanvas + 25);				
 		if(dinsX&&dinsY){
 			push();
 			fill(100,200,200);
-			rectC(halfcanvas,innerHeight/1.5,100,50);
+			rectC(halfcanvas,halfheightcanvas,100,50);
 			pop();
-			textC("Empezar",innerHeight/1.48,20);					
+			textC("Empezar",halfheightcanvas+10,20);					
 			if(mouseIsPressed){							
 				if(document.getElementById("url").value!="" && document.getElementById("sendurl").value !=""){
 					util_xmlhttp(document.getElementById("url").value, set_preguntes,{}, function(){} );						
@@ -32,9 +32,9 @@ function pause(){
 	$( ".loader" ).css( "display", "none" );
 		
 		textC("Pausa", innerHeight * .5, 30);
-		textC("Pulsa espacio o enter para seguir", innerHeight * .5 + 45, 15);
+		textC("Pulsa espacio o enter para seguir", halfheightcanvas + 45, 15);
 		if(preguntes.length > 0){
-			textC("PREGUNTA: " + (current+1), innerHeight * .5 + 100, 20);		
+			textC("PREGUNTA: " + (current+1), halfheightcanvas + 100, 20);		
 	}
 }
 function playing(){

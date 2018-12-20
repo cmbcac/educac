@@ -79,7 +79,6 @@ function setup(){
 	canvas = document.getElementById("defaultCanvas0");
 	canvas.style.border = "2px solid";
 	canvas.style.borderRadius = "15px";
-	
 	ctx=canvas.getContext('2d');
 	backswipe =  color(144, 145, 232, 0.2);
 	lastframemouse = mouseIsPressed;	
@@ -104,6 +103,7 @@ function draw(){
 	if(preguntes.length > 0 && estatdelsistema == "playing"){
 		
 		playing();
+		CHLIST();
 		
 	}
 
@@ -125,7 +125,7 @@ function draw(){
 	push()
 	fill(0+g*0.1, 204, 102);
 	pop();
-	CHLIST();
+	
 }
 function mouseReleased(){
   mouseout = true;
