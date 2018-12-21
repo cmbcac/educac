@@ -1,6 +1,3 @@
-//CCOMO DIBUJAR LAS PREGUNTAS DE TIPO DRAG
-/*DRAG PERMITE CLASIFICAR LAS OPCIONES A 5 TIPOS DE CATEGORIAS DE MANERA QUE PODEMOS TENER UNA OPCION MULTIPLE MEZCLADA CON
-UN SWIPE. EN EL APARTADO DE FOTOS NOS PERMITE ARRASTRAR LA IMAGEN HASTA LA CATEGORIA DESEADA, PERO EN LA DE TEXTO NO, SE TIENE QUE MIRAR */
 function fotodrag(p,g){
 	
 	let numopcions = p.numopcions;
@@ -106,11 +103,6 @@ function fotodrag(p,g){
 	lastframemouse = mouseIsPressed;
 }
 
-//COMO DIBUJAR LAS PREGUNTA DE TIPO SWIPE
-/*SWIPE CONSTA DE UN ENUNCIADO Y UN RECUADRO AL CENTRO CON EL ELEMENTO A CLASIFICAR. A LA QUE EL USUARIO
-HAGA CLICK ENCIMA DEL RECUADRO, EL RECUADRO SE MINIMIZARA Y NOS PERMITIRA VER LAS POSIBLES RESPUESTAS A ESCOGER.
-EL COLOR DE FONDO CAMBIA DEPENDIENDO DE LA POSICION DEL RECUADRO, Y EL RECUADRO SOLO NOS SEGUIRA SI EL USUARIO MANTIENE
-PULSADO EL RATON*/
 function fotoswipe( p , g ){
 	background(255,255,255);
 	if(p.categories[isubp][0]=="!"){
@@ -445,154 +437,151 @@ function fotoswipe( p , g ){
 	enunciat(p.gran, quarterheight+40,20);
 }
 
-//COMO DIBUJAR LAS PREGUNTAS DE TIPO RELACION
-/*LAS PREGUNTAS DE RELACION CONSTAN DE DOS COLUMNAS DE TEXTO CON OPCIONES A RELACIONAR PARA EL USUARIO.
-EL USUARIO SIMPLEMENTE TENDRA QUE HACER CLICK EN UNA OPCION DE CADA COLUMNA PARA UNIRLAS Y HACER QUE 
-DESAPAREZCAN. POR ESTE MOTIVO TENDRA UN SISTEMA DE BLOQUEO QUE PERIMITRA AL USUARIO VER SI REALMENTE ESTA
-DE ACUERDO CON LA DECISION QUE EL HA TOMADO*/
 function fotorelacio( p , g ){
 	
 	textSize(innerWidth*0.03);
 	enunciat(p.gran,halfheightcanvas-100, 20);
-	for(var i=0;i<p.subpreguntes.length;i++){
-		let fontsize = innerWidth*0.01;
-		textSize(fontsize);
-		let x = innerWidth*0.15;
-		let y = halfheightcanvas+40*(i+1)+fontsize;
-		let w =  textWidth("AAAAAAAAAAAAAAAAAAAA");	
-		let dinsx = entre(mouseX, x, x+w);
-		let dinsy = entre(mouseY, y-fontsize, y+fontsize);
-		push()
-		if(dinsx && dinsy && !mouseIsPressed){
-			fill(255, 255, 102);
-		}else if(dinsx && dinsy && mouseIsPressed){
-			lock1=i;
-		}else{
-			fill(0);
-		}
-		if(p.subpreguntes[i][0]=="!"){
-			if(p.subpreguntes[i]!=""){
-				ellipse(x+w+10, y-5, 6, 6);
-			}
-			text(p.subpreguntes[i].substr(1),	x, y);
-		}else{
-			
-			text("Opcion con foto", x,y);
-			
-			ellipse(x+textWidth("Opcion con foto")+10, y-5, 6, 6);
-			
-			/*
-			var image1=new Image();
-				image1.src = p.subpreguntes[i];
-			ctx.drawImage(image1,x, y,innerWidth*0.1,innerHeight*0.1); 
-			*/
-		}
-		pop();
-	}
-	for(var i=0;i<p.categories.length;i++){
-		let fontsize = innerWidth*0.01;
-		textSize(fontsize);
-		let w =  textWidth(p.categories[i]);
-		let x = quarterwidth3-w;
-		let y = halfheightcanvas+40*(i+1)+fontsize;
-		let dinsxfot1 = entre(mouseX, quarterwidth3, quarterwidth3+innerWidth*0.1);
-		let dinsxfot2 = entre(mouseX, halfcanvas, halfcanvas+innerWidth*0.1);
-		let dinsyfot = entre(mouseY, y-100, y-100+innerHeight*0.1); 
-		let dinsx= entre(mouseX, x, x+w);
-		let dinsy = entre(mouseY, y-fontsize, y+fontsize);
-		push()
-		if((dinsx && dinsy && p.categories[i][0]=="!") && !mouseIsPressed){
-			fill(255, 255, 102);
-		}else if((dinsx && dinsy && p.categories[i][0]=="!") && mouseIsPressed){
-			lock2=i;
-		}else if(dinsxfot1 && dinsyfot && i%2==1 && mouseIsPressed){
-			lock2=i;
-		}else if(dinsxfot2 && dinsyfot && i%2==0 && mouseIsPressed){
-			lock2=i;
-		}
-		else{
-			fill(0);
-		}
-		if(p.categories[i][0]=="!"){
-			if(p.categories[i]!=""){
-				ellipse(x+w+10, y-5, 6, 6);
-			}
-			text(p.categories[i].substr(1),	x, y);
-		}else{
-			var image1=new Image();
-			image1.src = p.categories[i];
-			if(i%2==0){
-				ctx.drawImage(image1,halfcanvas, y-100,innerWidth*0.1,innerHeight*0.1); 
+	try{
+		for(var i=0;i<p.subpreguntes.length;i++){
+			let fontsize = innerWidth*0.01;
+			textSize(fontsize);
+			let x = innerWidth*0.15;
+			let y = halfheightcanvas+40*(i+1)+fontsize;
+			let w =  textWidth("AAAAAAAAAAAAAAAAAAAA");	
+			let dinsx = entre(mouseX, x, x+w);
+			let dinsy = entre(mouseY, y-fontsize, y+fontsize);
+			push()
+			if(dinsx && dinsy && !mouseIsPressed){
+				fill(255, 255, 102);
+			}else if(dinsx && dinsy && mouseIsPressed){
+				lock1=i;
 			}else{
-				ctx.drawImage(image1,quarterwidth3, y-100,innerWidth*0.1,innerHeight*0.1); 
-			}	
-		}
-		pop();
-	}
-	if(lock1!=undefined && lock2 != undefined){
-		respostarel=(lock1+1)+"-"+(lock2+1);
-		var fotsub;
-		var fotcat;
-		if( p.subpreguntes[lock1][0]=="!"){
-			text(p.subpreguntes[lock1].substr(1), innerWidth*0.2, innerHeight*0.2);
-			if(p.categories[lock2][0]=="!"){
-				text(p.categories[lock2].substr(1), innerWidth*0.5, innerHeight*0.2);
-			}else{
-				fotcat= new Image();
-				fotcat.src=p.categories[lock2];
-				ctx.drawImage(fotcat, innerWidth*0.5, innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
+				fill(0);
 			}
-			line(innerWidth*0.31, innerHeight*0.2,innerWidth*0.49, innerHeight*0.2); 
-		}
-		else{
-			fotsub= new Image();
-			fotsub.src=p.subpreguntes[lock1];
-			ctx.drawImage(fotsub, innerWidth*0.1, innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
-			if(p.categories[lock2][0]=="!"){	
-				text(p.categories[lock2].substr(1), innerWidth*0.5, innerHeight*0.2);
+			if(p.subpreguntes[i][0]=="!"){
+				if(p.subpreguntes[i]!=""){
+					ellipse(x+w+10, y-5, 6, 6);
+				}
+				text(p.subpreguntes[i].substr(1),	x, y);
 			}else{
-				fotcat= new Image();
-				fotcat.src=p.categories[lock2];
-				ctx.drawImage(fotcat, innerWidth*0.5, innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
+				
+				text("Opcion con foto", x,y);
+				
+				ellipse(x+textWidth("Opcion con foto")+10, y-5, 6, 6);
+				
+				/*
+				var image1=new Image();
+					image1.src = p.subpreguntes[i];
+				ctx.drawImage(image1,x, y,innerWidth*0.1,innerHeight*0.1); 
+				*/
 			}
-			line(innerWidth*0.31, innerHeight*0.2,innerWidth*0.49, innerHeight*0.2); 
-		}
-		rect(halfcanvas-50, quarterheight-25, 100 ,50,15);
-		text("Confirmar",halfcanvas-textWidth("Confirmar")/2,quarterheight);
-		if(dist(halfcanvas, quarterheight-25, mouseX, mouseY) < 50){
-			push();
-			fill(179, 179, 179);
-			rect(halfcanvas-50, quarterheight-25, 100 ,50,15);
 			pop();
+		}
+		for(var i=0;i<p.categories.length;i++){
+			let fontsize = innerWidth*0.01;
+			textSize(fontsize);
+			let w =  textWidth(p.categories[i]);
+			let x = quarterwidth3-w;
+			let y = halfheightcanvas+40*(i+1)+fontsize;
+			let dinsxfot1 = entre(mouseX, quarterwidth3, quarterwidth3+innerWidth*0.1);
+			let dinsxfot2 = entre(mouseX, halfcanvas, halfcanvas+innerWidth*0.1);
+			let dinsyfot = entre(mouseY, y-100, y-100+innerHeight*0.1); 
+			let dinsx= entre(mouseX, x, x+w);
+			let dinsy = entre(mouseY, y-fontsize, y+fontsize);
+			push()
+			if((dinsx && dinsy && p.categories[i][0]=="!") && !mouseIsPressed){
+				fill(255, 255, 102);
+			}else if((dinsx && dinsy && p.categories[i][0]=="!") && mouseIsPressed){
+				lock2=i;
+			}else if(dinsxfot1 && dinsyfot && i%2==1 && mouseIsPressed){
+				lock2=i;
+			}else if(dinsxfot2 && dinsyfot && i%2==0 && mouseIsPressed){
+				lock2=i;
+			}
+			else{
+				fill(0);
+			}
+			if(p.categories[i][0]=="!"){
+				if(p.categories[i]!=""){
+					ellipse(x+w+10, y-5, 6, 6);
+				}
+				text(p.categories[i].substr(1),	x, y);
+			}else{
+				var image1=new Image();
+				image1.src = p.categories[i];
+				if(i%2==0){
+					ctx.drawImage(image1,halfcanvas, y-100,innerWidth*0.1,innerHeight*0.1); 
+				}else{
+					ctx.drawImage(image1,quarterwidth3, y-100,innerWidth*0.1,innerHeight*0.1); 
+				}	
+			}
+			pop();
+		}
+		if(lock1!=undefined && lock2 != undefined){
+			respostarel=(lock1+1)+"-"+(lock2+1);
+			var fotsub;
+			var fotcat;
+			if( p.subpreguntes[lock1][0]=="!"){
+				text(p.subpreguntes[lock1].substr(1), innerWidth*0.25, innerHeight*0.35);
+				if(p.categories[lock2][0]=="!"){
+					text(p.categories[lock2].substr(1), innerWidth*0.5, innerHeight*0.35);
+				}else{
+					fotcat= new Image();
+					fotcat.src=p.categories[lock2];
+					ctx.drawImage(fotcat, innerWidth*0.5, innerHeight*0.3, innerWidth*0.1, innerHeight*0.1);
+				}
+				line(innerWidth*0.31, innerHeight*0.35,innerWidth*0.49, innerHeight*0.35); 
+			}
+			else{
+				fotsub= new Image();
+				fotsub.src=p.subpreguntes[lock1];
+				ctx.drawImage(fotsub, innerWidth*0.1, innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
+				if(p.categories[lock2][0]=="!"){	
+					text(p.categories[lock2].substr(1), innerWidth*0.5, innerHeight*0.2);
+				}else{
+					fotcat= new Image();
+					fotcat.src=p.categories[lock2];
+					ctx.drawImage(fotcat, innerWidth*0.5, innerHeight*0.1, innerWidth*0.2, innerHeight*0.2);
+				}
+				line(innerWidth*0.31, innerHeight*0.2,innerWidth*0.49, innerHeight*0.2); 
+			}
+			rect(halfcanvas-50, quarterheight-25, 100 ,50,15);
 			text("Confirmar",halfcanvas-textWidth("Confirmar")/2,quarterheight);
-			if(mouseIsPressed){
-				if(track<p.subpreguntes.length-1){
-					p.respostaUsuari.push(respostarel);
-					p.categories[lock2]="";
-					lock1=undefined;
-					lock2=undefined;
-					sleep(200);
-					track++;
-				}else if(track>=p.subpreguntes.length-1){
-					p.respostaUsuari.push(respostarel);
-					p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
-					upTime(new Date());
-					sleep(500);
-					current++;
-					track=0;
-					lock1=undefined;
-					lock2=undefined;
+			if(dist(halfcanvas, quarterheight-25, mouseX, mouseY) < 50){
+				push();
+				fill(179, 179, 179);
+				rect(halfcanvas-50, quarterheight-25, 100 ,50,15);
+				pop();
+				text("Confirmar",halfcanvas-textWidth("Confirmar")/2,quarterheight);
+				if(mouseIsPressed){
+					if(track<p.subpreguntes.length-1){
+						p.respostaUsuari.push(respostarel);
+						p.categories[lock2]="";
+						lock1=undefined;
+						lock2=undefined;
+						sleep(200);
+						track++;
+					}else if(track>=p.subpreguntes.length-1){
+						p.respostaUsuari.push(respostarel);
+						p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+						upTime(new Date());
+						sleep(500);
+						current++;
+						track=0;
+						lock1=undefined;
+						lock2=undefined;
+					}
 				}
 			}
 		}
+
+	}
+	catch(error){
+			console.log(error);
+			missatgeerror = error;
+			estatdelsistema = "error";
 	}
 }
-
-//COMO DIBUJAR LAS PREGUNTAS DE OPCION MULTIPLE
-/*CONSTA DE UN ENUNCIADO ESCRITO ENCIMA Y X OPCIONES PARA QUE EL USUARIO ESCOJA
-A LA QUE EL USUARIO HAGA CLICK EN UNA DE LAS OPCIONES, SE GUARDARA LA RESPUESTA Y
-EL USUARIO PARASA A LA SIGUIENTE PREGUNTA. SI LA OPCION ES UNA FOTO, LA IMAGEN SE MOSTRARA
-AL MANTENER EL RATON POR ENCIMA DEL APARTADO */
 function fotomultop( p , g ){
 	
 	let half1 = innerWidth * .4

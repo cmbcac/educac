@@ -3,12 +3,8 @@ var lockfil=[];
 var lock=0;
 var estatdrag=false;
 var once=0;
-//COMO DIBUJAR LAS PREGUNTAS DE OPCION MULTIPLE
-/*CONSTA DE UN ENUNCIADO ESCRITO ENCIMA Y X OPCIONES PARA QUE EL USUARIO ESCOJA
-A LA QUE EL USUARIO HAGA CLICK EN UNA DE LAS OPCIONES, LA RESPUESTA SE ACTUALIZARÀ Y
-EL USUARIO PASARA A LA SIGUIENTE PREGUNTA*/
-function opcio_multiple(p,g){
-	
+
+function opcio_multiple(p,g){	
 	try{
 		let half1 = halfcanvas;
 		let half2 = textWidth(p.gran) * .5;
@@ -53,15 +49,10 @@ function opcio_multiple(p,g){
 	}
 }
 
-//COMO DIBUJAR LAS PREGUNTAS DE TIPO DRAG
-/*DRAG CONSISTE EN SER UNA MEZCLA ENTRE UNA PREGUNTA DE OPCION MULTIPLE Y UNA PREGUNTA DE TIPO SWIPE.
-SU FUNCIONAMIENTO ES MUY SIMILAR A LA DE OPCION MULTIPLE POR AHORA*/
-function drag(p,g){
-	
+function drag(p,g){	
 	let numopcions = p.numopcions;
 	enunciat(p.gran, quarterheight*0.3,20);
-	
-		textC(p.categories[isubp2], halfheightcanvas, 23);
+	textC(p.categories[isubp2], halfheightcanvas, 23);
 		try{
 			var posipunts;
 			var rad = innerWidth*0.1;
@@ -106,11 +97,6 @@ function drag(p,g){
 		lastframemouse = mouseIsPressed;
 }
 
-//COMO DIBUJAR LAS PREGUNTAS DE TIPO SWIPE
-/*SWIPE CONSTA DE UN ENUNCIADO Y UN RECUADRO AL CENTRO CON EL ELEMENTO A CLASIFICAR. A LA QUE EL USUARIO HAGA
-CLICK ENCIMA DEL RECUADRO, EL RECUADRO SE MINIMIZARA Y NOS PERMITIRA VER LAS POSIBLES RESPUESTAS PARA ESCOJER.
-EL COLOR DEL FONDO CAMBIA DEPENDIENDO DE LA POSICION DEL RECUADRO Y ESTE SOLO SE MOVERA SI EL USUARIO MANTIENE
-PULSADO EL RATON*/
 function swipe(p,g){
 	background(255,255,255);
 	try{
@@ -274,11 +260,6 @@ function swipe(p,g){
 	enunciat(p.gran, quarterheight+40,20);
 }
 
-//COMO DIBUJAR LAS PREGUNTAS DE TIPO FILTRO
-/*LAS PREGUNTAS DE FILTRO CONSISTEN EN UNA IMAGEN QUE SERA LEIDA A TRAVES DE SU URL Y UN CONJUNTO DE OPCIONES.
-CADA OPCION PINTARA UNA CAPA DE OPACIDAD INFIMA ENCIMA DE LA IMAGEN QUE PERMITIRA AL USUARIO TENER LA SENSACION DE ESTAR
-MODIFICANDOLA.
-CUANDO EL USUARIO ACABE. PODRA DECIDIR SI ENVIAR LA RESPEUSTA, BORRAR-LA O SEGUIR MODIFICANDOLA EN CASO DE QUE NO LE GUSTE*/
 function filtre(p,g){
 	try{
 		var opcions=["Rojo","Verde","Azul","Blanco","Negro"];
@@ -396,10 +377,6 @@ function filtre(p,g){
 	
 }
 
-//COMO DUNUJAR LAS PREGUNTAS DE RELACION
-/*LAS PREGUNTAS DE RELACION CONSISTEN EN DOS COLUMNAS DE TEXTO CON OPCIONES A RELACIONAR PARA EL USUARIO.
-EL USUARIO SIMPLEMENTE TENDRA QUE HACER CLICK EN UNA OPCION EN CADA COLUMNA PERA UNIRLAS Y HACER QUE DESAPAREZCAN.
-AUN ASI EL SISTEMA CONSTA DE UN SEGURO PARA EVITAR QUE EL USUARIO ENVIE RESPUESTAS SIN TENER QUE REVISARLAS */
 function relacio(p,g){	
 	try{
 		textSize(innerWidth*0.03);
@@ -454,7 +431,7 @@ function relacio(p,g){
 		}
 		if(lock1!=undefined && lock2 != undefined){
 			respostarel=(lock1+1)+"-"+(lock2+1);
-			line(quarterwidth+textWidth(p.subpreguntes[lock1])+10, halfheightcanvas+40*(lock1+1)+9, quarterwidth3-textWidth(p.categories[lock2])-10, halfheightcanvas+40*(lock2+1)+9);
+			line(quarterwidth+textWidth(p.subpreguntes[lock1])+10, halfheightcanvas+40*(lock1+1)+9, (innerWidth*0.8)-textWidth(p.categories[lock2])-10, halfheightcanvas+40*(lock2+1)+9);
 			rect(halfcanvas-50, quarterheight-25, 100 ,50,15);
 			text("Confirmar",halfcanvas-textWidth("Confirmar")/2,quarterheight);
 			if(dist(halfcanvas, quarterheight-25, mouseX, mouseY) < 50){
@@ -494,10 +471,6 @@ function relacio(p,g){
 		}
 }
 
-//COMO DIBUJAR LAS PREGUNTAS DE ORDENACION
-/*LAS RPREGUNTAS DE ORDENACION CONSISTEN EN UN ENUNCIADO Y UN CONJUNTO DE ELEMENTOS QUE EL USUARIO TENDRA QUE ORDENAR.
-PARA ORDENARLOS SIMPLEMENTE TENDRA QUE ESCRIBIR EN EL CUADRO DE TEXTO EL ORDNEN EN EL QUE LE PAREZA CORRECTO.
-(EL ESTILO DE RESPUESTA QUEDA A MANOS DEL CREADOR DEL CUESTIONARIO Y LA COMUNICACION CON LOS QUE VAN A REALIZARLO LOS USUARIOS)*/
 function ordenar(p,g){
 	try{
 		textSize(20);
@@ -545,8 +518,6 @@ function ordenar(p,g){
 		}
 }
 
-//COM DIBUIXAR LES PREGUNTES DE BUSCADOR
-/*WORK IN PROGRESS*/
 function buscador(p,g){
 	enunciat(p.gran, innerWidth*0.1, 20);
 
@@ -591,9 +562,7 @@ function buscador(p,g){
 		text("He acabado", halfcanvas-70, innerHeight*0.5);
 		
 }
-//COMO DIBUJAR LAS PREGUNTAS QUE MUESTRAN VIDEOS
-/* LAS PREGUNTAS QUE MUESTRAN VIDEOS DE YOUTUBE SIMPLEMENTE CARGAN LA URL DE LA PREGUNTA Y LA MUESTRAN COMO UN VIDEO DENTRO DE
-UN IFRAME. CUANDO EL USUARIO HAYA ACABADO DE VER EL VIDEO, SE PASA A LA SIGUIENTE PREGUNTA	*/
+
 function Youtube(p,g){
 
 	enunciat(p.gran, innerHeight*0.2,20);

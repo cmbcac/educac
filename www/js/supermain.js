@@ -69,8 +69,6 @@ var stateprint=true;
 var end=false;
 var start=true;
 var SENDURL;
-
-
 }
 
 function setup(){
@@ -82,9 +80,8 @@ function setup(){
 	ctx=canvas.getContext('2d');
 	backswipe =  color(144, 145, 232, 0.2);
 	lastframemouse = mouseIsPressed;	
-	
-
 }
+
 function draw(){
 	
 	textFont('Helvetica');
@@ -124,9 +121,9 @@ function draw(){
 	
 	push()
 	fill(0+g*0.1, 204, 102);
-	pop();
-	
+	pop();	
 }
+
 function mouseReleased(){
   mouseout = true;
 }
@@ -167,6 +164,7 @@ function keyPressed(){
 		return;
 	}
 }
+
 function set_preguntes(data, params){
 	data = text_a_JSON(data);
 	console.log(data);
@@ -179,6 +177,7 @@ function set_preguntes(data, params){
 		afegir_pregunta(tip, txtfot, e, list_gsx);
 	}
 }
+
 //LA FUNCION DE "AFEGIR_PREGUNTA" CONSISTE EN LEER LOS ELEMENTOS DE TIPO JSON QUE ESTAMOS RECIBIENDO Y TRANSFORMARLOS EN STRINGS
 //DENTRO DE LA ESTRUCTURA DE PREGUNTAS DE LA MANERA QUE NOS CONVENGA, EN CASO DE AÑADIR UN NUEVO TIPO DE PREGUNTA, SE PRECISARA
 //DE ESPEDCIFICAR COMO SE RECIBE LA INFORMACION JSON DENTRO DE ELLA

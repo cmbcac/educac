@@ -53,7 +53,6 @@ function rectC(x, y, w, h){
 	redraw(5);
 }*/
 function windowResized() {
-	
 	resizeCanvas(window.innerWidth*0.9, window.innerHeight*0.85);
 	resizevArialbles();
 	redraw(5);
@@ -66,8 +65,7 @@ function resizevArialbles(){
 	quarterwidth3 = window.innerWidth * .65;
 	quarterheight = window.innerHeight * .25;
 	halfheightcanvas = window.innerHeight * .50;
-	quarterheight3 = window.innerHeight * .75;
-	
+	quarterheight3 = window.innerHeight * .75;	
 }
 //CENTRA UN RECTANGLE
 function rectangleCentrat(w, h){
@@ -174,8 +172,7 @@ function creaSubmit(stateprint){
 				
 			}else{
 				$(".animRCHLST").css('display', 'none');
-			}
-			
+			}	
 			g = 255 + (Math.sin(frameCount/100) * 100);
 			background(0, 204, 204+g)
 			sbmit=document.getElementById("foo");
@@ -295,8 +292,7 @@ function enunciat(txt, height, mida){
 	push();
 	noFill();
 	rect(halfcanvas-textWidth(txt)/2-25, innerHeight*0.1-25, textWidth(txt)+50, textHeight(txt)*2 + 25);
-	pop();
-	
+	pop();	
 }
 
 function createStart(){
@@ -321,7 +317,6 @@ function createStart(){
 }
 
 function CHLIST(){
-	
 	var lleng = document.getElementById("lleng");
 	lleng.style.display="block";
 	if(lleng.checked){
@@ -339,12 +334,9 @@ function CHLIST(){
 	if(current>0 && current<=preguntes.length){
 		document.getElementById("check"+(current-1)).checked=true;
 	}
-	
-	
 }
 
 function createCHLIST(){
-	
 	for( r ; r<preguntes.length; r++){
 		var nwcheck = document.createElement("input");
 		nwcheck.type="checkbox";
