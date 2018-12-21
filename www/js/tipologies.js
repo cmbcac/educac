@@ -266,23 +266,23 @@ function filtre(p,g){
 		var image1=new Image();
 		image1.src = p.subpreguntes;
 		textSize(20);
-		let half1 = innerWidth * .45
+		let half1 = halfcanvas;
 		let half2 = textWidth(p.gran) * .5;
-		let height1 = innerHeight*.50;
+		let height1 = halfheightcanvas;
 		ctx.lineWidth="2";
 		ctx.strokeStyle="black";
 		ctx.fillStyle = "#999999";
 		ctx.fill();
-		ctx.drawImage(image1,innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4); 
+		ctx.drawImage(image1,innerWidth*0.3, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4); 
 		enunciat(p.gran, innerHeight*0.15,15);
-		let dinsDonex = entre(mouseX,innerWidth*0.1, innerWidth*0.1+innerWidth*0.07 ); 
+		let dinsDonex = entre(mouseX,innerWidth*0.2, innerWidth*0.2+innerWidth*0.07 ); 
 		let dinsDoney = entre(mouseY,innerHeight/2-25,innerHeight/2+innerHeight*0.07); 
 		let dinsResx = entre(mouseX,innerWidth*0.65, innerWidth*0.65+innerWidth*0.07 ); 
 		let dinsResy = entre(mouseY,innerHeight/2-25,innerHeight/2+innerHeight*0.07); 
 		if(dinsDonex&&dinsDoney){
 			push();
 			fill(255, 255, 204);
-			rect(innerWidth*0.1, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
+			rect(innerWidth*0.2, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
 			pop();
 			if(mouseIsPressed){
 				for(var i=0; i<lockfil.length;i++){
@@ -295,7 +295,7 @@ function filtre(p,g){
 			}
 		}
 		else{
-			rect(innerWidth*0.1, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
+			rect(innerWidth*0.2, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
 		}
 		if(dinsResx&&dinsResy){
 			push();
@@ -310,11 +310,11 @@ function filtre(p,g){
 		else{
 			rect(innerWidth*0.65, innerHeight/2, innerWidth*0.07,innerHeight*0.07,15);
 		}
-		textC2("Acabar",innerWidth*0.13, innerHeight/2+35,20);
+		textC2("Acabar",innerWidth*0.23, innerHeight/2+35,20);
 		textC2("Reset",innerWidth*0.68, innerHeight/2+35,20);
 		//FOR DE DIBUIXAR
 		for(var i = 0; i < 5 ; i++){
-			let x= innerWidth*(0.8*i/5)+100;
+			let x= innerWidth*(0.8*i/5)+200;
 			let y= innerHeight*0.7;
 			let dinsx = entre(mouseX, x, x+100);
 			let dinsy = entre(mouseY, y, y+50);
@@ -339,31 +339,31 @@ function filtre(p,g){
 		for( var i=0; i<lockfil.length;i++){
 		if(lockfil[i]==0){
 			ctx.beginPath();
-			ctx.rect(innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
+			ctx.rect(innerWidth*0.3, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
 			ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
 			ctx.fill();
 		}
 		else if(lockfil[i]==1){
 			ctx.beginPath();
-			ctx.rect(innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
+			ctx.rect(innerWidth*0.3, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
 			ctx.fillStyle = "rgba(0, 255, 0, 0.2)";
 			ctx.fill();
 		}
 		else if(lockfil[i]==2){
 			ctx.beginPath();
-			ctx.rect(innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
+			ctx.rect(innerWidth*0.3, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
 			ctx.fillStyle = "rgba(0, 0, 255, 0.2)";
 			ctx.fill();
 		}
 		else if(lockfil[i]==3){
 			ctx.beginPath();
-			ctx.rect(innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
+			ctx.rect(innerWidth*0.3, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
 			ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
 			ctx.fill();
 		}
 		else if(lockfil[i]==4){
 			ctx.beginPath();
-			ctx.rect(innerWidth*0.25, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
+			ctx.rect(innerWidth*0.3, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
 			ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
 			ctx.fill();
 		}
