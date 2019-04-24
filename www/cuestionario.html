@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+	<head>
+	
 	<meta charset="utf-8">
 	<meta http-equiv="pragma" content="no-cache" />
-	<!--<meta name="viewport" height=device-height, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>-->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
 	<title> Cuestionario CM </title>
 	<link rel="stylesheet" type="text/css" href="style_cuestionario.css" />
@@ -12,24 +13,19 @@
 	<script src="libs/addons/p5.dom.min.js"></script>
 	<script src="libs/addons/p5.sound.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<div id="countup" style="display:none">
-		<p id="hours" style="float:left">00</p>
-		<p id="timeRefHours" style="float:left">:</p>
-		<p id="minutes" style="float:left">00</p>
-		<p id="timeRefMinutes" style="float:left">:</p>
-		<p id="seconds" style="float:left">00</p>					
-	</div>
+	
 	</head>
-	<script src="js/util.js"></script>
-	<script src="js/supermain.js"></script>
-	<script src="js/tipologies.js"></script>
-	<script src="js/tipologies_fotos.js"></script>
-	<script src="js/DrawFuncs.js"></script>
-	<!-- <script src="js/canvasDraw.js"></script> -->
+	
+		<script src="js/util.js"></script>
+		<script src="js/supermain.js"></script>
+		<script src="js/tipologies.js"></script>
+		<script src="js/tipologies_fotos.js"></script>
+		<script src="js/DrawFuncs.js"></script>
+			
 	<body>
-		<div class = "container-welcome">
-			<h1> CUESTIONARIO SOBRE EL AMBITO MEDIATICO </h1>	
-		</div>
+	
+		<!-- LOADER I ELS 7 COLORS QUE TE -->
+		
 		<div class="loader">
 			<div id= "col1"></div>
 			<div id= "col2"></div>
@@ -39,10 +35,19 @@
 			<div id= "col6"></div>
 			<div id= "col7"></div>
 		</div>
+		
+		<!-- APARTAT PER A ESCRIURE LES RESPOSTES DE TEXT -->
+		
 		<input id='respostaescrita' style="display:none">
+		
+		<!-- PARTS DEL BOTÓ DE IGNORAR PREGUNTA -->
+		
 		<div id="passar"></div>
 		<div id="infopass"></div>
 		<text id="txtpassar">Pasar pregunta implica nota nula</text>
+		
+		<!-- TEMPORITZADOR TOTAL -->
+		
 		<div id="totalcountup">
 			<p style="float:left"> Tiempo total:  </p>
 			<p id="totalhours" style="float:left">00</p>
@@ -51,15 +56,28 @@
 			<p id="totaltimeRefMinutes" style="float:left">:</p>
 			<p id="totalseconds" style="float:left">00</p>				
 		</div>
+		
+		<!-- FORMULARI PER A MOSTRAR LES RESPOSTES -->
+		
 		<form id='foo' style="z-index:999">
 		</form>	
 		
-		<div class="RCHLST">
-			<input type="checkbox" id="lleng"></input>
-			<div id="RCHDIV"></div>
-		</div>
-    </body>
+	</body>
+
+	<!-- CONTADOR INTERN PER PREGUNTA -->
+	
+	<div id="countup" style="display:none">
+		<p id="hours" style="float:left">00</p>
+		<p id="timeRefHours" style="float:left">:</p>
+		<p id="minutes" style="float:left">00</p>
+		<p id="timeRefMinutes" style="float:left">:</p>
+		<p id="seconds" style="float:left">00</p>					
+	</div>
+	
 	<script src='js/google-sheet.js'></script> 
+	
+	<!-- SCRIPT PER A LES TECLES -->
+	
 	<script>
 		function keyPressed(){
 			if(keyCode===ESCAPE){
@@ -75,6 +93,9 @@
 		}
 		function pinta(s){console.log(s)};
 	</script>
+	
+	<!-- SCRIPT PER ALS TEMPORITZADORS -->
+	
 	<script> 
 		function upTime(countTo) {
 			now = new Date();
@@ -115,4 +136,5 @@
 			totalupTime.to=setTimeout(function(){ totalupTime(countTo); },1000);
 		}
 	</script>
-  </html>
+	
+</html>

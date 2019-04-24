@@ -1,11 +1,11 @@
-var un = 0;
 function inici(){
 		if(start==true){
 			document.getElementById("defaultCanvas0").style.border="2px solid black";
 			createStart();
 		}
+		textC("Todos los campos son requeridos para empezar", quarterheight, 20);
 		rectC(halfcanvas,halfheightcanvas,100,50);
-		textC("Empezar",halfheightcanvas+10,20);
+		textC("Empezar",halfheightcanvas+8,20);
 		let dinsX=entre(mouseX, halfcanvas-50, halfcanvas + 50);
 		let dinsY=entre(mouseY, halfheightcanvas-25, halfheightcanvas + 25);				
 		if(dinsX&&dinsY){
@@ -13,16 +13,15 @@ function inici(){
 			fill(100,200,200);
 			rectC(halfcanvas,halfheightcanvas,100,50);
 			pop();
-			textC("Empezar",halfheightcanvas+10,20);					
+			textC("Empezar",halfheightcanvas+8,20);					
 			if(mouseIsPressed){							
-				if(document.getElementById("url").value!="" && document.getElementById("sendurl").value !=""){
+				if(document.getElementById("url").value!=""){
 					util_xmlhttp(document.getElementById("url").value, set_preguntes,{}, function(){} );						
 					$( ".loader" ).css( "display", "inline" );
 					document.getElementById("StartingDiv").setAttribute("style", "display:none");
 					ctx.clearRect(0, 0, width, height);
 					upTime(new Date());
 					totalupTime(new Date());
-					SENDURL=document.getElementById("sendurl").value;
 					estatdelsistema="playing";
 				}
 			}		
@@ -52,26 +51,23 @@ function playing(){
 			ctx.fillStyle = "#999999";	
 			//DRAW PER A CADA ESTAT DEL JOC
 			
-			for ( un ; un<1 ; un++){
-				createCHLIST();
-			}
 			if(tipo == "Opció múltiple"){
-				p.disseny=="Text" ? opcio_multiple(p,g) : fotomultop(p,g);
+				p.diseño=="Text" ? opcio_multiple(p,g) : fotomultop(p,g);
 				//opcio_multiple(p, g)
 			}
 			else if(tipo == "Swipe"){
-				p.disseny=="Text"? swipe(p,g) : fotoswipe(p,g);
+				p.diseño=="Text"? swipe(p,g) : fotoswipe(p,g);
 				//swipe(p,g);
 			}
 			else if(tipo == "Drag-categories"){
-				p.disseny=="Text"? drag(p,g) : fotodrag(p,g);
+				p.diseño=="Text"? drag(p,g) : fotodrag(p,g);
 				//drag(p,g);
 			}
 			else if(tipo == "Filtre"){			
 				filtre(p,g);
 			}	
 			else if(tipo == "Relació"){
-				p.disseny=="Text"? relacio(p,g) : fotorelacio(p,g);
+				p.diseño=="Text"? relacio(p,g) : fotorelacio(p,g);
 				//relacio(p,g);
 			}
 			else if(tipo == "Ordenar"){

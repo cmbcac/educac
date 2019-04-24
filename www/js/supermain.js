@@ -5,20 +5,20 @@
 		
 		1. function set_preguntes:
 			
-			1.1. En "- let tip = e['gsx$tipus'].$t -", se tiene que cambiar "tipus" por
+			1.1. En "- let tip = e['gsx$tipo'].$t -", se tiene que cambiar "tipo" por
 				 el nuevo nombre del elemento ID correspondiente
-			1.2. En "- let txtfot = e['gsx$disseny'].$t -", se tiene que cambiar "disseny" 	por el nuevo nombre del elemento ID correspondiente
+			1.2. En "- let txtfot = e['gsx$diseño'].$t -", se tiene que cambiar "diseño" 	por el nuevo nombre del elemento ID correspondiente
 			
 		2. function afegir_pregunta:
 			2.1. TODOS los elementos de tipo 'respostaX' que hayan sido modificados anteriormente
 			
 			2.2. TODOS los elementos de tipo 'catX' que hayan sido modificados anteriormente
 			
-			2.3. El elemento 'corr' si es que ha sido modificado anteriormente
+			2.3. El elemento 'respostacorrecta' si es que ha sido modificado anteriormente
 			
 			2.4. El elemento 'enun' si es que ha sido modificado anteriormente
 			
-			2.5. el elemento 'punt' si es que ha sido modificado anteriormente
+			2.5. el elemento 'puntuació' si es que ha sido modificado anteriormente
 			
 			2.6. el elemento 'url' si es que ha sido modificado anteriormente
 
@@ -41,17 +41,14 @@ var backswipe;
 var estatswipe = "nomig", estats_swipe = ["nomig", "migsense", "migamb", "dreta", "esquerra", "avall"];
 var isubp = 0;
 //vars para drag;
-var backdrag;
 var isubp2 = 0;
 var lastframemouse;
 //vars para relacio
 var lock1;
 var lock2;
 var respostarel="";
-var estatmatch=false;
 var track=0;
 //vars para filtre
-var filtres = ["Blur","Brightness","Contrast","Grayscale","Invert","Opacity", "Saturate", "Sepia"];
 var estat=-1;
 var opcions;
 var resposta;
@@ -61,12 +58,8 @@ var resp;
 var respfin;
 //Vars para submit
 var sbmit;
-var newlabel;
-var namenewlabel;
 var passar;
-var boolpassar=false;
 var stateprint=true;
-var end=false;
 var start=true;
 var SENDURL;
 }
@@ -100,7 +93,6 @@ function draw(){
 	if(preguntes.length > 0 && estatdelsistema == "playing"){
 		
 		playing();
-		CHLIST();
 		
 	}
 
@@ -170,9 +162,15 @@ function set_preguntes(data, params){
 	console.log(data);
 	entry = data.feed.entry
 	for(var i = 0; i < entry.length; i++){
+		
 		let e = entry[i];
-		let tip = e['gsx$tipus'].$t;
-		let txtfot = e['gsx$disseny'].$t;
+		
+		if(i==0){
+			SENDURL = e['gsx$linkderespuesta'].$t;
+		}
+		
+		let tip = e['gsx$tipo'].$t;
+		let txtfot = e['gsx$diseño'].$t;
 		let list_gsx = multichoice_gsx;
 		afegir_pregunta(tip, txtfot, e, list_gsx);
 	}
@@ -188,14 +186,14 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 	var categories;
 	var numopcions;
 	var resp;
-	var punt;  
+	var puntuació;  
 	if(tip == "Swipe"){
 		subpreguntes=[];
 		categories=[];
 		var left, down, right;	
-		left = e[g+'resposta1'].$t;
-		down = e[g+'resposta3'].$t;
-		right= e[g+'resposta2'].$t;		
+		left = e[g+'respuesta1'].$t;
+		down = e[g+'respuesta2'].$t;
+		right= e[g+'respuesta3'].$t;		
 		if(left&&down&&right){ numopcions = 3;}		
 		else if(left&&right){ numopcions = 2;}				
 		if(!left && !right && ! down) return 0;					
@@ -205,12 +203,12 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 					subpreguntes.push(e[g+element].$t);
 				}
 			}
-			if(element.includes("corr")){
+			if(element.includes("respuestacorrecta")){
 				if(e[g+element].$t!=""){
 					resp = e[g+element].$t;
 				}
 			}
-			if(element.includes("cat")){
+			if(element.includes("apar")){
 				if(e[g+element].$t!=""){
 					categories.push(e[g+element].$t);
 				}
@@ -220,16 +218,16 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 					gran=e[g+element].$t;
 				}
 			}
-			if(element.includes("punt")){
+			if(element.includes("puntuacion")){
 				if(e[g+element].$t!=""){
-					punt=parseInt(e[g+element].$t, 10);
+					puntuació=parseInt(e[g+element].$t, 10);
 				}
 			}
 		});
 		subpreguntes = [left, down, right];
-		var p = new Pregunta(gran, subpreguntes, categories, numopcions, punt);
+		var p = new Pregunta(gran, subpreguntes, categories, numopcions, puntuació);
 		p.tipologia = tip;
-		p.disseny=txtfot;
+		p.diseño=txtfot;
 		p.respostes = resp;
 		preguntes.push(p);
 	}
@@ -243,12 +241,12 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 					subpreguntes.push(e[g+element].$t);
 				}
 			}
-			if(element.includes("corr")){
+			if(element.includes("respuestacorrecta")){
 				if(e[g+element].$t!=""){
 				resp = e[g+element].$t;
 				}
 			}
-			if(element.includes("cat")){
+			if(element.includes("apar")){
 				if(e[g+element].$t!=""){
 				categories.push(e[g+element].$t);
 				}
@@ -258,17 +256,17 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 				gran=e[g+element].$t;
 				}
 			}
-			if(element.includes("punt")){
+			if(element.includes("puntuacion")){
 				if(e[g+element].$t!=""){
-					punt=parseInt(e[g+element].$t, 10);
+					puntuació=parseInt(e[g+element].$t, 10);
 				}
 			}
 		});
 		respuestascorrectas = [];
-		respuestascorrectas.push(e[g+'corr'].$t);
-		var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, punt);
+		respuestascorrectas.push(e[g+'respostacorrecta'].$t);
+		var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, puntuació);
 		p.tipologia = tip;
-		p.disseny=txtfot;
+		p.diseño=txtfot;
 		p.respostes = respuestascorrectas;
 		preguntes.push(p);
 	}
@@ -285,41 +283,39 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 					subpreguntes.push(e[g+element].$t);
 				}
 			}
-			if(element.includes("corr")){
+			if(element.includes("apar")){
 				if(e[g+element].$t!=""){
 					resp = e[g+element].$t;
 				}
 			}
-			if(element.includes("puntatje")){
+			if(element.includes("puntuacion")){
 				if(e[g+element].$t!=""){
-					punt=parseInt(e[g+element].$t, 10);
+					puntuació=parseInt(e[g+element].$t, 10);
 				}
 			}
 		});
-		var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, punt);
+		var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, puntuació);
 		p.tipologia = tip;
 		p.respostes = resp;
-		p.disseny=txtfot;
+		p.diseño=txtfot;
 		preguntes.push(p);
 	}
 	if(tip == "Filtre" || tip == "Youtube"){
 		var gran, subpreguntes = [], resp;
-		gran="Funciona";
-		subpreguntes="FuncionaSubP";
-		resp="FuncionaResp";
+
 		for(var i = 0; i < list_gsx.length; i++){
 			let current = list_gsx[i];
 			let ecurrent = e[g+current].$t;
 			
 			if(current.includes("enun") && ecurrent) gran = ecurrent;
-			if(current.includes("punt")&& ecurrent) punt=ecurrent;
+			if(current.includes("puntuacion")&& ecurrent) puntuació=ecurrent;
 			subpreguntes = e[g+'url'].$t;
 		}
-		var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, punt);
+		var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, puntuació);
 		p.tipologia = tip;
 		p.respostes = resp;
 		preguntes.push(p);
-		p.disseny=txtfot;
+		p.diseño=txtfot;
 	}
 	if(tip== "Relació"){
 		var numopcions=0;
@@ -331,12 +327,12 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 					subpreguntes.push(e[g+element].$t);
 				}
 			}
-			if(element.includes("corr")){
+			if(element.includes("respuestacorrecta")){
 				if(e[g+element].$t!=""){
 					resp = e[g+element].$t;
 				}
 			}
-			if(element.includes("cat")){
+			if(element.includes("apar")){
 				if(e[g+element].$t!=""){
 					categories.push(e[g+element].$t);
 				}
@@ -346,17 +342,17 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 					gran=e[g+element].$t;
 				}
 			}
-			if(element.includes("punt")){
+			if(element.includes("puntuacion")){
 				if(e[g+element].$t!=""){
-					punt=parseInt(e[g+element].$t, 10);
+					puntuació=parseInt(e[g+element].$t, 10);
 				}
 			}
 		});
-		var p = new Pregunta(gran,subpreguntes, categories, numopcions, punt);
+		var p = new Pregunta(gran,subpreguntes, categories, numopcions, puntuació);
 		p.tipologia = tip;
 		p.respostes = resp;
 		preguntes.push(p);
-		p.disseny=txtfot;
+		p.diseño=txtfot;
 	}
 	if(tip == "Ordenar"){
 		var gran, subpreguntes = [], resp;
@@ -367,20 +363,20 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 			if(element.includes("resp")){
 				subpreguntes.push(e[g+element].$t);
 			}
-			if(element.includes("corr")){
+			if(element.includes("apar")){
 				resp = e[g+element].$t;
 			}
-			if(element.includes("punt")){
+			if(element.includes("puntuacion")){
 				if(e[g+element].$t!=""){
-					punt=parseInt(e[g+element].$t, 10);
+					puntuació=parseInt(e[g+element].$t, 10);
 				}
 			}
 		});
-		var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, punt);
+		var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, puntuació);
 		p.tipologia = tip;
 		p.respostes = resp;
 		preguntes.push(p);
-		p.disseny=txtfot;
+		p.diseño=txtfot;
 	}
 	if(tip == "Buscador"){
 		var gran, subpreguntes = [], resp;
@@ -395,23 +391,23 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 					subpreguntes.push(e[g+element].$t);
 				}
 			}
-			if(element.includes("corr")){
+			if(element.includes("respuestacorrecta")){
 				if(e[g+element].$t!=""){
 					resp = e[g+element].$t;
 				}
 			}
-			if(element.includes("puntatje")){
+			if(element.includes("puntuacion")){
 				if(e[g+element].$t!=""){
-					punt=parseInt(e[g+element].$t, 10);
+					puntuació=parseInt(e[g+element].$t, 10);
 				}
 			}
 			
 		});
-		var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, punt);
+		var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, puntuació);
 		p.tipologia = tip;
 		p.respostes = resp;
 		preguntes.push(p);
-		p.disseny=txtfot;
+		p.diseño=txtfot;
 	}
 	if(tip == "RespuestaLibre"){
 		var gran, subpreguntes = [], resp;
@@ -426,42 +422,42 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 					subpreguntes.push(e[g+element].$t);
 				}
 			}
-			if(element.includes("corr")){
+			if(element.includes("respuestacorrecta")){
 				if(e[g+element].$t!=""){
 					resp = e[g+element].$t;
 				}
 			}
-			if(element.includes("puntatje")){
+			if(element.includes("puntuacion")){
 				if(e[g+element].$t!=""){
-					punt=parseInt(e[g+element].$t, 10);
+					puntuació=parseInt(e[g+element].$t, 10);
 				}
 			}
 			
 		});
-		var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, punt);
+		var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, puntuació);
 		p.tipologia = tip;
 		p.respostes = resp;
 		preguntes.push(p);
-		p.disseny=txtfot;
+		p.diseño=txtfot;
 	}
 }
 //ELEMENTO QUE NOS PERMITE LEER LOS APARTADOS DE LOS DATOS DE TIPO JSON
 //EN CASO DE AÑADIR UN NUEVO TIPO DE ELEMENTO, TAMBIEN SE TENDRA QUE AÑADIR ESE ELEMENTO AL MULTICHOICE
 var multichoice_gsx = [
-"enunciat",
-"resposta1",
-"resposta2",
-'resposta3',
-'resposta4',
-'resposta5',
-'cat1',
-'cat2',
-'cat3',
-'cat4',
-'cat5',
+"enunciado",
+"respuesta1",
+"respuesta2",
+'respuesta3',
+'respuesta4',
+'respuesta5',
+'apartado1',
+'apartado2',
+'apartado3',
+'apartado4',
+'apartado5',
 'url',
-'corr',
-'puntatje'];
+'respuestacorrecta',
+'puntuacion'];
 //NO ES RECOMENDABLE PERO ESTA FUNCION OCUPA AL ORDENADOR X MILISEGUNDOS PARA PERMITIR QUE LOS EVENTOS COMO MOUSEISPRESSED O KEYPRESSED SE ACTUALIZEN CORRECTAMENTE
 function sleep(milliseconds) {
   var start = new Date().getTime();

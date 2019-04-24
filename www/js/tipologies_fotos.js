@@ -582,6 +582,7 @@ function fotorelacio( p , g ){
 			estatdelsistema = "error";
 	}
 }
+
 function fotomultop( p , g ){
 	
 	let half1 = innerWidth * .4

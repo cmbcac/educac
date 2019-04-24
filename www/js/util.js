@@ -306,43 +306,6 @@ function createStart(){
 		newinput.classList.add('ginput');
 		newinput.placeholder="URL del cuestionario: ";
 		document.getElementById(newdiv.id).appendChild(newinput);
-						
-		newinput= document.createElement("input");
-		newinput.id="sendurl"
-		newinput.classList.add('ginput');
-		newinput.placeholder="Dónde guardar las respuestas: ";
-		document.getElementById(newdiv.id).appendChild(newinput);
 										
 		start=false;
-}
-
-function CHLIST(){
-	var lleng = document.getElementById("lleng");
-	lleng.style.display="block";
-	if(lleng.checked){
-		$(".RCHLST").toggleClass("RCHLST animRCHLST");
-	}else{
-		$(".animRCHLST").toggleClass("animRCHLST RCHLST");
-	}
-	
-	if($(".RCHLST").hasClass( "RCHLST" )){
-		$("#RCHDIV").css('display', 'none');
-		
-	}else{
-		$("#RCHDIV").css('display', 'block');
-	}
-	if(current>0 && current<=preguntes.length){
-		document.getElementById("check"+(current-1)).checked=true;
-	}
-}
-
-function createCHLIST(){
-	for( r ; r<preguntes.length; r++){
-		var nwcheck = document.createElement("input");
-		nwcheck.type="checkbox";
-		nwcheck.id="check"+r;
-		nwcheck.classList.add("CHBX");
-		nwcheck.disabled=true;
-		document.getElementById("RCHDIV").appendChild(nwcheck);		
-	}
 }
