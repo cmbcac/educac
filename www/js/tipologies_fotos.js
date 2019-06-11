@@ -1,3 +1,5 @@
+var AtLeastOneMultFot = false;
+
 function fotodrag(p,g){
 	
 	let numopcions = p.numopcions;
@@ -585,9 +587,9 @@ function fotorelacio( p , g ){
 
 function fotomultop( p , g ){
 	
-	let half1 = innerWidth * .4
+	let half1 = innerWidth * .45
 	let half2 = textWidth(p.gran) * .5;
-	let height1 = innerHeight*.40;
+	let height1 = innerHeight*.30;
 	ctx.lineWidth="2";
 	ctx.strokeStyle="black";
 	ctx.fillStyle = "white";
@@ -604,6 +606,7 @@ function fotomultop( p , g ){
 			let posy = height1 + 40 * (i+1);
 			let w =  textWidth(e)
 			let h = fontsize;
+			let numS= String.fromCharCode(i+65)
 			push();		  
 			if(mouseX > posx && mouseX < posx+w && mouseY > (posy-14) && mouseY < (posy-14+h)){
 				fill(255,244, 123);
@@ -613,11 +616,11 @@ function fotomultop( p , g ){
 					ctx.drawImage(opimage, quarterwidth-innerWidth*0.1, innerHeight*0.4, innerWidth*0.2, innerHeight*0.2);
 				}
 				if(mouseIsPressed){
-					preguntes[current].respostaUsuari.push(e);
+					preguntes[current].respostaUsuari.push("Opción "+numS);
 					p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
 					upTime(new Date());
 					sleep(500);					
-					current++;							 
+					AtLeastOneMultFot = true;						 
 				}
 			}
 			ellipse(posx - 10, posy - 5, 6, 6);
@@ -625,9 +628,30 @@ function fotomultop( p , g ){
 				text(e.substr(1), posx, posy );
 			}
 			else{
-				text("Ponga el ratón aqui para ver la imagen", posx, posy);
+				text("Opción "+numS, posx, posy);
 			}
 			pop();
-		}				
+		}	
+		if(AtLeastOneMultFot==true){
+				
+				push();
+				if(mouseX < window.innerWidth*0.5 + textWidth("Siguiente") && mouseX > window.innerWidth*0.5 - textWidth("Siguiente")){
+					if( mouseY < window.innerHeight*0.19 + 20 && mouseY > window.innerHeight*0.19-20){
+					
+						fill(255,244,123);
+						if( mouseIsPressed){
+							upTime(new Date());
+							current++;
+							AtLeastOneMult = false;
+							sleep(500);
+						}
+					}
+				}
+				rectC(halfcanvas, window.innerHeight*0.19, textWidth("Siguiente")+40 , 40);
+				
+				pop();
+				textC("Siguiente", window.innerHeight*0.2, 23);	
+				
+			}
 	}
 }

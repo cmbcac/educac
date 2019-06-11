@@ -3,6 +3,7 @@ var lockfil=[];
 var lock=0;
 var estatdrag=false;
 var once=0;
+var AtLeastOneMult = false;
 
 function opcio_multiple(p,g){	
 	try{
@@ -21,25 +22,86 @@ function opcio_multiple(p,g){
 				let fontsize = 20;
 				textSize(fontsize);
 				let half3 = textWidth(e)*.5;
-				let posx = half1 - 50;
+				let posx = window.innerWidth*0.15;
+				let posx2 = window.innerWidth*0.55;
 				let posy = height1 + 40 * (i+1);
+				let posy2 = height1 + 40 * ((i-5)+1);
+				
 				let w =  textWidth(e)
 				let h = fontsize;
 				push();		  
-				if(mouseX > posx && mouseX < posx+w && mouseY > (posy-14) && mouseY < (posy-14+h)){
-					fill(255,244, 123);
-					if(mouseIsPressed){
-						preguntes[current].respostaUsuari.push(e);
-						p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
-						upTime(new Date());
-						sleep(500);					
-						current++;							 
+				
+				
+				
+				
+				if(p.subpreguntes.length > 5){
+					
+					if((mouseX > posx && mouseX < posx+w  && mouseY > (posy-14) && mouseY < (posy-14+h)) || (mouseY > (posy2-14) && mouseY < (posy2-14+h) && (mouseX > posx2 && mouseX < posx2+w))){
+					
+						if(mouseY>= (height1) && mouseY <=(height1+40*5)){
+							fill(255,244, 123);
+							if(mouseIsPressed){
+								preguntes[current].respostaUsuari.push(e);
+								p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+								
+								AtLeastOneMult = true;
+							}
+						}
+					}
+					
+					if( i < 5 ){
+						ellipse(posx - 10, posy - 5, 6, 6);
+						text(e, posx, posy );
+					}else{
+						ellipse(posx2 - 10, posy2 - 5, 6, 6);
+						text(e, posx2, posy2 );
+					}
+				}else{
+					
+					if(mouseX > window.innerWidth*0.45 - w/2 - 20 && mouseX < window.innerWidth*0.45 +w/2 + 20 && mouseY > (posy-14) && mouseY < (posy-14+h)){
+						
+							if(mouseY>= (height1) && mouseY <=(height1+40*5)){
+							fill(255,244, 123);
+							if(mouseIsPressed){
+								preguntes[current].respostaUsuari.push(e);
+								p.date=document.getElementById("hours").innerHTML+" : "+document.getElementById("minutes").innerHTML+" : "+document.getElementById("seconds").innerHTML;
+								
+								AtLeastOneMult = true;
+							}
+						}
+
+						
+					}
+					
+					ellipse(window.innerWidth*0.45 - w/2 - 20, posy - 5, 6, 6);
+					text(e, window.innerWidth*0.45 -w/2 - 10, posy );
+				}
+				
+				pop();
+				
+			}
+			
+			if(AtLeastOneMult==true){
+				
+				push();
+				if(mouseX < window.innerWidth*0.5 + textWidth("Siguiente") && mouseX > window.innerWidth*0.5 - textWidth("Siguiente")){
+					if( mouseY < window.innerHeight*0.19 + 20 && mouseY > window.innerHeight*0.19-20){
+					
+						fill(255,244,123);
+						if( mouseIsPressed){
+							upTime(new Date());
+							current++;
+							AtLeastOneMult = false;
+							sleep(500);
+						}
 					}
 				}
-				ellipse(posx - 10, posy - 5, 6, 6);
-				text(e, posx, posy );
+				rectC(halfcanvas, window.innerHeight*0.19, textWidth("Siguiente")+40 , 40);
+				
 				pop();
-			}				
+				textC("Siguiente", window.innerHeight*0.2, 23);	
+				
+			}
 		}
 	}
 	catch(error){
@@ -159,7 +221,7 @@ function swipe(p,g){
 			if( estatswipe == "migsense"){
 				push();
 				fill(200,200,234, 0.5*255);
-				rectC(halfcanvas, halfheightcanvas, w , h);
+				rectC(halfcanvas, halfheightcanvas, w*0.6 , h);
 				pop();
 				if(p.categories[isubp].length>=Math.ceil(innerWidth*0.02)){
 					for(var i=0;i<=p.categories[isubp].length-1;i++){
@@ -222,21 +284,22 @@ function swipe(p,g){
 				push();
 				fill(150,150,150);
 				ellipse(mouseX, mouseY, innerWidth*0.05 , innerWidth*0.05);
-				textSize(14);
+				textSize(23);
+				textStyle(BOLD);
 				ctx.fillStyle = "black";
-				text(p.subpreguntes[0], quarterwidth, halfheightcanvas);
-				text(p.subpreguntes[2], quarterwidth3, halfheightcanvas);
-				if(p.numopcions <= 3) text(p.subpreguntes[1], innerWidth*0.4 - textWidth(p.subpreguntes[1])/2, quarterheight3);
+				text(p.subpreguntes[0], window.innerWidth*0.22, halfheightcanvas);
+				text(p.subpreguntes[1], quarterwidth3, halfheightcanvas);
+				if(p.numopcions <= 3) text(p.subpreguntes[2], innerWidth*0.45 - textWidth(p.subpreguntes[2])/2, quarterheight3);
 				pop();
 			}
 			if( estatswipe == "esquerra"){
 				preguntes[current].respostaUsuari.push(p.subpreguntes[0]);
 			}
 			if( estatswipe == "dreta"){
-				preguntes[current].respostaUsuari.push(p.subpreguntes[2]);
+				preguntes[current].respostaUsuari.push(p.subpreguntes[1]);
 			}
 			if( estatswipe == "avall"){
-				preguntes[current].respostaUsuari.push(p.subpreguntes[1]);
+				preguntes[current].respostaUsuari.push(p.subpreguntes[2]);
 			}
 			if( estatswipe == "dreta" || estatswipe == "esquerra"||estatswipe=="avall"){
 				isubp+=1;
@@ -262,7 +325,7 @@ function swipe(p,g){
 
 function filtre(p,g){
 	try{
-		var opcions=["Rojo","Verde","Azul","Blanco","Negro"];
+		var opcions=["Rojo","Verde","Azul","Amarillo","Negro"];
 		var image1=new Image();
 		image1.src = p.subpreguntes;
 		textSize(20);
@@ -358,13 +421,13 @@ function filtre(p,g){
 		else if(lockfil[i]==3){
 			ctx.beginPath();
 			ctx.rect(innerWidth*0.3, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
-			ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
+			ctx.fillStyle = "rgba(255, 215, 0, 0.2)";
 			ctx.fill();
 		}
 		else if(lockfil[i]==4){
 			ctx.beginPath();
 			ctx.rect(innerWidth*0.3, innerHeight*0.25,innerWidth*0.3,innerHeight*0.4);
-			ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+			ctx.fillStyle = "rgba(0,0,0, 0.2)";
 			ctx.fill();
 		}
 	}	
@@ -385,7 +448,7 @@ function relacio(p,g){
 			let fontsize = innerWidth*0.01;
 			textSize(fontsize);
 			let x = innerWidth*0.15;
-			let y = halfheightcanvas+40*(i+1)+fontsize;
+			let y = window.innerHeight*0.3+40*(i+1)+fontsize;
 			let w =  textWidth(p.subpreguntes[i]);	
 			let dinsx = entre(mouseX, x, x+w);
 			let dinsy = entre(mouseY, y-fontsize, y+fontsize);
@@ -410,7 +473,7 @@ function relacio(p,g){
 			textSize(fontsize);
 			let w =  textWidth(p.categories[i]);
 			let x = innerWidth*0.8-w;
-			let y = halfheightcanvas+40*(i+1)+fontsize;
+			let y = window.innerHeight*0.3+40*(i+1)+fontsize;
 			let dinsx = entre(mouseX, x, x+w);
 			let dinsy = entre(mouseY, y-fontsize, y+fontsize);
 			push()
@@ -431,7 +494,7 @@ function relacio(p,g){
 		}
 		if(lock1!=undefined && lock2 != undefined){
 			respostarel=(lock1+1)+"-"+(lock2+1);
-			line(quarterwidth+textWidth(p.subpreguntes[lock1])+10, halfheightcanvas+40*(lock1+1)+9, (innerWidth*0.8)-textWidth(p.categories[lock2])-10, halfheightcanvas+40*(lock2+1)+9);
+			line(innerWidth*0.15+textWidth(p.subpreguntes[lock1])+10, window.innerHeight*0.3+40*(lock1+1)+innerWidth*0.01-5, (innerWidth*0.8)-textWidth(p.categories[lock2])-10, window.innerHeight*0.3+40*(lock2+1)+innerWidth*0.01-5);
 			rect(halfcanvas-50, quarterheight-25, 100 ,50,15);
 			text("Confirmar",halfcanvas-textWidth("Confirmar")/2,quarterheight);
 			if(dist(halfcanvas, quarterheight-25, mouseX, mouseY) < 50){
@@ -474,19 +537,21 @@ function relacio(p,g){
 function ordenar(p,g){
 	try{
 		textSize(20);
-		let half1 = innerWidth * .45
+		let half1 = innerWidth * .25
 		let half2 = textWidth(p.gran) * .5;
-		let height1 = innerHeight*.25;
+		let height1 = innerHeight*.35;
 		enunciat(p.gran, height1, 20);
 		if(p.subpreguntes.length > 0){
+			
 			resp.setAttribute('style', 'display:initial');
-			resp.style.left = innerWidth*0.45+'px';
-			resp.style.top = innerHeight*0.45+'px';
+			resp.style.left = innerWidth*0.44+'px';
+			resp.style.top = innerHeight*0.85+'px';
+			resp.placeholder = "Escribe aquí tu respuesta";
 			ctx.lineWidth="2";
 			ctx.strokeStyle="black";
 			push();
 			fill(242);
-			rectC(half1,halfheightcanvas,450,350);
+			
 			pop();
 			for(var i = 0; i < p.subpreguntes.length; i++){
 				let e = ordre[i]+ p.subpreguntes[i];
@@ -494,11 +559,21 @@ function ordenar(p,g){
 				let fontsize = 20;
 				textSize(fontsize);
 				let half3 = textWidth(e)*.5;
-				let x = half1;
-				let y = (height1+150) + 40 * (i+1);
+				let posx = window.innerWidth*0.30;
+				let posx2 = window.innerWidth*0.60;
+				let posy = height1 + 35 * (i+1);
+				let posy2 = height1 + 35 * ((i-5)+1);
+				if(i==0){
+					rectC(posx,posy+100,450,350);
+					rectC(posx2,posy+100,450,350);
+				}
 				let w =  textWidth(e)
 				let h = fontsize;
-				text(e, x-textWidth(e)/2, y );
+				if(i<5){
+					text(e, posx-textWidth(e)/2, posy );
+				}else{
+					text(e, posx2-textWidth(e)/2, posy2);
+				}
 			}
 			if(keyCode==13){
 				resp.setAttribute("style", "display:none");

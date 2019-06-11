@@ -291,7 +291,11 @@ function enunciat(txt, height, mida){
 	ajustaTextC(txt, innerHeight*0.12,mida);
 	push();
 	noFill();
-	rect(halfcanvas-textWidth(txt)/2-25, innerHeight*0.1-25, textWidth(txt)+50, textHeight(txt)*2 + 25);
+	if(txt.length >= Math.ceil(innerWidth*0.03)){
+		rect(halfcanvas-textWidth(txt)*0.32, innerHeight*0.1-25, textWidth(txt)*0.65, textHeight(txt)*2 + 25);
+	}else{
+		rect(halfcanvas-textWidth(txt)/2 - 30, innerHeight*0.1-25, textWidth(txt)+60, textHeight(txt)*2 + 25);
+	}
 	pop();	
 }
 

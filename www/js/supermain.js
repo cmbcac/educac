@@ -14,7 +14,7 @@
 			
 			2.2. TODOS los elementos de tipo 'catX' que hayan sido modificados anteriormente
 			
-			2.3. El elemento 'respostacorrecta' si es que ha sido modificado anteriormente
+			2.3. El elemento 'correcta' si es que ha sido modificado anteriormente
 			
 			2.4. El elemento 'enun' si es que ha sido modificado anteriormente
 			
@@ -53,7 +53,7 @@ var estat=-1;
 var opcions;
 var resposta;
 //vars para ordenar
-var ordre=["A- ","B- ","C- ","D- ","E- "]
+var ordre=["A- ","B- ","C- ","D- ","E- ", "F- ", "G- ", "H- " , "I- ", "J- "]
 var resp;
 var respfin;
 //Vars para submit
@@ -195,15 +195,15 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 		down = e[g+'respuesta2'].$t;
 		right= e[g+'respuesta3'].$t;		
 		if(left&&down&&right){ numopcions = 3;}		
-		else if(left&&right){ numopcions = 2;}				
+		else if(left&&down){ numopcions = 2;}				
 		if(!left && !right && ! down) return 0;					
 		multichoice_gsx.forEach(element => {
-			if(element.includes("resp")){
+			if(element.includes("resp") && !element.includes("correcta")){
 				if(e[g+element].$t!=""){
 					subpreguntes.push(e[g+element].$t);
 				}
 			}
-			if(element.includes("respuestacorrecta")){
+			if(element.includes("correcta")){
 				if(e[g+element].$t!=""){
 					resp = e[g+element].$t;
 				}
@@ -232,16 +232,16 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 		preguntes.push(p);
 	}
 	if(tip == "Drag-categories"){		
-		numopcions=5;
+		
 		categories = [];
 		subpreguntes = [];		
 		multichoice_gsx.forEach(element => {
-			if(element.includes("resp")){
+			if(element.includes("resp") && !element.includes("correcta")){
 				if(e[g+element].$t!=""){
 					subpreguntes.push(e[g+element].$t);
 				}
 			}
-			if(element.includes("respuestacorrecta")){
+			if(element.includes("correcta")){
 				if(e[g+element].$t!=""){
 				resp = e[g+element].$t;
 				}
@@ -262,8 +262,9 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 				}
 			}
 		});
+		numopcions=subpreguntes.length;
 		respuestascorrectas = [];
-		respuestascorrectas.push(e[g+'respostacorrecta'].$t);
+		respuestascorrectas.push(e[g+'correcta'].$t);
 		var p = new Pregunta(gran, subpreguntes, categories, subpreguntes.length, puntuació);
 		p.tipologia = tip;
 		p.diseño=txtfot;
@@ -278,7 +279,7 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 					gran = e[g+element].$t
 				}
 			}
-			if(element.includes("resp")){
+			if(element.includes("resp") && !element.includes("correcta")){
 				if(e[g+element].$t!=""){ 
 					subpreguntes.push(e[g+element].$t);
 				}
@@ -322,12 +323,12 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 		var subpreguntes = [], resp;
 		categories = [];
 		multichoice_gsx.forEach(element => {
-			if(element.includes("resp")){
+			if(element.includes("resp") && !element.includes("correcta")){
 				if(e[g+element].$t!=""){
 					subpreguntes.push(e[g+element].$t);
 				}
 			}
-			if(element.includes("respuestacorrecta")){
+			if(element.includes("correcta")){
 				if(e[g+element].$t!=""){
 					resp = e[g+element].$t;
 				}
@@ -360,7 +361,7 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 			if(element.includes("enun")){
 				gran = e[g+element].$t
 			}
-			if(element.includes("resp")){
+			if(element.includes("resp") && !element.includes("correcta")){
 				subpreguntes.push(e[g+element].$t);
 			}
 			if(element.includes("apar")){
@@ -386,12 +387,12 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 					gran = e[g+element].$t
 				}
 			}
-			if(element.includes("resp")){
+			if(element.includes("resp") && !element.includes("correcta")){
 				if(e[g+element].$t!=""){ 
 					subpreguntes.push(e[g+element].$t);
 				}
 			}
-			if(element.includes("respuestacorrecta")){
+			if(element.includes("correcta")){
 				if(e[g+element].$t!=""){
 					resp = e[g+element].$t;
 				}
@@ -417,12 +418,12 @@ function afegir_pregunta(tip, txtfot, e,list_gsx){
 					gran = e[g+element].$t
 				}
 			}
-			if(element.includes("resp")){
+			if(element.includes("resp") && !element.includes("correcta")){
 				if(e[g+element].$t!=""){ 
 					subpreguntes.push(e[g+element].$t);
 				}
 			}
-			if(element.includes("respuestacorrecta")){
+			if(element.includes("correcta")){
 				if(e[g+element].$t!=""){
 					resp = e[g+element].$t;
 				}
@@ -450,11 +451,21 @@ var multichoice_gsx = [
 'respuesta3',
 'respuesta4',
 'respuesta5',
+"respuesta6",
+"respuesta7",
+'respuesta8',
+'respuesta9',
+'respuesta10',
 'apartado1',
 'apartado2',
 'apartado3',
 'apartado4',
 'apartado5',
+'apartado6',
+'apartado7',
+'apartado8',
+'apartado9',
+'apartado10',
 'url',
 'respuestacorrecta',
 'puntuacion'];
